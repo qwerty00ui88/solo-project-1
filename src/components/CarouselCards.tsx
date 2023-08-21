@@ -1,17 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import { largeSize } from '../style/font'
-import { Info } from './Carousel'
 import { ReactComponent as Star } from '../assets/star.svg'
+import { Data } from './Carousel'
 
-const CardContainer = styled.div`
+interface CarouselCardsWrapperProps {
+    ref: React.ForwardedRef<HTMLDivElement>
+}
+
+const CarouselCardsWrapper = styled.div<CarouselCardsWrapperProps>`
     display: flex;
     justify-content: space-between;
-    flex: 1 0 100%;
+    flex: 1 0 calc(100% + 30vw);
+    &::after {
+        content: '';
+        display: block;
+        flex: 1 0 30vw;
+        background-color: red;
+    }
 `
 
 const Card = styled.div`
-    flex-basis: 24.5%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 20%;
     padding: 35px;
     border: 1px solid;
     border-radius: 30px;
@@ -23,6 +35,7 @@ const Card = styled.div`
     }
 `
 const Text = styled.div`
+    flex: 1;
     font-size: ${largeSize};
 `
 
@@ -30,14 +43,15 @@ const Img = styled.img`
     width: 100%;
 `
 
-interface Props {
-    info: Info[]
+interface CarouselCardsProps {
+    data: Data[]
+    CarouselCardsRef: React.ForwardedRef<HTMLDivElement>
 }
 
-function CarouselCards({ info }: Props) {
+function CarouselCards({ data, CarouselCardsRef }: CarouselCardsProps) {
     return (
-        <CardContainer>
-            {info.map((el) => {
+        <CarouselCardsWrapper ref={CarouselCardsRef}>
+            {data.map((el) => {
                 return (
                     <Card key={el.id}>
                         <Text>
@@ -55,7 +69,7 @@ function CarouselCards({ info }: Props) {
                     </Card>
                 )
             })}
-        </CardContainer>
+        </CarouselCardsWrapper>
     )
 }
 export default CarouselCards

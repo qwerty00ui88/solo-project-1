@@ -21,17 +21,20 @@ const Bullet = styled.div`
     background-color: gray;
     border-radius: 100%;
 `
-
-function Indicator() {
+interface Props {
+    goToPre: () => void
+    goToNext: () => void
+}
+function Indicator({ goToPre, goToNext }: Props) {
     return (
         <IndicatorWrapper>
-            <Pre />
+            <Pre onClick={goToPre} />
             <Pagenation>
                 <Bullet />
                 <Bullet />
                 <Bullet />
             </Pagenation>
-            <Next />
+            <Next onClick={goToNext} />
         </IndicatorWrapper>
     )
 }

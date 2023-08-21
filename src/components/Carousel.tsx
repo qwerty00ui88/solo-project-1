@@ -1,20 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components'
 import axios from 'axios'
 import CarouselCards from './CarouselCards'
 import Indicator from './Indicator'
 
-const Div = styled.div`
+const Viewer = styled.div`
+    overflow: hidden;
+`
+
+interface SlideProps {
+    currentindex: number
+    movewidth: number
+}
+
+const Slide = styled.div<SlideProps>`
     display: flex;
-    width: 100%;
+    transition: transform 0.8s ease;
+    transform: ${(props) =>
+        `translateX(-${props.currentindex * props.movewidth}px)`};
 `
 
 const CarouselWrapper = styled.div`
-    /* overflow: hidden; */
     height: 100%;
 `
 
-export interface Info {
+export interface Data {
     adult: boolean
     backdrop_path: string
     genre_ids: number[]
@@ -32,7 +42,25 @@ export interface Info {
 }
 
 function Carousel() {
-    const [info, setInfo] = useState<Info[]>([])
+    const [data, setData] = useState<Data[]>([])
+    const [currentIndex, setCurrentIndex] = useState(1)
+    const ref = useRef<HTMLDivElement>(null)
+
+    const slideData: { id: number; data: Data[] }[] = [
+        { id: 0, data: data.slice(10, 15) },
+        { id: 1, data: data.slice(0, 5) },
+        { id: 2, data: data.slice(5, 10) },
+        { id: 3, data: data.slice(10, 15) },
+        { id: 4, data: data.slice(0, 5) },
+    ]
+
+    const goToPre = () => {
+        setCurrentIndex(currentIndex - 1)
+    }
+
+    const goToNext = () => {
+        setCurrentIndex(currentIndex + 1)
+    }
 
     const options = {
         method: 'GET',
@@ -54,8 +82,7 @@ function Carousel() {
     const fetchData = async () => {
         try {
             const response = await axios.request(options)
-            // eslint-disable-next-line no-console
-            setInfo(response.data.results)
+            setData(response.data.results)
         } catch (error) {
             // eslint-disable-next-line no-console
             console.error(error)
@@ -68,12 +95,23 @@ function Carousel() {
 
     return (
         <CarouselWrapper>
-            <Div>
-                <CarouselCards info={info.slice(0, 4)} />
-                <CarouselCards info={info.slice(4, 8)} />
-                <CarouselCards info={info.slice(8, 12)} />
-            </Div>
-            <Indicator />
+            <Viewer>
+                <Slide
+                    currentindex={currentIndex}
+                    movewidth={ref.current ? ref.current.clientWidth : 0}
+                >
+                    {slideData.map((el) => {
+                        return (
+                            <CarouselCards
+                                key={el.id}
+                                data={el.data}
+                                CarouselCardsRef={ref}
+                            />
+                        )
+                    })}
+                </Slide>
+            </Viewer>
+            <Indicator goToPre={goToPre} goToNext={goToNext} />
         </CarouselWrapper>
     )
 }
