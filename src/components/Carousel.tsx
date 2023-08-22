@@ -11,11 +11,12 @@ const Viewer = styled.div`
 interface SlideProps {
     currentindex: number
     movewidth: number
+    animation: boolean
 }
 
 const Slide = styled.div<SlideProps>`
     display: flex;
-    transition: transform 0.8s ease;
+    transition: ${(props) => props.animation && `transform 0.8s ease`};
     transform: ${(props) =>
         `translateX(-${props.currentindex * props.movewidth}px)`};
 `
@@ -44,6 +45,7 @@ export interface Data {
 function Carousel() {
     const [data, setData] = useState<Data[]>([])
     const [currentIndex, setCurrentIndex] = useState(1)
+    const [animation, setAnimation] = useState(false)
     const ref = useRef<HTMLDivElement>(null)
 
     const slideData: { id: number; data: Data[] }[] = [
@@ -55,11 +57,17 @@ function Carousel() {
     ]
 
     const goToPre = () => {
-        setCurrentIndex(currentIndex - 1)
+        if (currentIndex > 0) {
+            setAnimation(true)
+            setCurrentIndex((ci) => ci - 1)
+        }
     }
 
     const goToNext = () => {
-        setCurrentIndex(currentIndex + 1)
+        if (currentIndex < slideData.length - 1) {
+            setAnimation(true)
+            setCurrentIndex((ci) => ci + 1)
+        }
     }
 
     const options = {
@@ -93,12 +101,34 @@ function Carousel() {
         fetchData()
     }, [])
 
+    useEffect(() => {
+        if (currentIndex === 0) {
+            const slide = document.getElementById('slide') as HTMLElement
+            const changeIndex = () => {
+                setAnimation(false)
+                setCurrentIndex(() => slideData.length - 2)
+                slide.removeEventListener('transitionend', changeIndex)
+            }
+            slide.addEventListener('transitionend', changeIndex)
+        } else if (currentIndex === 4) {
+            const slide = document.getElementById('slide') as HTMLElement
+            const changeIndex = () => {
+                setAnimation(false)
+                setCurrentIndex(() => 1)
+                slide.removeEventListener('transitionend', changeIndex)
+            }
+            slide.addEventListener('transitionend', changeIndex)
+        }
+    }, [currentIndex])
+
     return (
         <CarouselWrapper>
             <Viewer>
                 <Slide
+                    id="slide"
                     currentindex={currentIndex}
                     movewidth={ref.current ? ref.current.clientWidth : 0}
+                    animation={animation}
                 >
                     {slideData.map((el) => {
                         return (

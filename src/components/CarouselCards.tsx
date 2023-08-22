@@ -16,7 +16,6 @@ const CarouselCardsWrapper = styled.div<CarouselCardsWrapperProps>`
         content: '';
         display: block;
         flex: 1 0 30vw;
-        background-color: red;
     }
 `
 
