@@ -6,6 +6,7 @@ import { ReactComponent as Next } from '../assets/next.svg'
 const IndicatorWrapper = styled.div`
     display: flex;
     justify-content: center;
+    flex: 0;
 `
 
 const Pagenation = styled.div`

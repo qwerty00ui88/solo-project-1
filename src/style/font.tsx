@@ -1,4 +1,4 @@
-export const smallSize = '1.3rem'
+export const smallSize = '1.2rem'
 export const mediumSize = '1.5rem'
 export const largeSize = '1.7rem'
 

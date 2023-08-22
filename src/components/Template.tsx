@@ -8,7 +8,7 @@ const Main = styled.main`
 
 const CarouselTemplate = styled.div`
     border: 1px solid;
-    height: 500px;
+    height: 63vh;
 `
 
 function Template() {

@@ -1,17 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import { largeSize } from '../style/font'
+import { largeSize, smallSize } from '../style/font'
 import { ReactComponent as Star } from '../assets/star.svg'
 import { Data } from './Carousel'
 
-interface CarouselCardsWrapperProps {
+interface SlideWrapperProps {
     ref: React.ForwardedRef<HTMLDivElement>
 }
 
-const CarouselCardsWrapper = styled.div<CarouselCardsWrapperProps>`
+const SlideWrapper = styled.div<SlideWrapperProps>`
+    flex: 0 0 calc(100% + 30vw);
+    width: calc(100% + 30vw);
     display: flex;
     justify-content: space-between;
-    flex: 1 0 calc(100% + 30vw);
     &::after {
         content: '';
         display: block;
@@ -20,9 +21,10 @@ const CarouselCardsWrapper = styled.div<CarouselCardsWrapperProps>`
 `
 
 const Card = styled.div`
+    flex: 0 0 calc((100% - 30vw) / 6);
+    width: calc((100% - 30vw) / 6);
     display: flex;
     flex-direction: column;
-    flex: 1 1 20%;
     padding: 35px;
     border: 1px solid;
     border-radius: 30px;
@@ -34,22 +36,30 @@ const Card = styled.div`
     }
 `
 const Text = styled.div`
-    flex: 1;
+    flex: 1 1; // 세로
     font-size: ${largeSize};
+    & > h3 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    & > p {
+        font-size: ${smallSize};
+    }
 `
 
 const Img = styled.img`
-    width: 100%;
+    flex: 0 0; // 세로
 `
 
-interface CarouselCardsProps {
+interface SlideProps {
     data: Data[]
-    CarouselCardsRef: React.ForwardedRef<HTMLDivElement>
+    slideRef: React.ForwardedRef<HTMLDivElement>
 }
 
-function CarouselCards({ data, CarouselCardsRef }: CarouselCardsProps) {
+function Slide({ data, slideRef }: SlideProps) {
     return (
-        <CarouselCardsWrapper ref={CarouselCardsRef}>
+        <SlideWrapper ref={slideRef}>
             {data.map((el) => {
                 return (
                     <Card key={el.id}>
@@ -68,7 +78,7 @@ function CarouselCards({ data, CarouselCardsRef }: CarouselCardsProps) {
                     </Card>
                 )
             })}
-        </CarouselCardsWrapper>
+        </SlideWrapper>
     )
 }
-export default CarouselCards
+export default Slide

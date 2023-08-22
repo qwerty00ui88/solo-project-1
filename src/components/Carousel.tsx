@@ -1,27 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components'
 import axios from 'axios'
-import CarouselCards from './CarouselCards'
+import Slide from './Slide'
 import Indicator from './Indicator'
 
 const Viewer = styled.div`
+    flex: 1; // 세로
     overflow: hidden;
+    margin-bottom: 10px;
 `
 
-interface SlideProps {
-    currentindex: number
-    movewidth: number
-    animation: boolean
+interface SlidesProps {
+    $currentindex: number
+    $slidewidth: number
+    $animation: boolean
 }
 
-const Slide = styled.div<SlideProps>`
+const Slides = styled.div<SlidesProps>`
     display: flex;
-    transition: ${(props) => props.animation && `transform 0.8s ease`};
+    transition: ${(props) => props.$animation && `transform 0.8s ease`};
     transform: ${(props) =>
-        `translateX(-${props.currentindex * props.movewidth}px)`};
+        `translateX(-${props.$currentindex * props.$slidewidth}px)`};
+    height: 100%;
 `
 
 const CarouselWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
     height: 100%;
 `
 
@@ -45,15 +50,16 @@ export interface Data {
 function Carousel() {
     const [data, setData] = useState<Data[]>([])
     const [currentIndex, setCurrentIndex] = useState(1)
+    const [slideWidth, setSlideWidth] = useState<number>(0)
     const [animation, setAnimation] = useState(false)
-    const ref = useRef<HTMLDivElement>(null)
+    const slideRef = useRef<HTMLDivElement>(null)
 
     const slideData: { id: number; data: Data[] }[] = [
-        { id: 0, data: data.slice(10, 15) },
-        { id: 1, data: data.slice(0, 5) },
-        { id: 2, data: data.slice(5, 10) },
-        { id: 3, data: data.slice(10, 15) },
-        { id: 4, data: data.slice(0, 5) },
+        { id: 0, data: data.slice(12, 18) },
+        { id: 1, data: data.slice(0, 6) },
+        { id: 2, data: data.slice(6, 12) },
+        { id: 3, data: data.slice(12, 18) },
+        { id: 4, data: data.slice(0, 6) },
     ]
 
     const goToPre = () => {
@@ -97,49 +103,53 @@ function Carousel() {
         }
     }
 
+    const getSlideWidth = () => {
+        setAnimation(false)
+        setSlideWidth(slideRef.current ? slideRef.current.clientWidth : 0)
+    }
+
+    const changeIndex = (index: number) => {
+        const slides = slideRef.current?.parentElement as HTMLElement
+        const handleTransitionEnd = () => {
+            setAnimation(false)
+            setCurrentIndex(() => index)
+            slides.removeEventListener('transitionend', handleTransitionEnd)
+        }
+        slides.addEventListener('transitionend', handleTransitionEnd)
+    }
+
     useEffect(() => {
         fetchData()
+        getSlideWidth()
+        window.addEventListener('resize', getSlideWidth)
+        return () => {
+            window.removeEventListener('resize', getSlideWidth)
+        }
     }, [])
 
     useEffect(() => {
-        if (currentIndex === 0) {
-            const slide = document.getElementById('slide') as HTMLElement
-            const changeIndex = () => {
-                setAnimation(false)
-                setCurrentIndex(() => slideData.length - 2)
-                slide.removeEventListener('transitionend', changeIndex)
-            }
-            slide.addEventListener('transitionend', changeIndex)
-        } else if (currentIndex === 4) {
-            const slide = document.getElementById('slide') as HTMLElement
-            const changeIndex = () => {
-                setAnimation(false)
-                setCurrentIndex(() => 1)
-                slide.removeEventListener('transitionend', changeIndex)
-            }
-            slide.addEventListener('transitionend', changeIndex)
-        }
+        if (currentIndex === 0) changeIndex(slideData.length - 2)
+        else if (currentIndex === 4) changeIndex(1)
     }, [currentIndex])
 
     return (
         <CarouselWrapper>
             <Viewer>
-                <Slide
-                    id="slide"
-                    currentindex={currentIndex}
-                    movewidth={ref.current ? ref.current.clientWidth : 0}
-                    animation={animation}
+                <Slides
+                    $currentindex={currentIndex}
+                    $slidewidth={slideWidth}
+                    $animation={animation}
                 >
                     {slideData.map((el) => {
                         return (
-                            <CarouselCards
+                            <Slide
                                 key={el.id}
                                 data={el.data}
-                                CarouselCardsRef={ref}
+                                slideRef={slideRef}
                             />
                         )
                     })}
-                </Slide>
+                </Slides>
             </Viewer>
             <Indicator goToPre={goToPre} goToNext={goToNext} />
         </CarouselWrapper>
