@@ -58,6 +58,8 @@ interface SlideProps {
 }
 
 function Slide({ data, slideRef }: SlideProps) {
+    // eslint-disable-next-line no-console
+    console.log(data)
     return (
         <SlideWrapper ref={slideRef}>
             {data.map((el) => {
@@ -68,8 +70,8 @@ function Slide({ data, slideRef }: SlideProps) {
                                 <Star />
                                 {el?.vote_average}
                             </span>
-                            <h3>{el?.title}</h3>
-                            <p>{el?.release_date}</p>
+                            <h3>{el?.name || el?.title}</h3>
+                            <p>{el?.first_air_date || el?.release_date}</p>
                         </Text>
                         <Img
                             alt=""

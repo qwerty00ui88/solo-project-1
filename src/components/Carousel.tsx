@@ -33,18 +33,21 @@ const CarouselWrapper = styled.div`
 export interface Data {
     adult: boolean
     backdrop_path: string
-    genre_ids: number[]
     id: number
+    title?: string
     original_language: string
     original_title: string
     overview: string
-    popularity: number
     poster_path: string
-    release_date: string
-    title: string
+    media_type: string
+    genre_ids: number[]
+    popularity: number
+    release_date?: string
     video: boolean
     vote_average: number
     vote_count: number
+    name?: string
+    first_air_date?: string
 }
 
 function Carousel() {
@@ -78,14 +81,8 @@ function Carousel() {
 
     const options = {
         method: 'GET',
-        url: 'https://api.themoviedb.org/3/discover/movie',
-        params: {
-            include_adult: 'false',
-            include_video: 'false',
-            language: 'ko-KR',
-            page: '1',
-            sort_by: 'popularity.desc',
-        },
+        url: 'https://api.themoviedb.org/3/trending/all/day',
+        params: { language: 'ko-KR' },
         headers: {
             accept: 'application/json',
             Authorization:
