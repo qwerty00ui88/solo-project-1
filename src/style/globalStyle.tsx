@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  body {
+    background-color: #E5E5E5;
+  }
+
   li {
     list-style: none;
   }

@@ -58,11 +58,11 @@ function Carousel() {
     const slideRef = useRef<HTMLDivElement>(null)
 
     const slideData: { id: number; data: Data[] }[] = [
-        { id: 0, data: data.slice(12, 18) },
-        { id: 1, data: data.slice(0, 6) },
-        { id: 2, data: data.slice(6, 12) },
-        { id: 3, data: data.slice(12, 18) },
-        { id: 4, data: data.slice(0, 6) },
+        { id: 0, data: data.slice(10, 15) },
+        { id: 1, data: data.slice(0, 5) },
+        { id: 2, data: data.slice(5, 10) },
+        { id: 3, data: data.slice(10, 15) },
+        { id: 4, data: data.slice(0, 5) },
     ]
 
     const goToPre = () => {

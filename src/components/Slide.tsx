@@ -12,17 +12,24 @@ const SlideWrapper = styled.div<SlideWrapperProps>`
     flex: 0 0 calc(100% + 30vw);
     width: calc(100% + 30vw);
     display: flex;
-    justify-content: space-between;
     &::after {
         content: '';
         display: block;
-        flex: 1 0 30vw;
+        width: 30vw;
+        flex: 0 0 30vw;
     }
 `
 
+const CardContainer = styled.div`
+    flex: 0 0 calc(100% - 30vw);
+    width: calc(100% - 30vw);
+    display: flex;
+    justify-content: space-between;
+`
+
 const Card = styled.div`
-    flex: 0 0 calc((100% - 30vw) / 6);
-    width: calc((100% - 30vw) / 6);
+    flex: 1 0 calc((100% - 30vw) / 5.3);
+    width: calc((100% - 30vw) / 5.3);
     display: flex;
     flex-direction: column;
     padding: 35px;
@@ -58,28 +65,28 @@ interface SlideProps {
 }
 
 function Slide({ data, slideRef }: SlideProps) {
-    // eslint-disable-next-line no-console
-    console.log(data)
     return (
         <SlideWrapper ref={slideRef}>
-            {data.map((el) => {
-                return (
-                    <Card key={el.id}>
-                        <Text>
-                            <span>
-                                <Star />
-                                {el?.vote_average}
-                            </span>
-                            <h3>{el?.name || el?.title}</h3>
-                            <p>{el?.first_air_date || el?.release_date}</p>
-                        </Text>
-                        <Img
-                            alt=""
-                            src={`https://image.tmdb.org/t/p/w500${el?.poster_path}`}
-                        />
-                    </Card>
-                )
-            })}
+            <CardContainer>
+                {data.map((el) => {
+                    return (
+                        <Card key={el.id}>
+                            <Text>
+                                <span>
+                                    <Star />
+                                    {el?.vote_average}
+                                </span>
+                                <h3>{el?.name || el?.title}</h3>
+                                <p>{el?.first_air_date || el?.release_date}</p>
+                            </Text>
+                            <Img
+                                alt=""
+                                src={`https://image.tmdb.org/t/p/w500${el?.poster_path}`}
+                            />
+                        </Card>
+                    )
+                })}
+            </CardContainer>
         </SlideWrapper>
     )
 }

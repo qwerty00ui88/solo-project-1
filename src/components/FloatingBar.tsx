@@ -3,10 +3,10 @@ import { styled } from 'styled-components'
 
 const Div = styled.div`
     height: 100%;
-    background-color: #14213d;
+    background-color: #5d4ffe;
     border-radius: 30px;
 `
-function SearchBar() {
+function FloatingBar() {
     return <Div>dfs</Div>
 }
-export default SearchBar
+export default FloatingBar
