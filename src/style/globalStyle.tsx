@@ -23,6 +23,10 @@ const GlobalStyle = createGlobalStyle`
     all: unset;
     cursor: pointer;
   }
+
+  input {
+    all: unset;
+  }
 `
 
 export default GlobalStyle

@@ -23,12 +23,12 @@ const CarouselTemplate = styled.div`
 
 interface UtilityBarTemplateProps {
     // $isScrolledDown: boolean
-    $isClicked: boolean
+    $isOpen: boolean
 }
 
 const UtilityBarTemplate = styled.div<UtilityBarTemplateProps>`
     display: flex;
-    height: ${(props) => (props.$isClicked ? `36vh` : `6vh`)};
+    height: ${(props) => (props.$isOpen ? `36vh` : `6vh`)};
 `
 
 const SearchBarTemplate = styled.div`
@@ -39,7 +39,7 @@ const SearchBarTemplate = styled.div`
 
 interface FloatingBarTemplateProps {
     $isScrolledDown: boolean
-    $isClicked: boolean
+    $isOpen: boolean
 }
 
 const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
@@ -47,28 +47,38 @@ const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
     width: 6vh;
     height: 6vh;
     position: ${(props) =>
-        props.$isScrolledDown || props.$isClicked ? `fixed` : `null`};
+        props.$isScrolledDown || props.$isOpen ? `fixed` : `null`};
     right: ${(props) =>
-        props.$isScrolledDown || props.$isClicked ? `24px` : `null`};
+        props.$isScrolledDown || props.$isOpen ? `24px` : `null`};
     top: ${(props) =>
-        props.$isScrolledDown || props.$isClicked ? `88vh` : `null`};
+        props.$isScrolledDown || props.$isOpen ? `88vh` : `null`};
 `
 
 function Template() {
     const [isScrolledDown, setIsScrollDown] = useState(false)
-    const [isClicked, setIsClicked] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     window.addEventListener('scroll', () => {
         const { scrollY } = window
         setIsScrollDown(scrollY >= 12)
     })
 
-    const handleOnClick = () => {
-        setIsClicked(true)
+    const scrollToSearchBar = () => {
         window.scrollTo({
             top: 660,
             behavior: 'smooth',
         })
+    }
+
+    const handleSetIsOpen = () => {
+        setIsOpen(!isOpen)
+    }
+
+    const handleOnClick = () => {
+        if (!isOpen) {
+            handleSetIsOpen()
+        }
+        scrollToSearchBar()
     }
 
     return (
@@ -81,81 +91,21 @@ function Template() {
                 <CarouselTemplate>
                     <Carousel />
                 </CarouselTemplate>
-                <UtilityBarTemplate $isClicked={isClicked}>
+                <UtilityBarTemplate $isOpen={isOpen}>
                     <SearchBarTemplate onClick={handleOnClick}>
-                        <SearchBar />
+                        <SearchBar
+                            isOpen={isOpen}
+                            handleSetIsOpen={handleSetIsOpen}
+                        />
                     </SearchBarTemplate>
                     <FloatingBarTemplate
                         $isScrolledDown={isScrolledDown}
-                        $isClicked={isClicked}
+                        $isOpen={isOpen}
                     >
                         <FloatingBar />
                     </FloatingBarTemplate>
                 </UtilityBarTemplate>
             </Main>
-            <div>
-                fdfsfsad
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br /> <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br /> <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-            </div>
         </>
     )
 }

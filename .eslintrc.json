@@ -29,7 +29,10 @@
                 "tsx": "never"
             }
         ],
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "jsx-a11y/label-has-associated-control": [ 2, {
+            "some": [ "nesting", "id" ]
+          }]
     },
     "settings": {
         "import/resolver": {
