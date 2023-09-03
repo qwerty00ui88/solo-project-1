@@ -4,11 +4,12 @@ import Carousel from './Carousel'
 import SearchBar from './SearchBar'
 import FloatingBar from './FloatingBar'
 import Header from './Header'
+import RecommendedVideo from './RecommendedVideo'
 
 const Main = styled.main`
     margin: 0 24px;
     & > * {
-        border: 1px solid;
+        /* border: 1px solid; */
     }
 `
 
@@ -22,19 +23,23 @@ const CarouselTemplate = styled.div`
 `
 
 interface UtilityBarTemplateProps {
-    // $isScrolledDown: boolean
     $isOpen: boolean
 }
 
 const UtilityBarTemplate = styled.div<UtilityBarTemplateProps>`
     display: flex;
     height: ${(props) => (props.$isOpen ? `36vh` : `6vh`)};
+    margin-bottom: 16px;
 `
 
 const SearchBarTemplate = styled.div`
     flex: 1 1 70%;
     height: 100%;
     z-index: 1;
+`
+
+const RecommendedVideoTemplate = styled.div`
+    height: 50vh;
 `
 
 interface FloatingBarTemplateProps {
@@ -86,7 +91,6 @@ function Template() {
             <HeaderTemplate>
                 <Header />
             </HeaderTemplate>
-
             <Main>
                 <CarouselTemplate>
                     <Carousel />
@@ -105,6 +109,9 @@ function Template() {
                         <FloatingBar />
                     </FloatingBarTemplate>
                 </UtilityBarTemplate>
+                <RecommendedVideoTemplate>
+                    <RecommendedVideo />
+                </RecommendedVideoTemplate>
             </Main>
             <div>
                 fdfsfsad

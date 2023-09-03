@@ -43,8 +43,13 @@ const InputContainer = styled.div`
 
 const Autocomplete = styled.ul`
     position: absolute;
+    width: 40%;
     background-color: #e5e5e5;
     color: black;
+    margin-top: -15px;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
 `
 
 const GenrePanel = styled.ul`
@@ -153,7 +158,6 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                     <CancelButton type="button" onClick={handleOnClick}>
                         <Cancel width={20} height={20} />
                     </CancelButton>
-
                     <InputContainer>
                         <label htmlFor="search">
                             <input
@@ -166,12 +170,13 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                             />
                         </label>
                     </InputContainer>
-
-                    <Autocomplete>
-                        {data.map((d) => {
-                            return <li key={d.id}>{d.title || d.name}</li>
-                        })}
-                    </Autocomplete>
+                    {data.length ? (
+                        <Autocomplete>
+                            {data.map((d) => {
+                                return <li key={d.id}>{d.title || d.name}</li>
+                            })}
+                        </Autocomplete>
+                    ) : null}
                     <GenrePanel>
                         {genre.map((g: string) => {
                             return <li key={g}>{g}</li>
