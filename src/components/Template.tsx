@@ -35,7 +35,6 @@ const UtilityBarTemplate = styled.div<UtilityBarTemplateProps>`
 const SearchBarTemplate = styled.div`
     flex: 1 1 70%;
     height: 100%;
-    z-index: 1;
 `
 
 const RecommendedVideoTemplate = styled.div`
@@ -51,6 +50,7 @@ const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
     flex: 0 0 30%;
     width: 6vh;
     height: 6vh;
+    z-index: 1;
     position: ${(props) =>
         props.$isScrolledDown || props.$isOpen ? `fixed` : `null`};
     right: ${(props) =>
@@ -114,7 +114,6 @@ function Template() {
                 </RecommendedVideoTemplate>
             </Main>
             <div>
-                fdfsfsad
                 <br />
                 <br />
                 <br />

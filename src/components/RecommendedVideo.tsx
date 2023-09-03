@@ -22,92 +22,51 @@ const Detail = styled.p`
     margin-bottom: 36px;
 `
 
-const VideoListContainer = styled.div`
+const VideoList = styled.ul`
     display: flex;
+    position: relative;
+    left: -100px;
+    width: calc(250px * 14);
+    height: 100%;
+    animation: autoPlay 6s linear infinite;
 
-    & > .original {
-        animation: rollingleft1 33s linear infinite;
-        background-color: yellow;
-    }
-
-    & > .clone {
-        animation: rollingleft2 33s linear infinite;
-    }
-
-    @keyframes rollingleft1 {
-        0% {
-            transform: translateX(0);
-        }
-        50% {
-            transform: translateX(-100%);
-        }
-        50.01% {
-            transform: translateX(100%);
-        }
-        100% {
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes rollingleft2 {
+    @keyframes autoPlay {
         0% {
             transition: translateX(0);
         }
         100% {
-            transform: translateX(-200%);
+            transform: translateX(calc(-250px * 7));
         }
     }
-`
 
-const VideoList = styled.ul`
-    display: flex;
     & > li {
-        width: 300px;
-        display: inline;
+        width: 250px;
         border: 1px solid red;
-        margin-right: 1.6rem;
-        height: 100%;
+        padding: 0 1.6rem;
+        font-size: ${xlargeSize};
+    }
+    & :first-child {
+        background-color: skyblue;
+    }
+
+    & :nth-child(8) {
+        background-color: greenyellow;
     }
 `
 
 function RecommendedVideo() {
-    const autoRolling = () => {
-        const roller = document.querySelector('.rolling-list') as HTMLElement
-        roller.id = 'roller1'
-
-        const clone = roller.cloneNode(true) as HTMLElement
-        clone.id = 'roller2'
-
-        const wrap = document.querySelector('.container') as HTMLElement
-        wrap.appendChild(clone)
-
-        const roller1 = document.querySelector('#roller1') as HTMLElement
-        const roller2 = document.querySelector('#roller2') as HTMLElement
-        roller1.style.left = '0px'
-        roller2.style.left = `${roller.offsetWidth}px`
-
-        roller.classList.add('original')
-        clone.classList.add('clone')
-    }
-
-    window.onload = autoRolling
-
+    const listEl = [1, 2, 3, 4, 5, 6, 7]
     return (
         <RecommendedVideoWrapper>
             <Title>추천 영상</Title>
-            <Detail>추천 영상을 봐라</Detail>
-            <VideoListContainer className="container">
-                <VideoList className="rolling-list">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                </VideoList>
-            </VideoListContainer>
+            <Detail>관심 있는 영상을 시청해 보세요.</Detail>
+            <VideoList>
+                {listEl.concat(listEl).map((el) => {
+                    return <li key={el}>{el}</li>
+                })}
+            </VideoList>
         </RecommendedVideoWrapper>
     )
 }
+
 export default RecommendedVideo
