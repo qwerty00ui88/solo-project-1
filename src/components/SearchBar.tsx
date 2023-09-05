@@ -12,7 +12,20 @@ interface SearchBarWrapperTemplateProps {
 const SearchBarWrapper = styled.div<SearchBarWrapperTemplateProps>`
     position: relative;
     height: 100%;
-    background-color: #14213d;
+    background: #833ab4; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #fcb045b0,
+        #fd1d1db0,
+        #833ab4b0
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #fcb045b0,
+        #fd1d1db0,
+        #833ab4b0
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     border-radius: 30px;
     padding: ${(props) => (props.$isOpen ? `40px 100px` : `0`)};
 `
@@ -38,14 +51,17 @@ const InputContainer = styled.div`
         font-size: ${largeSize};
         color: #e5e5e5;
         padding-bottom: 10px;
+        &::placeholder {
+            color: #e5e5e53f;
+        }
     }
 `
 
 const Autocomplete = styled.ul`
     position: absolute;
     width: 40%;
-    background-color: #e5e5e5;
-    color: black;
+    background-color: black;
+    color: #e5e5e5;
     margin-top: -15px;
     border-radius: 15px;
     padding: 10px;

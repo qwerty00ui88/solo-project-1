@@ -5,22 +5,22 @@ import SearchBar from './SearchBar'
 import FloatingBar from './FloatingBar'
 import Header from './Header'
 import RecommendedVideo from './RecommendedVideo'
+import Footer from './Footer'
 
-const Main = styled.main`
-    margin: 0 24px;
-    & > * {
-        /* border: 1px solid; */
+const MainTemplate = styled.main`
+    margin: 0 10vw;
+    &::after {
+        content: '';
+        display: block;
+        height: 15vh;
     }
 `
 
-const HeaderTemplate = styled.div`
+const HeaderTemplate = styled.header`
     height: 15vh;
-    border: 1px solid;
 `
 
-const CarouselTemplate = styled.div`
-    height: 73vh;
-`
+const CarouselTemplate = styled.div``
 
 interface UtilityBarTemplateProps {
     $isOpen: boolean
@@ -35,6 +35,7 @@ const UtilityBarTemplate = styled.div<UtilityBarTemplateProps>`
 const SearchBarTemplate = styled.div`
     flex: 1 1 70%;
     height: 100%;
+    z-index: 2;
 `
 
 const RecommendedVideoTemplate = styled.div`
@@ -59,6 +60,10 @@ const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
         props.$isScrolledDown || props.$isOpen ? `88vh` : `null`};
 `
 
+const FooterTemplate = styled.footer`
+    padding: 50px 10vw;
+`
+
 function Template() {
     const [isScrolledDown, setIsScrollDown] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
@@ -70,7 +75,7 @@ function Template() {
 
     const scrollToSearchBar = () => {
         window.scrollTo({
-            top: 660,
+            top: window.innerHeight * 0.62,
             behavior: 'smooth',
         })
     }
@@ -91,7 +96,7 @@ function Template() {
             <HeaderTemplate>
                 <Header />
             </HeaderTemplate>
-            <Main>
+            <MainTemplate>
                 <CarouselTemplate>
                     <Carousel />
                 </CarouselTemplate>
@@ -112,69 +117,10 @@ function Template() {
                 <RecommendedVideoTemplate>
                     <RecommendedVideo />
                 </RecommendedVideoTemplate>
-            </Main>
-            <div>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br /> <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br /> <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-            </div>
+            </MainTemplate>
+            <FooterTemplate>
+                <Footer />
+            </FooterTemplate>
         </>
     )
 }

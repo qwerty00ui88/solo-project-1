@@ -1,3 +1,5 @@
+export const xxsmallSize = '0.9rem'
+export const xsmallSize = '1rem'
 export const smallSize = '1.2rem'
 export const mediumSize = '1.5rem'
 export const largeSize = '1.7rem'

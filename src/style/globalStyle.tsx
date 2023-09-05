@@ -8,7 +8,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: #E5E5E5;
+    background-color: black;
+  }
+
+  footer {
+    border-top: 1px solid #a5a5a7;
   }
 
   li {

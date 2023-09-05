@@ -1,40 +1,71 @@
 import React from 'react'
 import { styled } from 'styled-components'
+import {
+    boldWeight,
+    xsmallSize,
+    smallSize,
+    xlargeSize,
+    mediumWeight,
+} from '../style/font'
 
-const Div = styled.div`
+const HeaderWrapper = styled.div`
     height: 100%;
-    /* background-color: #5d4ffe; */
-    margin: 0 64px;
     display: flex;
-    & > div {
-        border: 1px solid;
+    color: #e5e5e5;
+    margin: 0 10vw;
+    & > * {
+        display: flex;
+        align-items: center;
     }
 `
 
 const Logo = styled.div`
-    flex: 1.1;
+    font-family: 'Yesteryear', cursive;
+    font-size: 2rem;
+    color: rgb(229, 9, 20);
+    margin-right: 1vw;
+    font-weight: ${boldWeight};
+    font-size: ${xlargeSize};
 `
 
 const Nav = styled.ul`
     flex: 3;
+    font-size: ${smallSize};
+    & > li {
+        height: 100%;
+        line-height: 15vh;
+        padding: 0 1vw;
+    }
 `
 
 const Menu = styled.div`
-    flex: 0.8;
+    column-gap: 10px;
+`
+
+const MenuButton = styled.button`
+    width: 4.5rem;
+    text-align: center;
+    padding: 0.4rem 0.4rem 0.5rem;
+    border-radius: 7px;
+    background-color: rgb(229, 9, 20);
+    font-size: ${xsmallSize};
+    font-weight: ${mediumWeight};
 `
 
 function Header() {
     return (
-        <Div>
-            <Logo>logo</Logo>
+        <HeaderWrapper>
+            <Logo>CUT</Logo>
             <Nav>
-                <li>fsdf</li>
-                <li>fsdf</li>
-                <li>fsdf</li>
-                <li>fsdf</li>
+                <li>영화</li>
+                <li>TV</li>
+                <li>인물</li>
             </Nav>
-            <Menu>메뉴2</Menu>
-        </Div>
+            <Menu>
+                <MenuButton>로그인</MenuButton>
+                <MenuButton>회원가입</MenuButton>
+            </Menu>
+        </HeaderWrapper>
     )
 }
 export default Header
