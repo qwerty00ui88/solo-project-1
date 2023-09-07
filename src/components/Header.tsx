@@ -1,17 +1,17 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import {
+    fontLogo,
+    largeSize,
     boldWeight,
-    xsmallSize,
-    smallSize,
-    xlargeSize,
-    mediumWeight,
+    logoSize,
+    semiboldWeight,
 } from '../style/font'
 
 const HeaderWrapper = styled.div`
     height: 100%;
     display: flex;
-    color: #e5e5e5;
+
     margin: 0 10vw;
     & > * {
         display: flex;
@@ -20,26 +20,31 @@ const HeaderWrapper = styled.div`
 `
 
 const Logo = styled.div`
-    font-family: 'Yesteryear', cursive;
-    font-size: 2rem;
+    font-family: ${fontLogo};
+    font-size: ${logoSize};
+    font-weight: ${boldWeight};
     color: rgb(229, 9, 20);
     margin-right: 1vw;
-    font-weight: ${boldWeight};
-    font-size: ${xlargeSize};
 `
 
 const Nav = styled.ul`
     flex: 3;
-    font-size: ${smallSize};
     & > li {
-        height: 100%;
-        line-height: 15vh;
         padding: 0 1vw;
+        white-space: nowrap;
+        font-size: ${largeSize};
+        font-weight: ${semiboldWeight};
+    }
+    @media screen and (max-width: 768px) {
+        display: none;
     }
 `
 
 const Menu = styled.div`
     column-gap: 10px;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 `
 
 const MenuButton = styled.button`
@@ -48,8 +53,7 @@ const MenuButton = styled.button`
     padding: 0.4rem 0.4rem 0.5rem;
     border-radius: 7px;
     background-color: rgb(229, 9, 20);
-    font-size: ${xsmallSize};
-    font-weight: ${mediumWeight};
+    font-weight: ${semiboldWeight};
 `
 
 function Header() {

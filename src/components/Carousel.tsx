@@ -57,12 +57,26 @@ function Carousel() {
     const [animation, setAnimation] = useState(false)
     const slideRef = useRef<HTMLDivElement>(null)
 
+    function updateSlideCount() {
+        const screenWidth =
+            window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth
+
+        if (screenWidth <= 375) return 1
+        if (screenWidth <= 640) return 2
+        if (screenWidth <= 768) return 3
+        return 5
+    }
+
+    const count = updateSlideCount()
+
     const slideData: { id: number; data: Data[] }[] = [
-        { id: 0, data: data.slice(10, 15) },
-        { id: 1, data: data.slice(0, 5) },
-        { id: 2, data: data.slice(5, 10) },
-        { id: 3, data: data.slice(10, 15) },
-        { id: 4, data: data.slice(0, 5) },
+        { id: 0, data: data.slice(count * 2, count * 3) },
+        { id: 1, data: data.slice(0, count) },
+        { id: 2, data: data.slice(count, count * 2) },
+        { id: 3, data: data.slice(count * 2, count * 3) },
+        { id: 4, data: data.slice(0, count) },
     ]
 
     const goToPre = () => {
@@ -118,6 +132,7 @@ function Carousel() {
     useEffect(() => {
         fetchData()
         getSlideWidth()
+        window.addEventListener('resize', updateSlideCount)
         window.addEventListener('resize', getSlideWidth)
         return () => {
             window.removeEventListener('resize', getSlideWidth)

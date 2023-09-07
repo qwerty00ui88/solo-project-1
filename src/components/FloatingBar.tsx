@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from 'styled-components'
 
-const Div = styled.div`
+const FloatingBarWrapper = styled.div`
     height: 100%;
     background-color: #5d4ffe;
     border-radius: 30px;
@@ -12,7 +12,7 @@ const Text = styled.ul`
     display: flex;
     height: 100%;
     align-items: center;
-    color: #e5e5e5;
+
     animation: TextAutoPlay 10s linear infinite;
     width: fit-content;
 
@@ -31,7 +31,7 @@ const Text = styled.ul`
 `
 function FloatingBar() {
     return (
-        <Div>
+        <FloatingBarWrapper>
             <Text>
                 <li>
                     👉포트폴리오라는거시다~~~!!!👉포트폴리오라는거시다~~~!!!👉포트폴리오라는거시다~~~!!!👉포트폴리오라는거시다~~~!!!
@@ -40,7 +40,7 @@ function FloatingBar() {
                     👉포트폴리오라는거시다~~~!!!👉포트폴리오라는거시다~~~!!!👉포트폴리오라는거시다~~~!!!👉포트폴리오라는거시다~~~!!!
                 </li>
             </Text>
-        </Div>
+        </FloatingBarWrapper>
     )
 }
 export default FloatingBar

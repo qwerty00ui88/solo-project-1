@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import axios from 'axios'
-import { largeSize } from '../style/font'
+import { xxlargeSize } from '../style/font'
 import { Data } from './Carousel'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
 
@@ -10,6 +10,8 @@ interface SearchBarWrapperTemplateProps {
 }
 
 const SearchBarWrapper = styled.div<SearchBarWrapperTemplateProps>`
+    display: ${(props) => (props.$isOpen ? 'block' : `flex`)};
+    align-items: ${(props) => (props.$isOpen ? null : `center`)};
     position: relative;
     height: 100%;
     background: #833ab4; /* fallback for old browsers */
@@ -27,14 +29,11 @@ const SearchBarWrapper = styled.div<SearchBarWrapperTemplateProps>`
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     border-radius: 30px;
-    padding: ${(props) => (props.$isOpen ? `40px 100px` : `0`)};
-`
+    padding: ${(props) => (props.$isOpen ? '48px 6vw' : `0`)};
 
-const SearchGuide = styled.div`
-    height: 6vh;
-    line-height: 6vh;
-    margin-left: 25px;
-    color: #e5e5e5;
+    & > div {
+        margin-left: 25px;
+    }
 `
 
 const CancelButton = styled.button`
@@ -48,8 +47,7 @@ const InputContainer = styled.div`
     & input {
         width: 100%;
         border-bottom: 1px solid #e5e5e5;
-        font-size: ${largeSize};
-        color: #e5e5e5;
+        font-size: ${xxlargeSize};
         padding-bottom: 10px;
         &::placeholder {
             color: #e5e5e53f;
@@ -61,7 +59,6 @@ const Autocomplete = styled.ul`
     position: absolute;
     width: 40%;
     background-color: black;
-    color: #e5e5e5;
     margin-top: -15px;
     border-radius: 15px;
     padding: 10px;
@@ -76,7 +73,6 @@ const GenrePanel = styled.ul`
     & > li {
         width: fit-content;
         border: 1px solid #e5e5e5;
-        color: #e5e5e5;
         border-radius: 20px;
         padding: 5px 10px;
     }
@@ -200,7 +196,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                     </GenrePanel>
                 </>
             ) : (
-                <SearchGuide>원하는 영화, 드라마를 검색해보세요</SearchGuide>
+                <div>원하는 영화, 드라마를 검색해보세요</div>
             )}
         </SearchBarWrapper>
     )

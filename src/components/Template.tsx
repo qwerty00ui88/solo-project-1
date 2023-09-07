@@ -6,6 +6,7 @@ import FloatingBar from './FloatingBar'
 import Header from './Header'
 import RecommendedVideo from './RecommendedVideo'
 import Footer from './Footer'
+import Trending from './Trending'
 
 const MainTemplate = styled.main`
     margin: 0 10vw;
@@ -13,6 +14,12 @@ const MainTemplate = styled.main`
         content: '';
         display: block;
         height: 15vh;
+    }
+    @media screen and (max-width: 768px) {
+        margin: 0 8vw;
+    }
+    @media screen and (max-width: 375px) {
+        margin: 0 7vw;
     }
 `
 
@@ -28,19 +35,19 @@ interface UtilityBarTemplateProps {
 
 const UtilityBarTemplate = styled.div<UtilityBarTemplateProps>`
     display: flex;
-    height: ${(props) => (props.$isOpen ? `36vh` : `6vh`)};
+    column-gap: 10px;
+    height: ${(props) => (props.$isOpen ? null : `6vw`)};
+    min-height: ${(props) => (props.$isOpen ? '36vh' : `44px`)};
+    max-height: ${(props) => (props.$isOpen ? null : `57px`)};
     margin-bottom: 16px;
 `
 
 const SearchBarTemplate = styled.div`
     flex: 1 1 70%;
-    height: 100%;
     z-index: 2;
 `
 
-const RecommendedVideoTemplate = styled.div`
-    height: 50vh;
-`
+const RecommendedVideoTemplate = styled.div``
 
 interface FloatingBarTemplateProps {
     $isScrolledDown: boolean
@@ -58,10 +65,22 @@ const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
         props.$isScrolledDown || props.$isOpen ? `24px` : `null`};
     top: ${(props) =>
         props.$isScrolledDown || props.$isOpen ? `88vh` : `null`};
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+`
+
+const TrendingTemplate = styled.div`
+    width: 100%;
+    margin-bottom: 25px;
+    height: 80vh;
 `
 
 const FooterTemplate = styled.footer`
     padding: 50px 10vw;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 `
 
 function Template() {
@@ -114,6 +133,9 @@ function Template() {
                         <FloatingBar />
                     </FloatingBarTemplate>
                 </UtilityBarTemplate>
+                <TrendingTemplate>
+                    <Trending />
+                </TrendingTemplate>
                 <RecommendedVideoTemplate>
                     <RecommendedVideo />
                 </RecommendedVideoTemplate>

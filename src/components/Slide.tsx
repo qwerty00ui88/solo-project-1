@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { largeSize, smallSize } from '../style/font'
-// import { ReactComponent as Star } from '../assets/star.svg'
 import { Data } from './Carousel'
 
 interface SlideWrapperProps {
@@ -22,16 +20,18 @@ const SlideWrapper = styled.div<SlideWrapperProps>`
 
 const CardContainer = styled.div`
     flex: 0 0 calc(100% - 30vw);
+    column-gap: 20px;
+    justify-content: space-between;
     width: calc(100% - 30vw);
     display: flex;
-    justify-content: space-between;
 `
 
 const Card = styled.div`
+    flex: 1;
     width: 18%;
     display: flex;
     flex-direction: column;
-    color: #e5e5e5;
+
     transition: transform 0.3s ease;
 
     &:hover {

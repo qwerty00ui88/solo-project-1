@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { xxsmallSize } from '../style/font'
+import { mediumWeight, xsmallSize } from '../style/font'
 import { ReactComponent as Velog } from '../assets/velog.svg'
 import { ReactComponent as GitHub } from '../assets/github.svg'
 import { ReactComponent as Gmail } from '../assets/gmail.svg'
@@ -13,7 +13,6 @@ const FooterWrapper = styled.div`
 
 const FooterLeft = styled.div`
     flex: 1;
-    font-size: ${xxsmallSize};
 `
 
 const FooterRight = styled.div`
@@ -26,6 +25,8 @@ const FooterLeftUl = styled.ul`
 
     & > li {
         margin: 0.1rem 0;
+        white-space: nowrap;
+        font-size: ${xsmallSize};
     }
 
     & > li:not(:last-child)::after {
@@ -42,7 +43,9 @@ const FooterLeftUl = styled.ul`
 const FooterRightSelect = styled.select`
     margin-bottom: auto;
     width: 7rem;
-    padding: 0.3rem 0 0.3rem 0.3rem;
+    padding: 3px 0 3px 3px;
+    font-weight: ${mediumWeight};
+    color: black;
 `
 
 const FooterLinks = styled.ul`

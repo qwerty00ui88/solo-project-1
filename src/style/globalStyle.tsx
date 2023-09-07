@@ -1,14 +1,34 @@
 import { createGlobalStyle } from 'styled-components'
+import { fontKR, mediumSize, smallSize } from './font'
 
 const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-size: ${mediumSize};
+    font-family: ${fontKR};
+    color: #e5e5e5;
+    @media screen and (max-width: 375px) {
+        font-size: ${smallSize};
+        color: black;
+    }
   }
 
   body {
     background-color: black;
+    min-width: 320px;
+    // test
+    @media screen and (max-width: 768px) {
+        background-color: gray;
+    }
+    @media screen and (max-width: 375px) {
+      background-color: white;
+    }
+  }
+
+  main{
+    font-family: ${fontKR};
   }
 
   footer {
