@@ -1,37 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-interface ParamsType {
+interface Params {
     query?: string
     include_adult?: string
     language?: string
     page?: string
 }
 
-export interface Data {
-    adult: boolean
-    backdrop_path: string
-    id: number
-    title?: string
-    original_language: string
-    original_title: string
-    overview: string
-    poster_path: string
-    media_type: string
-    genre_ids: number[]
-    popularity: number
-    release_date?: string
-    video: boolean
-    vote_average: number
-    vote_count: number
-    name?: string
-    first_air_date?: string
-}
-
 function useGet(
     key: string,
     url: string,
-    params: ParamsType,
+    params: Params,
     dependency?: string[]
 ) {
     const [data, setData] = useState([])

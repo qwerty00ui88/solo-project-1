@@ -73,7 +73,7 @@ const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
 const TrendingTemplate = styled.div`
     width: 100%;
     margin-bottom: 25px;
-    height: 80vh;
+    /* height: 80vh; */
 `
 
 const FooterTemplate = styled.footer`

@@ -5,7 +5,7 @@ import { titleWeb, mediumWeight, titleTablet, titleMobile } from '../style/font'
 const RecommendedVideoWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    border-radius: 30px;
+    border-radius: 1.8rem;
     padding: 4.8vw 6vw;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.534);

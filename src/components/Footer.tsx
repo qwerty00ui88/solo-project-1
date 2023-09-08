@@ -46,6 +46,7 @@ const FooterRightSelect = styled.select`
     padding: 3px 0 3px 3px;
     font-weight: ${mediumWeight};
     color: black;
+    border-radius: 0.5rem;
 `
 
 const FooterLinks = styled.ul`

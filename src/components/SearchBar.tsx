@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { xxlargeSize } from '../style/font'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
-import useGet, { Data } from '../utils/useGet'
+import useGet from '../utils/useGet'
+import { Data } from './Slide'
 
 interface SearchBarWrapperTemplateProps {
     $isOpen: boolean
@@ -27,7 +28,7 @@ const SearchBarWrapper = styled.div<SearchBarWrapperTemplateProps>`
         #833ab4b0
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-    border-radius: 30px;
+    border-radius: 1.8rem;
     padding: ${(props) => (props.$isOpen ? '48px 6vw' : `0`)};
 
     & > div {
@@ -113,6 +114,10 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         e.stopPropagation()
     }
 
+    const changeSearchWord = (e: ChangeEvent<HTMLInputElement>) => {
+        setWord(e.target.value)
+    }
+
     return (
         <SearchBarWrapper $isOpen={isOpen}>
             {isOpen ? (
@@ -126,9 +131,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                                 id="search"
                                 placeholder="검색해보세요"
                                 value={word}
-                                onChange={(e) => {
-                                    setWord(e.target.value)
-                                }}
+                                onChange={changeSearchWord}
                             />
                         </label>
                     </InputContainer>

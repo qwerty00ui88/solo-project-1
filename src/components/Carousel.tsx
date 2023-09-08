@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components'
-import Slide from './Slide'
+import Slide, { Data } from './Slide'
 import Indicator from './Indicator'
-import useGet, { Data } from '../utils/useGet'
+import useGet from '../utils/useGet'
 
 const Viewer = styled.div`
     flex: 1; // 세로
@@ -101,6 +101,7 @@ function Carousel() {
         window.addEventListener('resize', updateSlideCount)
         window.addEventListener('resize', getSlideWidth)
         return () => {
+            window.addEventListener('resize', updateSlideCount)
             window.removeEventListener('resize', getSlideWidth)
         }
     }, [])
