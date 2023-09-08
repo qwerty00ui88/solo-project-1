@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components'
-import axios from 'axios'
 import Slide from './Slide'
 import Indicator from './Indicator'
+import useGet, { Data } from '../utils/useGet'
 
 const Viewer = styled.div`
     flex: 1; // 세로
@@ -30,28 +30,15 @@ const CarouselWrapper = styled.div`
     height: 100%;
 `
 
-export interface Data {
-    adult: boolean
-    backdrop_path: string
-    id: number
-    title?: string
-    original_language: string
-    original_title: string
-    overview: string
-    poster_path: string
-    media_type: string
-    genre_ids: number[]
-    popularity: number
-    release_date?: string
-    video: boolean
-    vote_average: number
-    vote_count: number
-    name?: string
-    first_air_date?: string
-}
-
 function Carousel() {
-    const [data, setData] = useState<Data[]>([])
+    const data = useGet(
+        'results',
+        'https://api.themoviedb.org/3/trending/all/day',
+        {
+            language: 'ko-KR',
+        }
+    )
+
     const [currentIndex, setCurrentIndex] = useState(1)
     const [slideWidth, setSlideWidth] = useState<number>(0)
     const [animation, setAnimation] = useState(false)
@@ -64,8 +51,9 @@ function Carousel() {
             document.body.clientWidth
 
         if (screenWidth <= 375) return 1
-        if (screenWidth <= 640) return 2
+        if (screenWidth <= 600) return 2
         if (screenWidth <= 768) return 3
+        if (screenWidth <= 1024) return 4
         return 5
     }
 
@@ -93,27 +81,6 @@ function Carousel() {
         }
     }
 
-    const options = {
-        method: 'GET',
-        url: 'https://api.themoviedb.org/3/trending/all/day',
-        params: { language: 'ko-KR' },
-        headers: {
-            accept: 'application/json',
-            Authorization:
-                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTUyOWMwZTgyNzcxZTg2NzdkY2Q5ZGY1NDBlZTEyYyIsInN1YiI6IjY0ZTA5ODEyYTNiNWU2MDFkNTllNjA2MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.D9VKIXgwklDnixzscKkkoyBRJdQJsetwFke4bU9KiP0',
-        },
-    }
-
-    const fetchData = async () => {
-        try {
-            const response = await axios.request(options)
-            setData(response.data.results)
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(error)
-        }
-    }
-
     const getSlideWidth = () => {
         setAnimation(false)
         setSlideWidth(slideRef.current ? slideRef.current.clientWidth : 0)
@@ -130,7 +97,6 @@ function Carousel() {
     }
 
     useEffect(() => {
-        fetchData()
         getSlideWidth()
         window.addEventListener('resize', updateSlideCount)
         window.addEventListener('resize', getSlideWidth)

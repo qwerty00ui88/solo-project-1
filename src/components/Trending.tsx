@@ -8,6 +8,7 @@ import {
     titleTablet,
     titleWeb,
 } from '../style/font'
+import ContentCard from './ContentCard'
 
 const TrendingWrapper = styled.div`
     display: flex;
@@ -31,6 +32,8 @@ const TrendingLeft = styled.div``
 
 const TrendingRight = styled.div`
     flex: 1;
+    display: flex;
+    justify-content: space-between;
 `
 
 const Title = styled.h2`
@@ -90,7 +93,11 @@ function Trending() {
                     <li>인물</li>
                 </TabList>
             </TrendingLeft>
-            <TrendingRight>fds</TrendingRight>
+            <TrendingRight>
+                <ContentCard />
+                <ContentCard />
+                <ContentCard />
+            </TrendingRight>
         </TrendingWrapper>
     )
 }

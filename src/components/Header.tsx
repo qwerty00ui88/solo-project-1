@@ -50,7 +50,7 @@ const Menu = styled.div`
 const MenuButton = styled.button`
     width: 4.5rem;
     text-align: center;
-    padding: 0.4rem 0.4rem 0.5rem;
+    padding: 0.4rem;
     border-radius: 7px;
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};

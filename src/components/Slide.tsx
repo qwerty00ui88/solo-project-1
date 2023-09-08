@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Data } from './Carousel'
+import { Data } from '../utils/useGet'
 
 interface SlideWrapperProps {
     ref: React.ForwardedRef<HTMLDivElement>
@@ -31,7 +31,6 @@ const Card = styled.div`
     width: 18%;
     display: flex;
     flex-direction: column;
-
     transition: transform 0.3s ease;
 
     &:hover {

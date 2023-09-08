@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
-import axios from 'axios'
 import { xxlargeSize } from '../style/font'
-import { Data } from './Carousel'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
+import useGet, { Data } from '../utils/useGet'
 
 interface SearchBarWrapperTemplateProps {
     $isOpen: boolean
@@ -32,7 +31,7 @@ const SearchBarWrapper = styled.div<SearchBarWrapperTemplateProps>`
     padding: ${(props) => (props.$isOpen ? '48px 6vw' : `0`)};
 
     & > div {
-        margin-left: 25px;
+        padding-left: ${(props) => (props.$isOpen ? null : `25px`)};
     }
 `
 
@@ -78,7 +77,7 @@ const GenrePanel = styled.ul`
     }
 `
 
-interface Genre {
+export interface Genre {
     id: number
     name: string
 }
@@ -89,79 +88,30 @@ interface SearchBarProps {
 }
 
 function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
-    const [data, setData] = useState<Data[]>([])
     const [word, setWord] = useState('')
-    const [genre, setGenre] = useState<string[]>([])
-
-    const fetchData = async () => {
-        const options = {
-            method: 'GET',
-            url: 'https://api.themoviedb.org/3/search/multi',
-            params: {
-                query: `${word}`,
-                include_adult: 'false',
-                language: 'ko-KR',
-                page: '1',
-            },
-            headers: {
-                accept: 'application/json',
-                Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTUyOWMwZTgyNzcxZTg2NzdkY2Q5ZGY1NDBlZTEyYyIsInN1YiI6IjY0ZTA5ODEyYTNiNWU2MDFkNTllNjA2MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.D9VKIXgwklDnixzscKkkoyBRJdQJsetwFke4bU9KiP0',
-            },
+    const data: Data[] = useGet(
+        'results',
+        'https://api.themoviedb.org/3/search/multi',
+        {
+            query: `${word}`,
+            include_adult: 'false',
+            language: 'ko-KR',
+            page: '1',
+        },
+        [word]
+    )
+    const genres = useGet(
+        'genres',
+        `https://api.themoviedb.org/3/genre/movie/list`,
+        {
+            language: 'ko',
         }
-        try {
-            const response = await axios.request(options)
-            setData(response.data.results)
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(error)
-        }
-    }
+    )
 
     const handleOnClick = (e: React.MouseEvent<HTMLElement>) => {
         handleSetIsOpen()
         e.stopPropagation()
     }
-
-    const fetchGenre = async () => {
-        const media = ['movie', 'tv']
-        const genres: Set<string> = new Set()
-        const fetchPromises = media.map(async (m) => {
-            const options = {
-                method: 'GET',
-                url: `https://api.themoviedb.org/3/genre/${m}/list`,
-                params: { language: 'ko' },
-                headers: {
-                    accept: 'application/json',
-                    Authorization:
-                        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTUyOWMwZTgyNzcxZTg2NzdkY2Q5ZGY1NDBlZTEyYyIsInN1YiI6IjY0ZTA5ODEyYTNiNWU2MDFkNTllNjA2MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.D9VKIXgwklDnixzscKkkoyBRJdQJsetwFke4bU9KiP0',
-                },
-            }
-
-            try {
-                const response = await axios.request(options)
-                const SetAddPromises = response.data.genres.map(
-                    async (value: Genre) => {
-                        return genres.add(value.name)
-                    }
-                )
-                await Promise.all(SetAddPromises)
-            } catch (error) {
-                // eslint-disable-next-line no-console
-                console.error(error)
-            }
-        })
-        await Promise.all(fetchPromises)
-        setGenre(Array.from(genres))
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [word])
-
-    useEffect(() => {
-        fetchGenre()
-    }, [])
 
     return (
         <SearchBarWrapper $isOpen={isOpen}>
@@ -182,16 +132,16 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                             />
                         </label>
                     </InputContainer>
-                    {data.length ? (
+                    {data.length > 0 && (
                         <Autocomplete>
                             {data.map((d) => {
-                                return <li key={d.id}>{d.title || d.name}</li>
+                                return <li key={d.id}>{d.name || d.title}</li>
                             })}
                         </Autocomplete>
-                    ) : null}
+                    )}
                     <GenrePanel>
-                        {genre.map((g: string) => {
-                            return <li key={g}>{g}</li>
+                        {genres.map((g: Genre) => {
+                            return <li key={g.id}>{g.name}</li>
                         })}
                     </GenrePanel>
                 </>

@@ -49,22 +49,22 @@ const SearchBarTemplate = styled.div`
 
 const RecommendedVideoTemplate = styled.div``
 
-interface FloatingBarTemplateProps {
+export interface FloatingBarTemplateProps {
     $isScrolledDown: boolean
     $isOpen: boolean
 }
 
 const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
     flex: 0 0 30%;
-    width: 6vh;
-    height: 6vh;
-    z-index: 1;
+    width: ${(props) =>
+        props.$isScrolledDown || props.$isOpen ? `4rem` : `6vw`};
+    height: ${(props) =>
+        props.$isScrolledDown || props.$isOpen ? `4rem` : null};
     position: ${(props) =>
-        props.$isScrolledDown || props.$isOpen ? `fixed` : `null`};
+        props.$isScrolledDown || props.$isOpen ? `fixed` : null};
     right: ${(props) =>
-        props.$isScrolledDown || props.$isOpen ? `24px` : `null`};
-    top: ${(props) =>
-        props.$isScrolledDown || props.$isOpen ? `88vh` : `null`};
+        props.$isScrolledDown || props.$isOpen ? `24px` : null};
+    top: ${(props) => (props.$isScrolledDown || props.$isOpen ? `88vh` : null)};
     @media screen and (max-width: 768px) {
         display: none;
     }
@@ -130,7 +130,10 @@ function Template() {
                         $isScrolledDown={isScrolledDown}
                         $isOpen={isOpen}
                     >
-                        <FloatingBar />
+                        <FloatingBar
+                            isScrolledDown={isScrolledDown}
+                            isOpen={isOpen}
+                        />
                     </FloatingBarTemplate>
                 </UtilityBarTemplate>
                 <TrendingTemplate>
