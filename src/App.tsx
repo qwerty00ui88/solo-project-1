@@ -1,12 +1,8 @@
 import React from 'react'
-import Template from './components/Template'
+import Main from './pages/Main'
 
 function App() {
-    return (
-        <div>
-            <Template />
-        </div>
-    )
+    return <Main />
 }
 
 export default App

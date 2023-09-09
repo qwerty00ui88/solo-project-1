@@ -18,8 +18,8 @@ const Pagenation = styled.div`
 `
 
 const Bullet = styled.div`
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     background-color: gray;
     border-radius: 100%;
 `

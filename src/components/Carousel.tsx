@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components'
 import Slide, { Data } from './Slide'
 import Indicator from './Indicator'
-import useGet from '../utils/useGet'
 
 const Viewer = styled.div`
     flex: 1; // 세로
@@ -30,21 +29,17 @@ const CarouselWrapper = styled.div`
     height: 100%;
 `
 
-function Carousel() {
-    const data = useGet(
-        'results',
-        'https://api.themoviedb.org/3/trending/all/day',
-        {
-            language: 'ko-KR',
-        }
-    )
+interface CarouselProps {
+    data: Data[]
+}
 
+function Carousel({ data }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(1)
     const [slideWidth, setSlideWidth] = useState<number>(0)
     const [animation, setAnimation] = useState(false)
     const slideRef = useRef<HTMLDivElement>(null)
 
-    function updateSlideCount() {
+    const updateSlideCount = () => {
         const screenWidth =
             window.innerWidth ||
             document.documentElement.clientWidth ||

@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { FloatingBarTemplateProps } from './Template'
+import { FloatingBarTemplateProps } from './templates/MainPageTemplate'
 
 const FloatingBarWrapper = styled.div<FloatingBarTemplateProps>`
     height: 100%;

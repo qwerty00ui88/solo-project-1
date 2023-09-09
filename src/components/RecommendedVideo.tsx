@@ -1,6 +1,8 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { titleWeb, mediumWeight, titleTablet, titleMobile } from '../style/font'
+import { Data } from './Slide'
+import useGet from '../utils/useGet'
 
 const RecommendedVideoWrapper = styled.div`
     display: flex;
@@ -31,77 +33,82 @@ const Detail = styled.p`
 const VideoList = styled.ul`
     display: flex;
     position: relative;
-    left: -9vw;
-    width: calc((300px + 3rem) * 14);
+    left: -6vw;
+    width: calc(320px * 14);
     animation: autoPlay 20s linear infinite;
 
     @keyframes autoPlay {
         0% {
-            transition: translateX(0);
+            transform: translateX(0);
         }
         100% {
-            transform: translateX(calc((-300px + 3rem) * 7));
+            transform: translateX(calc(-320px * 7));
         }
     }
 
     & > li {
-        width: calc(300px + 3rem);
-        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        width: 300px;
+        height: calc(300px / 16 * 9);
+        margin: 0 10px;
         font-size: ${titleWeb};
+        overflow: hidden;
     }
 `
 
-function RecommendedVideo() {
-    const listEl = [
-        <img
-            src="https://img.youtube.com/vi/QkTnsXUedsw/hqdefault.jpg"
-            alt="fds"
-            width={300}
-        />,
-        <img
-            src="https://img.youtube.com/vi/QkTnsXUedsw/hqdefault.jpg"
-            alt="fds"
-            width={300}
-        />,
-        <img
-            src="https://img.youtube.com/vi/QkTnsXUedsw/hqdefault.jpg"
-            alt="fds"
-            width={300}
-        />,
-        <img
-            src="https://img.youtube.com/vi/QkTnsXUedsw/hqdefault.jpg"
-            alt="fds"
-            width={300}
-        />,
-        <img
-            src="https://img.youtube.com/vi/QkTnsXUedsw/hqdefault.jpg"
-            alt="fds"
-            width={300}
-        />,
-        <img
-            src="https://img.youtube.com/vi/QkTnsXUedsw/hqdefault.jpg"
-            alt="fds"
-            width={300}
-        />,
-        <img
-            src="https://img.youtube.com/vi/QkTnsXUedsw/hqdefault.jpg"
-            alt="fds"
-            width={300}
-        />,
-        // <iframe
-        //     title="title"
-        //     width="300"
-        //     src="https://www.youtube.com/embed/QkTnsXUedsw"
-        //     allowFullScreen
-        // />,
-    ]
+interface VideoDataType {
+    iso_639_1: string
+    iso_3166_1: string
+    name: string
+    key: string
+    site: string
+    size: number
+    type: string
+    official: boolean
+    published_at: string
+    id: string
+}
+
+interface RecommendedVideoProps {
+    data: Data[]
+}
+
+function RecommendedVideo({ data }: RecommendedVideoProps) {
+    const videoList = data
+        .map((d) => {
+            const [mediaType, id] = [d.media_type, d.id]
+            const results: VideoDataType[] = useGet(
+                'results',
+                `https://api.themoviedb.org/3/${mediaType}/${id}/videos`,
+                { language: 'ko-KR' }
+            )
+            return results[0]?.key
+        })
+        .filter((d) => d)
+        .slice(0, 7)
+
     return (
         <RecommendedVideoWrapper>
             <Title>추천 영상</Title>
             <Detail>관심 있는 영상을 시청해 보세요.</Detail>
             <VideoList>
-                {listEl.concat(listEl).map((el) => {
-                    return <li key={Math.random()}>{el}</li>
+                {videoList.concat(videoList).map((el, idx) => {
+                    return (
+                        <li key={el + String(idx)}>
+                            <a
+                                href={`https://www.youtube.com/watch?v=${el}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <img
+                                    src={`https://img.youtube.com/vi/${el}/hqdefault.jpg`}
+                                    alt="fds"
+                                    width={300}
+                                />
+                            </a>
+                        </li>
+                    )
                 })}
             </VideoList>
         </RecommendedVideoWrapper>

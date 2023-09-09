@@ -7,11 +7,12 @@ import {
     logoSize,
     semiboldWeight,
 } from '../style/font'
+import { ReactComponent as Sun } from '../assets/sun.svg'
+import { ReactComponent as Moon } from '../assets/moon.svg'
 
 const HeaderWrapper = styled.div`
     height: 100%;
     display: flex;
-
     margin: 0 10vw;
     & > * {
         display: flex;
@@ -19,7 +20,7 @@ const HeaderWrapper = styled.div`
     }
 `
 
-const Logo = styled.div`
+const Logo = styled.h1`
     font-family: ${fontLogo};
     font-size: ${logoSize};
     font-weight: ${boldWeight};
@@ -57,15 +58,19 @@ const MenuButton = styled.button`
 `
 
 function Header() {
+    const navList = ['영화', 'TV', '인물']
+
     return (
         <HeaderWrapper>
             <Logo>CUT</Logo>
             <Nav>
-                <li>영화</li>
-                <li>TV</li>
-                <li>인물</li>
+                {navList.map((list) => {
+                    return <li key={list}>{list}</li>
+                })}
             </Nav>
             <Menu>
+                <Sun />
+                <Moon />
                 <MenuButton>로그인</MenuButton>
                 <MenuButton>회원가입</MenuButton>
             </Menu>

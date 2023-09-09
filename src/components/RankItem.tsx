@@ -26,7 +26,6 @@ const Rank = styled.div`
     width: 40px;
     text-align: center;
     font-size: ${xlargeSize};
-    background-color: black;
 `
 
 const Poster = styled.img`

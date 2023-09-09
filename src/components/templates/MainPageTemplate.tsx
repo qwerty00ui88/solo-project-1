@@ -1,31 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { styled } from 'styled-components'
-import Carousel from './Carousel'
-import SearchBar from './SearchBar'
-import FloatingBar from './FloatingBar'
-import Header from './Header'
-import RecommendedVideo from './RecommendedVideo'
-import Footer from './Footer'
-import Trending from './Trending'
-
-const MainTemplate = styled.main`
-    margin: 0 10vw;
-    &::after {
-        content: '';
-        display: block;
-        height: 15vh;
-    }
-    @media screen and (max-width: 768px) {
-        margin: 0 8vw;
-    }
-    @media screen and (max-width: 375px) {
-        margin: 0 7vw;
-    }
-`
-
-const HeaderTemplate = styled.header`
-    height: 15vh;
-`
+import PageTemplate from './PageTemplate'
+import Carousel from '../Carousel'
+import SearchBar from '../SearchBar'
+import FloatingBar from '../FloatingBar'
+import RecommendedVideo from '../RecommendedVideo'
+import Trending from '../Trending'
+import { Data } from '../Slide'
 
 const CarouselTemplate = styled.div``
 
@@ -73,51 +54,28 @@ const FloatingBarTemplate = styled.div<FloatingBarTemplateProps>`
 const TrendingTemplate = styled.div`
     width: 100%;
     margin-bottom: 25px;
-    /* height: 80vh; */
 `
 
-const FooterTemplate = styled.footer`
-    padding: 50px 10vw;
-    @media screen and (max-width: 768px) {
-        display: none;
-    }
-`
+interface TemplateProps {
+    data: Data[]
+    isOpen: boolean
+    isScrolledDown: boolean
+    handleOnClick: () => void
+    handleSetIsOpen: () => void
+}
 
-function Template() {
-    const [isScrolledDown, setIsScrollDown] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
-
-    window.addEventListener('scroll', () => {
-        const { scrollY } = window
-        setIsScrollDown(scrollY >= 12)
-    })
-
-    const scrollToSearchBar = () => {
-        window.scrollTo({
-            top: window.innerHeight * 0.62,
-            behavior: 'smooth',
-        })
-    }
-
-    const handleSetIsOpen = () => {
-        setIsOpen(!isOpen)
-    }
-
-    const handleOnClick = () => {
-        if (!isOpen) {
-            handleSetIsOpen()
-        }
-        scrollToSearchBar()
-    }
-
+function MainPageTemplate({
+    data,
+    isOpen,
+    isScrolledDown,
+    handleOnClick,
+    handleSetIsOpen,
+}: TemplateProps) {
     return (
-        <>
-            <HeaderTemplate>
-                <Header />
-            </HeaderTemplate>
-            <MainTemplate>
+        <PageTemplate>
+            <>
                 <CarouselTemplate>
-                    <Carousel />
+                    <Carousel data={data} />
                 </CarouselTemplate>
                 <UtilityBarTemplate $isOpen={isOpen}>
                     <SearchBarTemplate onClick={handleOnClick}>
@@ -140,14 +98,11 @@ function Template() {
                     <Trending />
                 </TrendingTemplate>
                 <RecommendedVideoTemplate>
-                    <RecommendedVideo />
+                    <RecommendedVideo data={data} />
                 </RecommendedVideoTemplate>
-            </MainTemplate>
-            <FooterTemplate>
-                <Footer />
-            </FooterTemplate>
-        </>
+            </>
+        </PageTemplate>
     )
 }
 
-export default Template
+export default MainPageTemplate
