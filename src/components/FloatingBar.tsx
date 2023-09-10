@@ -1,12 +1,15 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { FloatingBarTemplateProps } from './templates/MainPageTemplate'
+import { xlargeRadius, roundRadius } from '../style/border'
 
 const FloatingBarWrapper = styled.div<FloatingBarTemplateProps>`
     height: 100%;
     background-color: #5d4ffe;
     border-radius: ${(props) =>
-        props.$isScrolledDown || props.$isOpen ? `100%` : '30px'};
+        props.$isScrolledDown || props.$isOpen
+            ? `${roundRadius}`
+            : `${xlargeRadius}`};
     overflow: hidden;
 `
 

@@ -1,13 +1,14 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { Data } from './Slide'
+import { xlargeRadius } from '../style/border'
+import { ContentType } from '../utils/useGet'
 
 const ContentCardWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 33%;
     height: 100%;
-    border-radius: 1.8rem;
+    border-radius: ${xlargeRadius};
     overflow: hidden;
 `
 
@@ -23,11 +24,7 @@ const Image = styled.img`
     width: 100%;
 `
 
-interface ContentCardProps {
-    data: Data
-}
-
-function ContentCard({ data }: ContentCardProps) {
+function ContentCard({ data }: { data: ContentType }) {
     return (
         <ContentCardWrapper>
             <Image

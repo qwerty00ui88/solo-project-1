@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
-import useGet from '../utils/useGet'
+import useGet, { TrendingContent } from '../utils/useGet'
 import MainPageTemplate from '../components/templates/MainPageTemplate'
 
 function Main() {
-    const data = useGet(
-        'results',
+    const { data, loading, error } = useGet<TrendingContent>(
         'https://api.themoviedb.org/3/trending/all/day',
-        {
-            language: 'ko-KR',
-        }
+        { language: 'ko-KR' }
     )
+    // eslint-disable-next-line no-console
+    console.log({ data, loading, error })
 
     const [isScrolledDown, setIsScrollDown] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
@@ -37,13 +36,15 @@ function Main() {
         scrollToSearchBar()
     }
     return (
-        <MainPageTemplate
-            data={data}
-            handleOnClick={handleOnClick}
-            isOpen={isOpen}
-            isScrolledDown={isScrolledDown}
-            handleSetIsOpen={handleSetIsOpen}
-        />
+        data && (
+            <MainPageTemplate
+                data={(data as TrendingContent).results}
+                handleOnClick={handleOnClick}
+                isOpen={isOpen}
+                isScrolledDown={isScrolledDown}
+                handleSetIsOpen={handleSetIsOpen}
+            />
+        )
     )
 }
 

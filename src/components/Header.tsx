@@ -9,6 +9,7 @@ import {
 } from '../style/font'
 import { ReactComponent as Sun } from '../assets/sun.svg'
 import { ReactComponent as Moon } from '../assets/moon.svg'
+import { xsmallRadius } from '../style/border'
 
 const HeaderWrapper = styled.div`
     height: 100%;
@@ -52,7 +53,7 @@ const MenuButton = styled.button`
     width: 4.5rem;
     text-align: center;
     padding: 0.4rem;
-    border-radius: 7px;
+    border-radius: ${xsmallRadius};
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};
 `

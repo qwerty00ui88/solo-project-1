@@ -1,0 +1,6 @@
+export const xsmallRadius = '0.5rem'
+export const smallRadius = '0.7rem'
+export const mediusRadius = '1rem'
+export const largeRadius = '1.3rem'
+export const xlargeRadius = '1.8rem'
+export const roundRadius = '100%'

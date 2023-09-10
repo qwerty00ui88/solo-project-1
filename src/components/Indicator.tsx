@@ -2,6 +2,7 @@ import React from 'react'
 import { styled } from 'styled-components'
 import { ReactComponent as Pre } from '../assets/pre.svg'
 import { ReactComponent as Next } from '../assets/next.svg'
+import { roundRadius } from '../style/border'
 
 const IndicatorWrapper = styled.div`
     display: flex;
@@ -21,7 +22,7 @@ const Bullet = styled.div`
     width: 8px;
     height: 8px;
     background-color: gray;
-    border-radius: 100%;
+    border-radius: ${roundRadius};
 `
 interface Props {
     goToPre: () => void

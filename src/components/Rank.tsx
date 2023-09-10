@@ -1,27 +1,35 @@
 import React from 'react'
+import { styled } from 'styled-components'
 import RankItem from './RankItem'
-import { Data } from './Slide'
+import { ContentType, PeopleType } from '../utils/useGet'
+import { Category } from './Trending'
+
+const RankWrapper = styled.div`
+    width: 100%;
+`
 
 interface RankProps {
-    category: string
-    rankingArr: Data[]
+    category: Category
+    rankingArr: PeopleType[] | ContentType[]
     start: number
 }
 
 function Rank({ category, rankingArr, start }: RankProps) {
     return (
-        <div>
-            {rankingArr.map((d, idx) => {
-                return (
-                    <RankItem
-                        key={d.id}
-                        category={category}
-                        data={d}
-                        rank={start + idx}
-                    />
-                )
-            })}
-        </div>
+        rankingArr && (
+            <RankWrapper>
+                {rankingArr.map((d, idx) => {
+                    return (
+                        <RankItem
+                            key={d.id}
+                            category={category}
+                            data={d}
+                            rank={start + idx}
+                        />
+                    )
+                })}
+            </RankWrapper>
+        )
     )
 }
 

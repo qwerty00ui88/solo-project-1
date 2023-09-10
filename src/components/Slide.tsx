@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { xlargeRadius } from '../style/border'
+import { ContentType } from '../utils/useGet'
 
-interface SlideWrapperProps {
-    ref: React.ForwardedRef<HTMLDivElement>
-}
-
-const SlideWrapper = styled.div<SlideWrapperProps>`
+const SlideWrapper = styled.div<{ ref: React.ForwardedRef<HTMLDivElement> }>`
     flex: 0 0 calc(100% + 30vw);
     width: calc(100% + 30vw);
     display: flex;
@@ -39,32 +37,11 @@ const Card = styled.div`
 
 const Img = styled.img`
     flex: 1 0; // 세로
-    border-radius: 1.8rem;
+    border-radius: ${xlargeRadius};
 `
 
-export interface Data {
-    adult: boolean
-    backdrop_path: string
-    id: number
-    title?: string
-    original_language: string
-    original_title: string
-    overview: string
-    poster_path: string
-    media_type: string
-    genre_ids: number[]
-    popularity: number
-    release_date?: string
-    video: boolean
-    vote_average: number
-    vote_count: number
-    name?: string
-    first_air_date?: string
-    profile_path?: string
-}
-
 interface SlideProps {
-    data: Data[]
+    data: ContentType[]
     slideRef: React.ForwardedRef<HTMLDivElement>
 }
 

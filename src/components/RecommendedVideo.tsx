@@ -1,13 +1,13 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { titleWeb, mediumWeight, titleTablet, titleMobile } from '../style/font'
-import { Data } from './Slide'
-import useGet from '../utils/useGet'
+import useGet, { ContentType, Video } from '../utils/useGet'
+import { xlargeRadius } from '../style/border'
 
 const RecommendedVideoWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    border-radius: 1.8rem;
+    border-radius: ${xlargeRadius};
     padding: 4.8vw 6vw;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.534);
@@ -35,7 +35,7 @@ const VideoList = styled.ul`
     position: relative;
     left: -6vw;
     width: calc(320px * 14);
-    animation: autoPlay 20s linear infinite;
+    animation: autoPlay 30s linear infinite;
 
     @keyframes autoPlay {
         0% {
@@ -51,39 +51,24 @@ const VideoList = styled.ul`
         align-items: center;
         width: 300px;
         height: calc(300px / 16 * 9);
+        border-radius: ${xlargeRadius};
         margin: 0 10px;
         font-size: ${titleWeb};
         overflow: hidden;
     }
 `
 
-interface VideoDataType {
-    iso_639_1: string
-    iso_3166_1: string
-    name: string
-    key: string
-    site: string
-    size: number
-    type: string
-    official: boolean
-    published_at: string
-    id: string
-}
-
-interface RecommendedVideoProps {
-    data: Data[]
-}
-
-function RecommendedVideo({ data }: RecommendedVideoProps) {
-    const videoList = data
+function RecommendedVideo({ videoData }: { videoData: ContentType[] }) {
+    const videoList = videoData
         .map((d) => {
             const [mediaType, id] = [d.media_type, d.id]
-            const results: VideoDataType[] = useGet(
-                'results',
+            const { data, loading, error } = useGet(
                 `https://api.themoviedb.org/3/${mediaType}/${id}/videos`,
                 { language: 'ko-KR' }
             )
-            return results[0]?.key
+            // eslint-disable-next-line no-console
+            console.log({ data, loading, error })
+            return (data as Video)?.results[0]?.key
         })
         .filter((d) => d)
         .slice(0, 7)

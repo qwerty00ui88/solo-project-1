@@ -2,14 +2,10 @@ import React, { ChangeEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { xxlargeSize } from '../style/font'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
-import useGet from '../utils/useGet'
-import { Data } from './Slide'
+import useGet, { Genre, TrendingContent } from '../utils/useGet'
+import { largeRadius, xlargeRadius } from '../style/border'
 
-interface SearchBarWrapperTemplateProps {
-    $isOpen: boolean
-}
-
-const SearchBarWrapper = styled.div<SearchBarWrapperTemplateProps>`
+const SearchBarWrapper = styled.div<{ $isOpen: boolean }>`
     display: ${(props) => (props.$isOpen ? 'block' : `flex`)};
     align-items: ${(props) => (props.$isOpen ? null : `center`)};
     position: relative;
@@ -28,7 +24,7 @@ const SearchBarWrapper = styled.div<SearchBarWrapperTemplateProps>`
         #833ab4b0
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-    border-radius: 1.8rem;
+    border-radius: ${xlargeRadius};
     padding: ${(props) => (props.$isOpen ? '48px 6vw' : `0`)};
 
     & > div {
@@ -60,7 +56,7 @@ const Autocomplete = styled.ul`
     width: 40%;
     background-color: black;
     margin-top: -15px;
-    border-radius: 15px;
+    border-radius: ${largeRadius};
     padding: 10px;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
 `
@@ -73,15 +69,10 @@ const GenrePanel = styled.ul`
     & > li {
         width: fit-content;
         border: 1px solid #e5e5e5;
-        border-radius: 20px;
+        border-radius: ${xlargeRadius};
         padding: 5px 10px;
     }
 `
-
-export interface Genre {
-    id: number
-    name: string
-}
 
 interface SearchBarProps {
     isOpen: boolean
@@ -90,8 +81,11 @@ interface SearchBarProps {
 
 function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
     const [word, setWord] = useState('')
-    const data: Data[] = useGet(
-        'results',
+    const {
+        data,
+        loading: dataL,
+        error: dataE,
+    } = useGet<TrendingContent>(
         'https://api.themoviedb.org/3/search/multi',
         {
             query: `${word}`,
@@ -101,13 +95,20 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         },
         [word]
     )
-    const genres = useGet(
-        'genres',
-        `https://api.themoviedb.org/3/genre/movie/list`,
-        {
-            language: 'ko',
-        }
-    )
+    // eslint-disable-next-line no-console
+    console.log({ data, dataL, dataE })
+    const result = (data as TrendingContent)?.results
+
+    const {
+        data: genres,
+        loading: genrensL,
+        error: genresE,
+    } = useGet(`https://api.themoviedb.org/3/genre/movie/list`, {
+        language: 'ko',
+    }) as { data: Genre[]; loading: boolean; error: null | Error }
+
+    // eslint-disable-next-line no-console
+    console.log({ genres, genrensL, genresE })
 
     const handleOnClick = (e: React.MouseEvent<HTMLElement>) => {
         handleSetIsOpen()
@@ -135,17 +136,18 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                             />
                         </label>
                     </InputContainer>
-                    {data.length > 0 && (
+                    {result && (
                         <Autocomplete>
-                            {data.map((d) => {
+                            {result.map((d) => {
                                 return <li key={d.id}>{d.name || d.title}</li>
                             })}
                         </Autocomplete>
                     )}
                     <GenrePanel>
-                        {genres.map((g: Genre) => {
-                            return <li key={g.id}>{g.name}</li>
-                        })}
+                        {genres.length > 0 &&
+                            genres.map((g: Genre) => {
+                                return <li key={g.id}>{g.name}</li>
+                            })}
                     </GenrePanel>
                 </>
             ) : (

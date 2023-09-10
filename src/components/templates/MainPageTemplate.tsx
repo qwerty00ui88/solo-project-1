@@ -6,7 +6,7 @@ import SearchBar from '../SearchBar'
 import FloatingBar from '../FloatingBar'
 import RecommendedVideo from '../RecommendedVideo'
 import Trending from '../Trending'
-import { Data } from '../Slide'
+import { ContentType } from '../../utils/useGet'
 
 const CarouselTemplate = styled.div``
 
@@ -57,7 +57,7 @@ const TrendingTemplate = styled.div`
 `
 
 interface TemplateProps {
-    data: Data[]
+    data: ContentType[]
     isOpen: boolean
     isScrolledDown: boolean
     handleOnClick: () => void
@@ -98,7 +98,7 @@ function MainPageTemplate({
                     <Trending />
                 </TrendingTemplate>
                 <RecommendedVideoTemplate>
-                    <RecommendedVideo data={data} />
+                    <RecommendedVideo videoData={data} />
                 </RecommendedVideoTemplate>
             </>
         </PageTemplate>

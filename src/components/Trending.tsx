@@ -8,16 +8,16 @@ import {
     titleTablet,
     titleWeb,
 } from '../style/font'
-import useGet from '../utils/useGet'
-import { Data } from './Slide'
+import useGet, { TrendingContent, TrendingPeople } from '../utils/useGet'
 import Rank from './Rank'
+import { xlargeRadius, smallRadius, xsmallRadius } from '../style/border'
 
 const TrendingWrapper = styled.div`
     display: flex;
     column-gap: 2vw;
     height: 100%;
     padding: 4.8vw 6vw;
-    border-radius: 1.8rem;
+    border-radius: ${xlargeRadius};
     border: 1px solid rgba(255, 255, 255, 0.534);
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.36);
 
@@ -31,9 +31,6 @@ const TrendingLeft = styled.div``
 const TrendingRight = styled.div`
     flex: 1;
     display: flex;
-    & > div {
-        width: 100%;
-    }
     @media screen and (max-width: 1024px) {
         display: block;
     }
@@ -62,7 +59,7 @@ const Select = styled.select`
     font-weight: ${mediumWeight};
     color: black;
     margin-bottom: 2rem;
-    border-radius: 0.5rem;
+    border-radius: ${xsmallRadius};
 `
 
 const CategoryGroup = styled.fieldset`
@@ -76,15 +73,11 @@ const CategoryGroup = styled.fieldset`
     }
 `
 
-interface LabelProps {
-    $isChecked: boolean
-}
-
-const Label = styled.label<LabelProps>`
+const Label = styled.label<{ $isChecked: boolean }>`
     display: block;
     padding: 0.8rem;
     min-width: 60px;
-    border-radius: 0.7rem;
+    border-radius: ${smallRadius};
     font-size: ${largeSize};
     font-weight: ${semiboldWeight};
     background-color: ${(props) => (props.$isChecked ? '#282828' : null)};
@@ -96,17 +89,24 @@ const Label = styled.label<LabelProps>`
     }
 `
 
-function Trending() {
-    const [duration, setDuration] = useState('day')
-    const [category, setCategory] = useState('movie')
-    const data: Data[] = useGet(
-        'results',
-        `https://api.themoviedb.org/3/trending/${category}/${duration}`,
-        {
-            language: 'ko-KR',
-        }
-    )
+export type Duration = 'day' | 'week'
+export type Category = 'movie' | 'tv' | 'person'
 
+function Trending() {
+    const [duration, setDuration] = useState<Duration>('day')
+    const [category, setCategory] = useState<Category>('movie')
+
+    type TrendingData = typeof category extends 'person'
+        ? TrendingPeople
+        : TrendingContent
+
+    const { data, loading, error } = useGet<TrendingData>(
+        `https://api.themoviedb.org/3/trending/${category}/${duration}`,
+        { language: 'ko-KR' }
+    ) as { data: TrendingData; loading: boolean; error: null | Error }
+
+    // eslint-disable-next-line no-console
+    console.log({ data, loading, error })
     const categoryArr = [
         { id: 'movie', name: '영화' },
         { id: 'tv', name: 'TV' },
@@ -114,16 +114,16 @@ function Trending() {
     ]
 
     const dataArr = [
-        { id: 0, data: data.slice(0, 5) },
-        { id: 1, data: data.slice(5, 10) },
+        { id: 0, data: data?.results.slice(0, 5) },
+        { id: 1, data: data?.results.slice(5, 10) },
     ]
 
     const changeDuration = (e: ChangeEvent<HTMLSelectElement>) => {
-        setDuration(e.currentTarget.value)
+        setDuration(e.currentTarget.value as 'day' | 'week')
     }
 
     const changeCategory = (e: ChangeEvent<HTMLInputElement>) => {
-        setCategory(e.currentTarget.value)
+        setCategory(e.currentTarget.value as 'movie' | 'tv' | 'person')
     }
 
     return (
@@ -158,16 +158,17 @@ function Trending() {
                 </CategoryGroup>
             </TrendingLeft>
             <TrendingRight>
-                {dataArr.map((el, i) => {
-                    return (
-                        <Rank
-                            key={el.id}
-                            category={category}
-                            rankingArr={el.data}
-                            start={i === 0 ? 1 : 6}
-                        />
-                    )
-                })}
+                {data &&
+                    dataArr.map((el, i) => {
+                        return (
+                            <Rank
+                                key={el.id}
+                                category={category}
+                                rankingArr={el.data}
+                                start={i === 0 ? 1 : 6}
+                            />
+                        )
+                    })}
             </TrendingRight>
         </TrendingWrapper>
     )

@@ -27,11 +27,7 @@ const FooterTemplate = styled.footer`
     }
 `
 
-interface PageTemplate {
-    children: ReactNode
-}
-
-function PageTemplate({ children }: PageTemplate) {
+function PageTemplate({ children }: { children: ReactNode }) {
     return (
         <>
             <HeaderTemplate>

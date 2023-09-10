@@ -4,6 +4,7 @@ import { mediumWeight, xsmallSize } from '../style/font'
 import { ReactComponent as Velog } from '../assets/velog.svg'
 import { ReactComponent as GitHub } from '../assets/github.svg'
 import { ReactComponent as Gmail } from '../assets/gmail.svg'
+import { xsmallRadius } from '../style/border'
 
 const FooterWrapper = styled.div`
     display: flex;
@@ -46,7 +47,7 @@ const FooterRightSelect = styled.select`
     padding: 3px 0 3px 3px;
     font-weight: ${mediumWeight};
     color: black;
-    border-radius: 0.5rem;
+    border-radius: ${xsmallRadius};
 `
 
 const FooterLinks = styled.ul`
