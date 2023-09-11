@@ -139,7 +139,7 @@ function useGet<T>(url: string, params: Params, dependency?: string[]) {
         params,
         headers: {
             accept: 'application/json',
-            Authorization: process.env.REACT_APP_API_KEY,
+            Authorization: process.env.REACT_APP_TMDB_KEY,
         },
     }
 
