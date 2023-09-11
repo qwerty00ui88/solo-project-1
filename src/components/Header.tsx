@@ -31,7 +31,7 @@ const Logo = styled.h1`
 `
 
 const Nav = styled.ul`
-    flex: 3;
+    flex: 1;
     & > li {
         padding: 0 1vw;
         white-space: nowrap;
@@ -46,7 +46,9 @@ const Nav = styled.ul`
 const Menu = styled.div`
     column-gap: 10px;
     @media screen and (max-width: 768px) {
-        display: none;
+        /* display: none; */
+        flex: 1;
+        justify-content: flex-end;
     }
 `
 

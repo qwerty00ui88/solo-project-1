@@ -17,7 +17,7 @@ const MainTemplate = styled.main`
         margin: 0 8vw;
     }
     @media screen and (max-width: 375px) {
-        margin: 0 7vw;
+        margin: 0 3vw;
     }
 `
 const FooterTemplate = styled.footer`

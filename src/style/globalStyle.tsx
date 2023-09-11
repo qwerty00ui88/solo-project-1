@@ -11,7 +11,6 @@ const GlobalStyle = createGlobalStyle`
     color: #e5e5e5;
     @media screen and (max-width: 375px) {
         font-size: ${smallSize};
-        color: black;
     }
   }
 

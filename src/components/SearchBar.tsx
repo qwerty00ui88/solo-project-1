@@ -110,7 +110,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
     // eslint-disable-next-line no-console
     console.log({ genres, genrensL, genresE })
 
-    const handleOnClick = (e: React.MouseEvent<HTMLElement>) => {
+    const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         handleSetIsOpen()
         e.stopPropagation()
     }
