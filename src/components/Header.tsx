@@ -1,5 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
+import { Link } from 'react-router-dom'
 import {
     fontLogo,
     largeSize,
@@ -49,7 +50,7 @@ const Menu = styled.div`
     }
 `
 
-const MenuButton = styled.button`
+const MenuButton = styled(Link)`
     width: 4.5rem;
     text-align: center;
     padding: 0.4rem;
@@ -63,7 +64,9 @@ function Header() {
 
     return (
         <HeaderWrapper>
-            <Logo>CUT</Logo>
+            <Link to="/">
+                <Logo>CUT</Logo>
+            </Link>
             <Nav>
                 {navList.map((list) => {
                     return <li key={list}>{list}</li>
@@ -72,8 +75,8 @@ function Header() {
             <Menu>
                 <Sun />
                 <Moon />
-                <MenuButton>로그인</MenuButton>
-                <MenuButton>회원가입</MenuButton>
+                <MenuButton to="/login">로그인</MenuButton>
+                <MenuButton to="/signup">회원가입</MenuButton>
             </Menu>
         </HeaderWrapper>
     )

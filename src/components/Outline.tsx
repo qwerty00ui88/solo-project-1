@@ -42,8 +42,12 @@ function Outline({ id }: { id: string }) {
                     <div>{data.runtime}</div>
                     <div>{data.vote_average.toFixed(1)}</div>
                     <div>{data.tagline}</div>
-                    <div>개요</div>
-                    <div>{data.overview}</div>
+                    {data.overview && (
+                        <>
+                            <div>개요</div>
+                            <div>{data.overview}</div>
+                        </>
+                    )}
                 </OutlineRight>
             </OutlineWrapper>
         )

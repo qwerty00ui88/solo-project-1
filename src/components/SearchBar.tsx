@@ -105,7 +105,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         error: genresE,
     } = useGet(`https://api.themoviedb.org/3/genre/movie/list`, {
         language: 'ko',
-    }) as { data: Genre[]; loading: boolean; error: null | Error }
+    }) as { data: { genres: Genre[] }; loading: boolean; error: null | Error }
 
     // eslint-disable-next-line no-console
     console.log({ genres, genrensL, genresE })
@@ -136,7 +136,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                             />
                         </label>
                     </InputContainer>
-                    {result && (
+                    {result.length > 0 && (
                         <Autocomplete>
                             {result.map((d) => {
                                 return <li key={d.id}>{d.name || d.title}</li>
@@ -144,8 +144,8 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                         </Autocomplete>
                     )}
                     <GenrePanel>
-                        {genres.length > 0 &&
-                            genres.map((g: Genre) => {
+                        {genres.genres.length > 0 &&
+                            genres.genres.map((g: Genre) => {
                                 return <li key={g.id}>{g.name}</li>
                             })}
                     </GenrePanel>
