@@ -18,13 +18,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: black;
     min-width: 320px;
-    // test
-    @media screen and (max-width: 768px) {
-        background-color: gray;
-    }
-    @media screen and (max-width: 375px) {
-      background-color: white;
-    }
   }
 
   main{
