@@ -1,6 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import useGet, { TrendingContent } from '../utils/useGet'
-import MainPageTemplate from '../components/templates/MainPageTemplate'
+import Carousel from '../components/Carousel'
+import SearchBar from '../components/SearchBar'
+import PageTemplate from '../components/templates/PageTemplate'
+import FloatingBar from '../components/FloatingBar'
+import Trending from '../components/Trending'
+import RecommendedVideo from '../components/RecommendedVideo'
+
+interface UtilityBarProps {
+    $isOpen: boolean
+}
+
+const UtilityBar = styled.div<UtilityBarProps>`
+    display: flex;
+    column-gap: 10px;
+    height: ${(props) => (props.$isOpen ? null : `6vw`)};
+    min-height: ${(props) => (props.$isOpen ? null : `44px`)};
+    max-height: ${(props) => (props.$isOpen ? null : `57px`)};
+    margin-bottom: 16px;
+`
 
 function Main() {
     const { data, loading, error } = useGet<TrendingContent>(
@@ -10,13 +29,12 @@ function Main() {
     // eslint-disable-next-line no-console
     console.log({ data, loading, error })
 
-    const [isScrolledDown, setIsScrollDown] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+    const [isScrolledDown, setIsScrollDown] = useState(false)
 
-    window.addEventListener('scroll', () => {
-        const { scrollY } = window
-        setIsScrollDown(scrollY >= 12)
-    })
+    const handleSetIsOpen = () => {
+        setIsOpen(!isOpen)
+    }
 
     const scrollToSearchBar = () => {
         window.scrollTo({
@@ -25,25 +43,34 @@ function Main() {
         })
     }
 
-    const handleSetIsOpen = () => {
-        setIsOpen(!isOpen)
-    }
+    window.addEventListener('scroll', () => {
+        const { scrollY } = window
+        setIsScrollDown(scrollY >= 12)
+    })
 
-    const handleOnClick = () => {
-        if (!isOpen) {
-            handleSetIsOpen()
+    useEffect(() => {
+        if (isOpen) {
+            scrollToSearchBar()
         }
-        scrollToSearchBar()
-    }
+    }, [isOpen])
+
     return (
         data && (
-            <MainPageTemplate
-                data={(data as TrendingContent).results}
-                handleOnClick={handleOnClick}
-                isOpen={isOpen}
-                isScrolledDown={isScrolledDown}
-                handleSetIsOpen={handleSetIsOpen}
-            />
+            <PageTemplate>
+                <Carousel data={data.results} />
+                <UtilityBar $isOpen={isOpen}>
+                    <SearchBar
+                        isOpen={isOpen}
+                        handleSetIsOpen={handleSetIsOpen}
+                    />
+                    <FloatingBar
+                        isOpen={isOpen}
+                        isScrolledDown={isScrolledDown}
+                    />
+                </UtilityBar>
+                <Trending />
+                <RecommendedVideo videoData={data.results} />
+            </PageTemplate>
         )
     )
 }

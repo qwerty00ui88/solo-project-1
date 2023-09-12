@@ -24,6 +24,9 @@ const TrendingWrapper = styled.div`
     @media screen and (max-width: 1024px) {
         display: block;
     }
+
+    width: 100%;
+    margin-bottom: 25px;
 `
 
 const TrendingLeft = styled.div``

@@ -1,7 +1,12 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { FloatingBarTemplateProps } from './templates/MainPageTemplate'
+
 import { xlargeRadius, roundRadius } from '../style/border'
+
+interface FloatingBarTemplateProps {
+    $isScrolledDown: boolean
+    $isOpen: boolean
+}
 
 const FloatingBarWrapper = styled.div<FloatingBarTemplateProps>`
     height: 100%;
@@ -11,6 +16,20 @@ const FloatingBarWrapper = styled.div<FloatingBarTemplateProps>`
             ? `${roundRadius}`
             : `${xlargeRadius}`};
     overflow: hidden;
+
+    flex: 0 0 30%;
+    width: ${(props) =>
+        props.$isScrolledDown || props.$isOpen ? `4rem` : `6vw`};
+    height: ${(props) =>
+        props.$isScrolledDown || props.$isOpen ? `4rem` : null};
+    position: ${(props) =>
+        props.$isScrolledDown || props.$isOpen ? `fixed` : null};
+    right: ${(props) =>
+        props.$isScrolledDown || props.$isOpen ? `24px` : null};
+    top: ${(props) => (props.$isScrolledDown || props.$isOpen ? `88vh` : null)};
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 `
 
 const Text = styled.ul`
@@ -34,11 +53,11 @@ const Text = styled.ul`
     }
 `
 interface FloatingBarProps {
-    isScrolledDown: boolean
     isOpen: boolean
+    isScrolledDown: boolean
 }
 
-function FloatingBar({ isScrolledDown, isOpen }: FloatingBarProps) {
+function FloatingBar({ isOpen, isScrolledDown }: FloatingBarProps) {
     return (
         <FloatingBarWrapper $isScrolledDown={isScrolledDown} $isOpen={isOpen}>
             <Text>

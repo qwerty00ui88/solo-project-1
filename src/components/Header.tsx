@@ -11,6 +11,7 @@ import {
 import { ReactComponent as Sun } from '../assets/sun.svg'
 import { ReactComponent as Moon } from '../assets/moon.svg'
 import { xsmallRadius } from '../style/border'
+import { useAppSelector } from '../hooks'
 
 const HeaderWrapper = styled.div`
     height: 100%;
@@ -62,6 +63,8 @@ const MenuButton = styled(Link)`
 `
 
 function Header() {
+    const isLogin = useAppSelector((state) => !!state.user.user)
+
     const navList = ['영화', 'TV', '인물']
 
     return (
@@ -74,12 +77,14 @@ function Header() {
                     return <li key={list}>{list}</li>
                 })}
             </Nav>
-            <Menu>
-                <Sun />
-                <Moon />
-                <MenuButton to="/login">로그인</MenuButton>
-                <MenuButton to="/signup">회원가입</MenuButton>
-            </Menu>
+            {!isLogin && (
+                <Menu>
+                    <Sun />
+                    <Moon />
+                    <MenuButton to="/login">로그인</MenuButton>
+                    <MenuButton to="/signup">회원가입</MenuButton>
+                </Menu>
+            )}
         </HeaderWrapper>
     )
 }

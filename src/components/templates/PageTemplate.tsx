@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react'
 import { styled } from 'styled-components'
 import Header from '../Header'
 import Footer from '../Footer'
+import { fontKR } from '../../style/font'
 
 const HeaderTemplate = styled.header`
     height: 15vh;
@@ -9,6 +10,7 @@ const HeaderTemplate = styled.header`
 `
 const MainTemplate = styled.main`
     margin: 0 10vw;
+    font-family: ${fontKR};
     &::after {
         content: '';
         display: block;
@@ -24,6 +26,7 @@ const MainTemplate = styled.main`
 `
 const FooterTemplate = styled.footer`
     padding: 50px 10vw;
+    border-top: 1px solid #a5a5a7;
     @media screen and (max-width: 768px) {
         display: none;
     }

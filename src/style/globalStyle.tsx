@@ -19,15 +19,6 @@ const GlobalStyle = createGlobalStyle`
     min-width: 320px;
   }
 
-  main{
-    font-family: ${fontKR};
- 
-  }
-
-  footer {
-    border-top: 1px solid #a5a5a7;
-  }
-
   li {
     list-style: none;
   }

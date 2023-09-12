@@ -12,7 +12,6 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>`
     width: ${(props) => `${props.$width}`};
     height: ${(props) => `${props.$height}`};
     text-align: center;
-    padding: 0.4rem;
     border-radius: ${xsmallRadius};
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};

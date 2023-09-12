@@ -6,6 +6,8 @@ import useGet, { Genre, TrendingContent } from '../utils/useGet'
 import { largeRadius, xlargeRadius } from '../style/border'
 
 const SearchBarWrapper = styled.div<{ $isOpen: boolean }>`
+    flex: 1 1 70%;
+    z-index: 2;
     display: ${(props) => (props.$isOpen ? 'block' : `flex`)};
     align-items: ${(props) => (props.$isOpen ? null : `center`)};
     position: relative;
@@ -120,7 +122,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
     }
 
     return (
-        <SearchBarWrapper $isOpen={isOpen}>
+        <SearchBarWrapper onClick={handleSetIsOpen} $isOpen={isOpen}>
             {isOpen ? (
                 <>
                     <CancelButton type="button" onClick={handleOnClick}>

@@ -1,24 +1,32 @@
 import React, { ChangeEvent } from 'react'
 import { styled } from 'styled-components'
+import { xsmallRadius } from '../../style/border'
 
 interface InputWrapperProps {
-    $width: number
-    $height: number
+    $width: string
+    $height: string
 }
 
 const InputWrapper = styled.input<InputWrapperProps>`
-    width: ${(props) => `${props.$width}px`};
-    height: ${(props) => `${props.$height}px`};
+    width: ${(props) => `${props.$width}`};
+    height: ${(props) => `${props.$height}`};
+    padding: 5px 10px;
     border: 1px solid white;
+    border-radius: ${xsmallRadius};
 `
 interface InputProps {
     value: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
-    width?: number
-    height?: number
+    width?: string
+    height?: string
 }
 
-function Input({ value, onChange, width = 200, height = 50 }: InputProps) {
+function Input({
+    value,
+    onChange,
+    width = 'calc(20rem - 20px)',
+    height = 'calc(3rem - 10px)',
+}: InputProps) {
     return (
         <InputWrapper
             value={value}
