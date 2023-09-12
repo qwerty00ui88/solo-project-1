@@ -60,17 +60,22 @@ const VideoList = styled.ul`
 
 function RecommendedVideo({ videoData }: { videoData: ContentType[] }) {
     const videoList = videoData
-        .map((d) => {
-            const [mediaType, id] = [d.media_type, d.id]
+        .reduce((acc: string[], cur) => {
+            const [mediaType, id] = [cur.media_type, cur.id]
             const { data, loading, error } = useGet(
                 `https://api.themoviedb.org/3/${mediaType}/${id}/videos`,
                 { language: 'ko-KR' }
-            )
+            ) as { data: Video; loading: boolean; error: null | Error }
             // eslint-disable-next-line no-console
             console.log({ data, loading, error })
-            return (data as Video)?.results[0]?.key
-        })
-        .filter((d) => d)
+            const n = data?.results.length
+
+            if (n === 1) acc.push(data?.results[0]?.key)
+            else if (n > 1)
+                acc.push(data?.results[Math.floor(Math.random() * n)]?.key)
+
+            return acc
+        }, [])
         .slice(0, 7)
 
     return (

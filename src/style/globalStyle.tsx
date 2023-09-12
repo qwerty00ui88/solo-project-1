@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
 
   main{
     font-family: ${fontKR};
+ 
   }
 
   footer {

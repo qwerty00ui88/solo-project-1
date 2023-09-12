@@ -36,6 +36,10 @@
           }],
         "react/require-default-props": [1, {
             "functions":  "defaultArguments" 
+        }],
+        "no-param-reassign": ["error", {
+            "props": true,
+            "ignorePropertyModificationsFor": [ "state" ]
         }]
     },
     "settings": {

@@ -18,7 +18,7 @@ const UtilityBarTemplate = styled.div<UtilityBarTemplateProps>`
     display: flex;
     column-gap: 10px;
     height: ${(props) => (props.$isOpen ? null : `6vw`)};
-    min-height: ${(props) => (props.$isOpen ? '36vh' : `44px`)};
+    min-height: ${(props) => (props.$isOpen ? null : `44px`)};
     max-height: ${(props) => (props.$isOpen ? null : `57px`)};
     margin-bottom: 16px;
 `
