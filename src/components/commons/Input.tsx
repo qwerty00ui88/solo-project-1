@@ -15,7 +15,7 @@ const InputWrapper = styled.input<InputWrapperProps>`
     border-radius: ${xsmallRadius};
 `
 interface InputProps {
-    value: string
+    value: string | undefined
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     width?: string
     height?: string

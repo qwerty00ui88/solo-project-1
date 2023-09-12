@@ -18,7 +18,7 @@ const ButtonWrapper = styled.button<ButtonWrapperProps>`
 `
 interface ButtonProps {
     name: string
-    onClick: (e: MouseEvent<HTMLButtonElement>) => void
+    onClick: (e?: MouseEvent<HTMLButtonElement>) => void
     width?: string
     height?: string | null
 }
@@ -30,7 +30,12 @@ function Button({
     height = null,
 }: ButtonProps) {
     return (
-        <ButtonWrapper onClick={onClick} $width={width} $height={height}>
+        <ButtonWrapper
+            type="button"
+            onClick={onClick}
+            $width={width}
+            $height={height}
+        >
             {name}
         </ButtonWrapper>
     )

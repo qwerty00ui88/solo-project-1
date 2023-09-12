@@ -6,8 +6,6 @@ import Main from './pages/Main'
 import Detail from './pages/Detail'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
-import { login } from './reducers/userReducer'
-import { useAppDispatch } from './hooks'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -20,14 +18,11 @@ const firebaseConfig = {
 }
 
 function App() {
-    const dispatch = useAppDispatch()
-
     useEffect(() => {
         initializeApp(firebaseConfig)
         const auth = getAuth()
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                dispatch(login({ email: user.email, uid: user.uid }))
                 // eslint-disable-next-line no-console
                 console.log('로그인 상태입니다.')
             } else {

@@ -1,24 +1,13 @@
-import React, { useState } from 'react'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { initializeApp } from 'firebase/app'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Input from '../components/commons/Input'
-import { login } from '../reducers/userReducer'
-import { useAppDispatch } from '../hooks'
+// import { login } from '../reducers/userReducer'
+import { useAppDispatch, useAppSelector } from '../hooks'
 import Button from '../components/commons/Button'
 import PageTemplate from '../components/templates/PageTemplate'
 import { logoSize } from '../style/font'
-
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGIN_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-}
+import { login } from '../reducers/userReducer'
 
 export const LoginWrapper = styled.div`
     display: flex;
@@ -44,31 +33,28 @@ export const Title = styled.h2`
 function Login() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
 
-    initializeApp(firebaseConfig)
-    const auth = getAuth()
+    const status = useAppSelector((state) => state.user.user.type)
 
     const logIn = () => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const { user } = userCredential
-                return { email: user.email, uid: user.uid }
-            })
-            .then((user) => {
-                dispatch(login(user))
-            })
-            .then(() => {
-                navigate('/')
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = error.message
-                // eslint-disable-next-line no-console
-                console.log({ errorCode, errorMessage })
-            })
+        if (email && password) {
+            dispatch(login({ email, password }))
+        }
     }
+
+    useEffect(() => {
+        if (status === 'fulfilled') {
+            navigate('/')
+        } else if (status === 'pendding') {
+            // eslint-disable-next-line no-console
+            console.log('pendding')
+        } else if (status === 'rejected') {
+            // eslint-disable-next-line no-console
+            console.log('rejected')
+        }
+    }, [status])
 
     return (
         <PageTemplate>
