@@ -22,12 +22,10 @@ const UtilityBar = styled.div<UtilityBarProps>`
 `
 
 function Main() {
-    const { data, loading, error } = useGet<TrendingContent>(
+    const { data } = useGet<TrendingContent>(
         'https://api.themoviedb.org/3/trending/all/day',
         { language: 'ko-KR' }
     )
-    // eslint-disable-next-line no-console
-    console.log({ data, loading, error })
 
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolledDown, setIsScrollDown] = useState(false)

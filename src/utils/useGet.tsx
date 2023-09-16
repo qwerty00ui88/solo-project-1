@@ -130,8 +130,8 @@ export interface ContentDetail {
 
 function useGet<T>(url: string, params: Params, dependency?: string[]) {
     const [data, setData] = useState<T | null>(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<null | Error>(null)
+    // const [loading, setLoading] = useState(true)
+    // const [error, setError] = useState<null | Error>(null)
 
     const options = {
         method: 'GET',
@@ -147,10 +147,10 @@ function useGet<T>(url: string, params: Params, dependency?: string[]) {
         try {
             const response = await axios.request(options)
             setData(response.data)
-            setLoading(false)
+            // setLoading(false)
         } catch (axiosError) {
-            setError(axiosError as Error)
-            setLoading(false)
+            // setError(axiosError as Error)
+            // setLoading(false)
         }
     }
 
@@ -158,7 +158,7 @@ function useGet<T>(url: string, params: Params, dependency?: string[]) {
         getData()
     }, [url, JSON.stringify(params), ...(dependency || [])])
 
-    return { data, loading, error }
+    return { data }
 }
 
 export default useGet

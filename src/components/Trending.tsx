@@ -103,13 +103,11 @@ function Trending() {
         ? TrendingPeople
         : TrendingContent
 
-    const { data, loading, error } = useGet<TrendingData>(
+    const { data } = useGet<TrendingData>(
         `https://api.themoviedb.org/3/trending/${category}/${duration}`,
         { language: 'ko-KR' }
-    ) as { data: TrendingData; loading: boolean; error: null | Error }
+    ) as { data: TrendingData }
 
-    // eslint-disable-next-line no-console
-    console.log({ data, loading, error })
     const categoryArr = [
         { id: 'movie', name: '영화' },
         { id: 'tv', name: 'TV' },

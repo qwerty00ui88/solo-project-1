@@ -83,11 +83,7 @@ interface SearchBarProps {
 
 function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
     const [word, setWord] = useState('')
-    const {
-        data,
-        loading: dataL,
-        error: dataE,
-    } = useGet<TrendingContent>(
+    const { data } = useGet<TrendingContent>(
         'https://api.themoviedb.org/3/search/multi',
         {
             query: `${word}`,
@@ -97,20 +93,15 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         },
         [word]
     )
-    // eslint-disable-next-line no-console
-    console.log({ data, dataL, dataE })
+
     const result = (data as TrendingContent)?.results
 
-    const {
-        data: genres,
-        loading: genrensL,
-        error: genresE,
-    } = useGet(`https://api.themoviedb.org/3/genre/movie/list`, {
-        language: 'ko',
-    }) as { data: { genres: Genre[] }; loading: boolean; error: null | Error }
-
-    // eslint-disable-next-line no-console
-    console.log({ genres, genrensL, genresE })
+    const { data: genres } = useGet(
+        `https://api.themoviedb.org/3/genre/movie/list`,
+        {
+            language: 'ko',
+        }
+    ) as { data: { genres: Genre[] } }
 
     const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         handleSetIsOpen()

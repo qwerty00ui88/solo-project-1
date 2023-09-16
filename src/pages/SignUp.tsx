@@ -18,7 +18,6 @@ const firebaseConfig = {
 }
 
 function SignUp() {
-    // const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')

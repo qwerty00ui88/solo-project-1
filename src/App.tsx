@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Main from './pages/Main'
 import Detail from './pages/Detail'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
+import { setUser } from './reducers/userReducer'
+import { useAppDispatch } from './hooks'
+import { setUi } from './reducers/uiReducer'
+import Loading from './pages/Loading'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -18,16 +22,33 @@ const firebaseConfig = {
 }
 
 function App() {
+    const dispatch = useAppDispatch()
+
     useEffect(() => {
         initializeApp(firebaseConfig)
         const auth = getAuth()
+        dispatch(setUi('AUTH_LOADING'))
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // eslint-disable-next-line no-console
-                console.log('로그인 상태입니다.')
+                console.log('🌈 로그인 중', { user })
+                dispatch(setUi('AUTH_SUCCESS'))
+                dispatch(
+                    setUser({
+                        email: user.email,
+                        uid: user.uid,
+                    })
+                )
             } else {
+                dispatch(setUi('AUTH_FAIL'))
+                dispatch(
+                    setUser({
+                        email: null,
+                        uid: null,
+                    })
+                )
                 // eslint-disable-next-line no-console
-                console.log('비로그인 상태입니다.')
+                console.log('🌈 로그인 중 아님', { user })
             }
         })
     }, [])
@@ -38,6 +59,7 @@ function App() {
             <Route path="/detail/:id" element={<Detail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/loading" element={<Loading />} />
         </Routes>
     )
 }

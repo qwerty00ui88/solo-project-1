@@ -62,12 +62,10 @@ function RecommendedVideo({ videoData }: { videoData: ContentType[] }) {
     const videoList = videoData
         .reduce((acc: string[], cur) => {
             const [mediaType, id] = [cur.media_type, cur.id]
-            const { data, loading, error } = useGet(
+            const { data } = useGet(
                 `https://api.themoviedb.org/3/${mediaType}/${id}/videos`,
                 { language: 'ko-KR' }
-            ) as { data: Video; loading: boolean; error: null | Error }
-            // eslint-disable-next-line no-console
-            console.log({ data, loading, error })
+            ) as { data: Video }
             const n = data?.results.length
 
             if (n === 1) acc.push(data?.results[0]?.key)

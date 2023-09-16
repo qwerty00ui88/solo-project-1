@@ -19,6 +19,8 @@ export const login = createAsyncThunk(
         initializeApp(firebaseConfig)
         const auth = getAuth()
         const { user } = await signInWithEmailAndPassword(auth, email, password)
+        // eslint-disable-next-line no-console
+        console.log('🌈 로그인 성공', { user })
         return { email: user.email, uid: user.uid }
     }
 )
@@ -26,44 +28,36 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk('users/logout', async () => {
     initializeApp(firebaseConfig)
     const auth = getAuth()
-    signOut(auth)
+    await signOut(auth)
 })
 
 interface UserState {
     user: {
-        value: { email: string | null; uid: string | null }
-        type: 'idle' | 'pendding' | 'fulfilled' | 'rejected'
+        email: string | null
+        uid: string | null
     }
 }
 
 const initialState: UserState = {
-    user: { value: { email: null, uid: null }, type: 'idle' },
+    user: { email: null, uid: null },
 }
 
 export const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
+    reducers: {
+        setUser: (state, action) => {
+            state.user = action.payload
+        },
+    },
     extraReducers: (builder) => {
-        builder.addCase(login.pending, (state) => {
-            state.user.type = 'pendding'
-        })
         builder.addCase(login.fulfilled, (state, action) => {
-            state.user.value = action.payload
-            state.user.type = 'fulfilled'
+            state.user = action.payload
         })
-        builder.addCase(login.rejected, (state) => {
-            state.user.type = 'rejected'
-        })
-        builder.addCase(logout.pending, (state) => {
-            state.user.type = 'pendding'
-        })
-        builder.addCase(logout.fulfilled, () => initialState)
-        builder.addCase(logout.rejected, () => initialState)
     },
 })
 
-// export const {} = userSlice.actions
+export const { setUser } = userSlice.actions
 
 export const selectAuth = (state: RootState) => state.user.user
 

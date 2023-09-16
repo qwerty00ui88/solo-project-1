@@ -3,6 +3,8 @@ import { styled } from 'styled-components'
 import Header from '../Header'
 import Footer from '../Footer'
 import { fontKR } from '../../style/font'
+import Loading from '../../pages/Loading'
+import { useAppSelector } from '../../hooks'
 
 const HeaderTemplate = styled.header`
     height: 15vh;
@@ -33,8 +35,10 @@ const FooterTemplate = styled.footer`
 `
 
 function PageTemplate({ children }: { children: ReactNode }) {
+    const uiStatus = useAppSelector((state) => state.ui.status)
     return (
         <>
+            {/(_LOADING$)/.test(uiStatus) && <Loading />}
             <HeaderTemplate>
                 <Header />
             </HeaderTemplate>

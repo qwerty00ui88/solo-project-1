@@ -15,13 +15,10 @@ const OutlineRight = styled.div`
 `
 
 function Outline({ id }: { id: string }) {
-    const { data, loading, error } = useGet<ContentDetail>(
+    const { data } = useGet<ContentDetail>(
         `https://api.themoviedb.org/3/movie/${id}`,
         { language: 'ko-KR' }
-    ) as { data: ContentDetail; loading: boolean; error: null | Error }
-
-    // eslint-disable-next-line no-console
-    console.log({ data, loading, error })
+    ) as { data: ContentDetail }
 
     return (
         data && (

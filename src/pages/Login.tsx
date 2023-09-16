@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Input from '../components/commons/Input'
-// import { login } from '../reducers/userReducer'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { useAppDispatch } from '../hooks'
 import Button from '../components/commons/Button'
 import PageTemplate from '../components/templates/PageTemplate'
 import { logoSize } from '../style/font'
@@ -32,29 +31,14 @@ export const Title = styled.h2`
 
 function Login() {
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-
-    const status = useAppSelector((state) => state.user.user.type)
 
     const logIn = () => {
         if (email && password) {
             dispatch(login({ email, password }))
         }
     }
-
-    useEffect(() => {
-        if (status === 'fulfilled') {
-            navigate('/')
-        } else if (status === 'pendding') {
-            // eslint-disable-next-line no-console
-            console.log('pendding')
-        } else if (status === 'rejected') {
-            // eslint-disable-next-line no-console
-            console.log('rejected')
-        }
-    }, [status])
 
     return (
         <PageTemplate>

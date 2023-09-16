@@ -10,10 +10,10 @@ import {
 } from '../style/font'
 import { ReactComponent as Sun } from '../assets/sun.svg'
 import { ReactComponent as Moon } from '../assets/moon.svg'
-import { xsmallRadius } from '../style/border'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Button from './commons/Button'
 import { logout } from '../reducers/userReducer'
+import LinkTo from './commons/LinkTo'
 
 const HeaderWrapper = styled.div`
     height: 100%;
@@ -55,20 +55,12 @@ const Menu = styled.div`
     }
 `
 
-const MenuButton = styled(Link)`
-    width: 4.5rem;
-    text-align: center;
-    padding: 0.4rem;
-    border-radius: ${xsmallRadius};
-    background-color: rgb(229, 9, 20);
-    font-weight: ${semiboldWeight};
-`
-
 function Header() {
     const dispatch = useAppDispatch()
-    const isLogin = useAppSelector((state) => state.user.user.type)
-    // eslint-disable-next-line no-console
-    console.log(isLogin)
+    const isLogin = useAppSelector(
+        (state) => state.ui.status === 'AUTH_SUCCESS'
+    )
+
     const navList = ['영화', 'TV', '인물']
 
     return (
@@ -81,20 +73,25 @@ function Header() {
                     return <li key={list}>{list}</li>
                 })}
             </Nav>
-            <Menu>
-                <Sun />
-                <Moon />
-                <MenuButton to="/login">로그인</MenuButton>
-                <MenuButton to="/signup">회원가입</MenuButton>
-            </Menu>
-            <Menu>
-                <Button
-                    name="로그아웃"
-                    onClick={() => {
-                        dispatch(logout())
-                    }}
-                />
-            </Menu>
+            {isLogin ? (
+                <Menu>
+                    <Button
+                        name="로그아웃"
+                        onClick={() => {
+                            dispatch(logout())
+                        }}
+                        width="4.5rem"
+                        height="2.4rem"
+                    />
+                </Menu>
+            ) : (
+                <Menu>
+                    <Sun />
+                    <Moon />
+                    <LinkTo name="로그인" to="/login" height="2.4rem" />
+                    <LinkTo name="회원가입" to="/signup" height="2.4rem" />
+                </Menu>
+            )}
         </HeaderWrapper>
     )
 }

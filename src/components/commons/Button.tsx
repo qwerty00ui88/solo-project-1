@@ -3,12 +3,12 @@ import { styled } from 'styled-components'
 import { xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 
-interface ButtonWrapperProps {
+export interface ButtonWrapperProps {
     $width: string
     $height: string | null
 }
 
-const ButtonWrapper = styled.button<ButtonWrapperProps>`
+export const ButtonWrapper = styled.button<ButtonWrapperProps>`
     width: ${(props) => `${props.$width}`};
     height: ${(props) => `${props.$height}`};
     text-align: center;
