@@ -3,10 +3,11 @@ import styled from 'styled-components'
 import useGet, { TrendingContent } from '../utils/useGet'
 import Carousel from '../components/Carousel'
 import SearchBar from '../components/SearchBar'
-import PageTemplate from '../components/templates/PageTemplate'
 import FloatingBar from '../components/FloatingBar'
 import Trending from '../components/Trending'
 import RecommendedVideo from '../components/RecommendedVideo'
+
+const MainWrapper = styled.main``
 
 interface UtilityBarProps {
     $isOpen: boolean
@@ -54,7 +55,7 @@ function Main() {
 
     return (
         data && (
-            <PageTemplate>
+            <MainWrapper>
                 <Carousel data={data.results} />
                 <UtilityBar $isOpen={isOpen}>
                     <SearchBar
@@ -68,7 +69,7 @@ function Main() {
                 </UtilityBar>
                 <Trending />
                 <RecommendedVideo videoData={data.results} />
-            </PageTemplate>
+            </MainWrapper>
         )
     )
 }

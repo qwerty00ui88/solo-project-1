@@ -12,36 +12,36 @@ const TextElement = styled.text`
     fill: none;
     stroke-width: 1;
     stroke-linejoin: round;
-    stroke-dasharray: 80 320;
+    stroke-dasharray: 45 155;
     stroke-dashoffset: 0;
-    animation: stroke 4.8s infinite linear;
+    animation: stroke 5s infinite linear;
     font-size: ${logoSize};
     font-family: ${fontLogo};
 
     @keyframes stroke {
         100% {
-            stroke-dashoffset: -400;
+            stroke-dashoffset: -200;
         }
     }
 
     &:nth-child(4n + 1) {
         stroke: #fcb045;
-        animation-delay: -1.2s;
+        animation-delay: -1.25s;
     }
 
     &:nth-child(4n + 2) {
         stroke: #fd1d1d;
-        animation-delay: -2.4s;
+        animation-delay: -2.5s;
     }
 
     &:nth-child(4n + 3) {
         stroke: #833ab4;
-        animation-delay: -3.6s;
+        animation-delay: -3.75s;
     }
 
     &:nth-child(4n + 4) {
         stroke: #e5e5e5;
-        animation-delay: -4.8s;
+        animation-delay: -5s;
     }
 `
 

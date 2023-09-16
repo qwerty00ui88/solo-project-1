@@ -16,13 +16,14 @@ import { logout } from '../reducers/userReducer'
 import LinkTo from './commons/LinkTo'
 
 const HeaderWrapper = styled.div`
-    height: 100%;
     display: flex;
     margin: 0 10vw;
     & > * {
         display: flex;
         align-items: center;
     }
+    height: 15vh;
+    max-height: 120px;
 `
 
 const Logo = styled.h1`
@@ -57,9 +58,11 @@ const Menu = styled.div`
 
 function Header() {
     const dispatch = useAppDispatch()
-    const isLogin = useAppSelector(
-        (state) => state.ui.status === 'AUTH_SUCCESS'
-    )
+    const isLogin = useAppSelector((state) => {
+        // eslint-disable-next-line no-console
+        console.log(state.ui.status)
+        return state.ui.status === 'AUTH_SUCCESS'
+    })
 
     const navList = ['영화', 'TV', '인물']
 

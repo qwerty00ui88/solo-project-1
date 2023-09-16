@@ -19,6 +19,23 @@ const GlobalStyle = createGlobalStyle`
     min-width: 320px;
   }
 
+  main {
+    margin: 0 10vw;
+    font-family: ${fontKR};
+    &::after {
+        content: '';
+        display: block;
+        height: 15vh;
+        max-height: 120px;
+    }
+    @media screen and (max-width: 768px) {
+        margin: 0 4vw;
+    }
+    @media screen and (max-width: 375px) {
+        margin: 0 3vw;
+    }
+  }
+
   li {
     list-style: none;
   }

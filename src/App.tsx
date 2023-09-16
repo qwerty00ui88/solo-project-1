@@ -7,8 +7,10 @@ import Detail from './pages/Detail'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import { setUser } from './reducers/userReducer'
-import { useAppDispatch } from './hooks'
+import { useAppDispatch, useAppSelector } from './hooks'
 import { setUi } from './reducers/uiReducer'
+import Header from './components/Header'
+import Footer from './components/Footer'
 import Loading from './pages/Loading'
 
 const firebaseConfig = {
@@ -23,16 +25,19 @@ const firebaseConfig = {
 
 function App() {
     const dispatch = useAppDispatch()
+    const isLoading = useAppSelector((state) =>
+        /(_LOADING$)/.test(state.ui.status)
+    )
 
     useEffect(() => {
+        dispatch(setUi('AUTH_LOADING'))
         initializeApp(firebaseConfig)
         const auth = getAuth()
-        dispatch(setUi('AUTH_LOADING'))
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                dispatch(setUi('AUTH_SUCCESS'))
                 // eslint-disable-next-line no-console
                 console.log('🌈 로그인 중', { user })
-                dispatch(setUi('AUTH_SUCCESS'))
                 dispatch(
                     setUser({
                         email: user.email,
@@ -53,14 +58,19 @@ function App() {
         })
     }, [])
 
-    return (
-        <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/detail/:id" element={<Detail />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/loading" element={<Loading />} />
-        </Routes>
+    return isLoading ? (
+        <Loading />
+    ) : (
+        <>
+            <Header />
+            <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/detail/:id" element={<Detail />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+            </Routes>
+            <Footer />
+        </>
     )
 }
 

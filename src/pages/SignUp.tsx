@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { LoginWrapper as SignUpWrpper, Title } from './Login'
 import Button from '../components/commons/Button'
 import Input from '../components/commons/Input'
-import PageTemplate from '../components/templates/PageTemplate'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -44,29 +43,27 @@ function SignUp() {
     }
 
     return (
-        <PageTemplate>
-            <SignUpWrpper>
-                <Title>SignUp</Title>
-                <Input
-                    value={email}
-                    onChange={(e) => {
-                        setEmail(e.target.value)
-                    }}
-                />
-                <Input
-                    value={password}
-                    onChange={(e) => {
-                        setPassword(e.target.value)
-                    }}
-                />
-                <Button
-                    name="회원가입"
-                    onClick={createUser}
-                    width="20rem"
-                    height="3rem"
-                />
-            </SignUpWrpper>
-        </PageTemplate>
+        <SignUpWrpper>
+            <Title>SignUp</Title>
+            <Input
+                value={email}
+                onChange={(e) => {
+                    setEmail(e.target.value)
+                }}
+            />
+            <Input
+                value={password}
+                onChange={(e) => {
+                    setPassword(e.target.value)
+                }}
+            />
+            <Button
+                name="회원가입"
+                onClick={createUser}
+                width="20rem"
+                height="3rem"
+            />
+        </SignUpWrpper>
     )
 }
 

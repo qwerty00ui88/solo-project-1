@@ -9,7 +9,11 @@ import { xsmallRadius } from '../style/border'
 const FooterWrapper = styled.div`
     display: flex;
     color: #a5a5a7;
-    height: 100%;
+    padding: 50px 10vw;
+    border-top: 1px solid #a5a5a7;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 `
 
 const FooterLeft = styled.div`

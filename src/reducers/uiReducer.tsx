@@ -5,7 +5,6 @@ import { login, logout } from './userReducer'
 
 interface UiState {
     status:
-        | 'IDLE'
         | 'AUTH_LOADING'
         | 'AUTH_SUCCESS'
         | 'AUTH_FAIL'
@@ -15,7 +14,7 @@ interface UiState {
 }
 
 const initialState: UiState = {
-    status: 'IDLE',
+    status: 'AUTH_LOADING',
 }
 
 export const uiSlice = createSlice({
