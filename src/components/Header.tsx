@@ -61,7 +61,7 @@ function Header() {
     const isLogin = useAppSelector((state) => {
         // eslint-disable-next-line no-console
         console.log(state.ui.status)
-        return state.ui.status === 'AUTH_SUCCESS'
+        return !!state.user.user
     })
 
     const navList = ['영화', 'TV', '인물']

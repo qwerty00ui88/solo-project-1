@@ -12,6 +12,7 @@ import { setUi } from './reducers/uiReducer'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Loading from './pages/Loading'
+import Error from './pages/Error'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -25,10 +26,13 @@ const firebaseConfig = {
 
 function App() {
     const dispatch = useAppDispatch()
-    const isLoading = useAppSelector((state) =>
-        /(_LOADING$)/.test(state.ui.status)
-    )
-
+    const status = useAppSelector((state) => {
+        if (/(_LOADING$)/.test(state.ui.status)) return 'LOADING'
+        if (/(_ERROR$)/.test(state.ui.status)) return 'ERROR'
+        return 'NORMAL'
+    })
+    // eslint-disable-next-line no-console
+    console.log(`⭐️${status}`)
     useEffect(() => {
         dispatch(setUi('AUTH_LOADING'))
         initializeApp(firebaseConfig)
@@ -40,36 +44,34 @@ function App() {
                 console.log('🌈 로그인 중', { user })
                 dispatch(
                     setUser({
-                        email: user.email,
                         uid: user.uid,
                     })
                 )
             } else {
                 dispatch(setUi('AUTH_FAIL'))
-                dispatch(
-                    setUser({
-                        email: null,
-                        uid: null,
-                    })
-                )
+                dispatch(setUser(null))
                 // eslint-disable-next-line no-console
                 console.log('🌈 로그인 중 아님', { user })
             }
         })
     }, [])
 
-    return isLoading ? (
-        <Loading />
-    ) : (
+    return (
         <>
-            <Header />
-            <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/detail/:id" element={<Detail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-            </Routes>
-            <Footer />
+            {status === 'LOADING' && <Loading />}
+            {status === 'ERROR' && <Error />}
+            {status === 'NORMAL' && (
+                <>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<Main />} />
+                        <Route path="/detail/:id" element={<Detail />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+                    </Routes>
+                    <Footer />
+                </>
+            )}
         </>
     )
 }

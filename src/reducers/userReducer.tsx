@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
         const { user } = await signInWithEmailAndPassword(auth, email, password)
         // eslint-disable-next-line no-console
         console.log('🌈 로그인 성공', { user })
-        return { email: user.email, uid: user.uid }
+        return { uid: user.uid }
     }
 )
 
@@ -32,14 +32,11 @@ export const logout = createAsyncThunk('users/logout', async () => {
 })
 
 interface UserState {
-    user: {
-        email: string | null
-        uid: string | null
-    }
+    user: null | { uid: string }
 }
 
 const initialState: UserState = {
-    user: { email: null, uid: null },
+    user: null,
 }
 
 export const userSlice = createSlice({

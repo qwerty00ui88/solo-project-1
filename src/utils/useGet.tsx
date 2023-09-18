@@ -147,10 +147,9 @@ function useGet<T>(url: string, params: Params, dependency?: string[]) {
         try {
             const response = await axios.request(options)
             setData(response.data)
-            // setLoading(false)
         } catch (axiosError) {
-            // setError(axiosError as Error)
-            // setLoading(false)
+            // eslint-disable-next-line no-console
+            console.log(axiosError)
         }
     }
 

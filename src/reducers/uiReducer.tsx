@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 import { RootState } from '../store'
 import { login, logout } from './userReducer'
 
@@ -10,7 +9,10 @@ interface UiState {
         | 'AUTH_FAIL'
         | 'LOGOUT_LOADING'
         | 'LOGOUT_SUCCESS'
-        | 'LOGOUT_FAIL'
+        | 'LOGOUT_ERROR'
+        | 'USEGET_LOADING'
+        | 'USEGET_SUCCESS'
+        | 'USEGET_ERROR'
 }
 
 const initialState: UiState = {
@@ -42,7 +44,7 @@ export const uiSlice = createSlice({
             state.status = 'LOGOUT_SUCCESS'
         })
         builder.addCase(logout.rejected, (state) => {
-            state.status = 'LOGOUT_FAIL'
+            state.status = 'LOGOUT_ERROR'
         })
     },
 })
