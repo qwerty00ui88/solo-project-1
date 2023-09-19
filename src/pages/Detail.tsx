@@ -1,22 +1,28 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import useGet, { ContentDetail } from '../utils/useGet'
+import useGet, { MovieDetail, TVDetail } from '../utils/useGet'
 import Outline from '../components/Outline'
+import Cast from '../components/\bCast'
 
 const DetailWrapper = styled.main``
 
 function Detail() {
-    const { id } = useParams()
-    const { data } = useGet<ContentDetail>(
-        `https://api.themoviedb.org/3/movie/${id}`,
-        { language: 'ko-KR' }
-    ) as { data: ContentDetail }
+    const { media, id } = useParams() as { media: string; id: string }
+    const { data } = useGet<MovieDetail | TVDetail>(
+        `https://api.themoviedb.org/3/${media}/${id}?append_to_response=credits`,
+        {
+            language: 'ko-KR',
+        }
+    ) as { data: MovieDetail | TVDetail }
 
     return (
-        <DetailWrapper>
-            <Outline data={data} />
-        </DetailWrapper>
+        data && (
+            <DetailWrapper>
+                <Outline media={media} data={data} />
+                <Cast credits={data.credits} />
+            </DetailWrapper>
+        )
     )
 }
 

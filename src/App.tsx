@@ -65,7 +65,7 @@ function App() {
                     <Header />
                     <Routes>
                         <Route path="/" element={<Main />} />
-                        <Route path="/detail/:id" element={<Detail />} />
+                        <Route path="/detail/:media/:id" element={<Detail />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<SignUp />} />
                     </Routes>

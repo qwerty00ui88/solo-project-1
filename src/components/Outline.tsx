@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { ContentDetail } from '../utils/useGet'
+import { MovieDetail, TVDetail } from '../utils/useGet'
 import { titleWeb, xlargeSize } from '../style/font'
 
 const OutlineWrapper = styled.div<{ $backdrop: string }>`
@@ -64,7 +64,20 @@ const Tagline = styled.div`
     margin-bottom: 0.5rem;
 `
 
-function Outline({ data }: { data: ContentDetail }) {
+function Outline({
+    media,
+    data,
+}: {
+    media: string
+    data: MovieDetail | TVDetail
+}) {
+    const title = (data as MovieDetail).title || (data as TVDetail).name
+
+    const releaseDate =
+        (data as MovieDetail).release_date || (data as TVDetail).first_air_date
+
+    const { runtime } = data as MovieDetail
+
     return (
         data && (
             <OutlineWrapper $backdrop={data.backdrop_path}>
@@ -74,20 +87,20 @@ function Outline({ data }: { data: ContentDetail }) {
                 />
                 <OutlineRight>
                     <MainInfo>
-                        <Title>{data.title}</Title>
+                        <Title>{title}</Title>
                         <Facts>
-                            <span>{data.release_date}</span>
+                            <span>{releaseDate}</span>
                             <GenreList>
                                 {data.genres.map((el) => {
                                     return <li key={el.name}>{el.name}</li>
                                 })}
                             </GenreList>
-                            <span>{`${data.runtime}분`}</span>
+                            {media === 'movie' && <span>{`${runtime}분`}</span>}
                         </Facts>
                     </MainInfo>
                     <VoteAvg>{data.vote_average.toFixed(1)}</VoteAvg>
                     <DetailedInfo>
-                        <Tagline>{data.tagline}</Tagline>
+                        {media === 'movie' && <Tagline>{data.tagline}</Tagline>}
                         {data.overview && (
                             <>
                                 <SubTitle>개요</SubTitle>

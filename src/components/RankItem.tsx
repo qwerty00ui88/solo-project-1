@@ -62,7 +62,7 @@ function RankItem({ category, data, rank }: RankItemProps) {
         <ChartWrapper $backdrop={backdropPath}>
             <Rank>{rank}</Rank>
             <Poster src={`https://image.tmdb.org/t/p/w92${imagePath}`} alt="" />
-            <Title to={`/detail/${data.id}`}>{title}</Title>
+            <Title to={`/detail/${data.media_type}/${data.id}`}>{title}</Title>
             {category === 'person' ? <Heart /> : <Star />}
             <VoteAvg>{vote}</VoteAvg>
         </ChartWrapper>

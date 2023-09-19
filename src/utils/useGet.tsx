@@ -28,16 +28,19 @@ export interface ContentType {
     origin_country: string[]
 }
 
-export interface PeopleType {
+export interface PersonCommon {
     adult: boolean
     id: number
     name: string
     original_name: string
-    media_type: string
     popularity: number
     gender: number
     known_for_department: string
     profile_path: string
+}
+
+export interface PeopleType extends PersonCommon {
+    media_type: string
     known_for: ContentType[]
     total_pages: number
     total_results: number
@@ -51,7 +54,7 @@ export interface TrendingContent {
 }
 
 export interface TrendingPeople {
-    page: 1
+    page: number
     results: PeopleType[]
     total_pages: number
     total_results: number
@@ -78,7 +81,18 @@ export interface Genre {
     name: string
 }
 
-export interface ContentDetail {
+export interface Person extends PersonCommon {
+    character: string
+    credit_id: string
+    order: number
+}
+
+export interface Credits {
+    cast: Person[]
+    crew: Person[]
+}
+
+export interface MovieDetail {
     adult: boolean
     backdrop_path: string
     belongs_to_collection: {
@@ -88,11 +102,7 @@ export interface ContentDetail {
         backdrop_path: string
     }
     budget: number
-    genres: {
-        id: number
-        name: string
-    }[]
-
+    genres: Genre[]
     homepage: string
     id: number
     imdb_id: string
@@ -107,14 +117,13 @@ export interface ContentDetail {
         name: string
         origin_country: string
     }[]
-
     production_countries: {
         iso_3166_1: string
         name: string
     }[]
     release_date: string
-    revenue: 0
-    runtime: 110
+    revenue: number
+    runtime: number
     spoken_languages: {
         english_name: string
         iso_639_1: string
@@ -126,6 +135,85 @@ export interface ContentDetail {
     video: boolean
     vote_average: number
     vote_count: number
+    credits: Credits
+}
+
+export interface Episode {
+    id: number
+    name: string
+    overview: string
+    vote_average: number
+    vote_count: number
+    air_date: string
+    episode_number: number
+    episode_type: string
+    production_code: string
+    runtime: number
+    season_number: number
+    show_id: number
+    still_path: null | string
+}
+
+export interface TVDetail {
+    adult: boolean
+    backdrop_path: string
+    created_by: []
+    episode_run_time: number[]
+    first_air_date: string
+    genres: Genre[]
+    homepage: string
+    id: number
+    in_production: boolean
+    languages: string[]
+    last_air_date: string
+    last_episode_to_air: Episode
+    name: string
+    next_episode_to_air: Episode
+    networks: {
+        id: number
+        logo_path: string
+        name: string
+        origin_country: string
+    }[]
+    number_of_episodes: number
+    number_of_seasons: number
+    origin_country: string[]
+    original_language: string
+    original_name: string
+    overview: string
+    popularity: number
+    poster_path: string
+    production_companies: {
+        id: number
+        logo_path: string
+        name: string
+        origin_country: string
+    }[]
+    production_countries: {
+        iso_3166_1: string
+        name: string
+    }[]
+    seasons: {
+        air_date: string
+        episode_count: number
+        id: number
+        name: string
+        overview: string
+        poster_path: string
+        season_number: number
+        vote_average: number
+    }[]
+    spoken_languages: {
+        english_name: string
+        iso_639_1: string
+        name: string
+    }[]
+    status: string
+    tagline: string
+    type: string
+    vote_average: number
+    vote_count: number
+    credits: Credits
 }
 
 function useGet<T>(url: string, params: Params, dependency?: string[]) {
