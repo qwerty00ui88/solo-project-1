@@ -8,7 +8,7 @@ import {
     titleTablet,
     titleWeb,
 } from '../style/font'
-import useGet, { TrendingContent, TrendingPeople } from '../utils/useGet'
+import useGet, { Contents, People } from '../utils/useGet'
 import Rank from './Rank'
 import { xlargeRadius, smallRadius, xsmallRadius } from '../style/border'
 
@@ -99,9 +99,7 @@ function Trending() {
     const [duration, setDuration] = useState<Duration>('day')
     const [category, setCategory] = useState<Category>('movie')
 
-    type TrendingData = typeof category extends 'person'
-        ? TrendingPeople
-        : TrendingContent
+    type TrendingData = typeof category extends 'person' ? People : Contents
 
     const { data } = useGet<TrendingData>(
         `https://api.themoviedb.org/3/trending/${category}/${duration}`,

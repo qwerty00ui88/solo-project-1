@@ -39,23 +39,23 @@ export interface PersonCommon {
     profile_path: string
 }
 
-export interface PeopleType extends PersonCommon {
+export interface PersonType extends PersonCommon {
     media_type: string
     known_for: ContentType[]
     total_pages: number
     total_results: number
 }
 
-export interface TrendingContent {
+export interface Contents {
     page: number
     results: ContentType[]
     total_pages: number
     total_results: number
 }
 
-export interface TrendingPeople {
+export interface People {
     page: number
-    results: PeopleType[]
+    results: PersonType[]
     total_pages: number
     total_results: number
 }

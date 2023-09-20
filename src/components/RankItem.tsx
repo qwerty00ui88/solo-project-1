@@ -5,7 +5,7 @@ import { ReactComponent as Star } from '../assets/star.svg'
 import { ReactComponent as Heart } from '../assets/heart.svg'
 import { xlargeSize } from '../style/font'
 import { smallRadius } from '../style/border'
-import { ContentType, PeopleType } from '../utils/useGet'
+import { ContentType, PersonType } from '../utils/useGet'
 import { Category } from './Trending'
 
 const ChartWrapper = styled.div<{ $backdrop: string | null }>`
@@ -42,20 +42,20 @@ const VoteAvg = styled.div`
 `
 interface RankItemProps {
     category: Category
-    data: PeopleType | ContentType
+    data: PersonType | ContentType
     rank: number
 }
 
 function RankItem({ category, data, rank }: RankItemProps) {
     const imagePath =
-        (data as ContentType).poster_path || (data as PeopleType).profile_path
+        (data as ContentType).poster_path || (data as PersonType).profile_path
     const backdropPath = (data as ContentType).backdrop_path
     const title =
         (data as ContentType).title ||
         (data as ContentType).name ||
-        (data as PeopleType).name
+        (data as PersonType).name
     const vote = (
-        (data as ContentType).vote_average || (data as PeopleType).popularity
+        (data as ContentType).vote_average || (data as PersonType).popularity
     ).toFixed(1)
 
     return (

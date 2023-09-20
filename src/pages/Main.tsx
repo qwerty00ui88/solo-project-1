@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useGet, { TrendingContent } from '../utils/useGet'
+import useGet, { Contents } from '../utils/useGet'
 import Carousel from '../components/Carousel'
 import SearchBar from '../components/SearchBar'
 import FloatingBar from '../components/FloatingBar'
@@ -23,7 +23,7 @@ const UtilityBar = styled.div<UtilityBarProps>`
 `
 
 function Main() {
-    const { data } = useGet<TrendingContent>(
+    const { data } = useGet<Contents>(
         'https://api.themoviedb.org/3/trending/all/day',
         { language: 'ko-KR' }
     )

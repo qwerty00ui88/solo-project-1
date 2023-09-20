@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { xxlargeSize } from '../style/font'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
-import useGet, { Genre, TrendingContent } from '../utils/useGet'
+import useGet, { Genre, Contents } from '../utils/useGet'
 import { largeRadius, xlargeRadius } from '../style/border'
 
 const SearchBarWrapper = styled.div<{ $isOpen: boolean }>`
@@ -83,7 +83,7 @@ interface SearchBarProps {
 
 function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
     const [word, setWord] = useState('')
-    const { data } = useGet<TrendingContent>(
+    const { data } = useGet<Contents>(
         'https://api.themoviedb.org/3/search/multi',
         {
             query: `${word}`,
@@ -94,7 +94,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         [word]
     )
 
-    const result = (data as TrendingContent)?.results
+    const result = (data as Contents)?.results
 
     const { data: genres } = useGet(
         `https://api.themoviedb.org/3/genre/movie/list`,

@@ -9,7 +9,7 @@ const PersonCardWrapper = styled.li`
     border: 2px solid #e5e5e53f;
     border-radius: 15px;
     background-color: black;
-    width: 17rem;
+    width: 24%;
     overflow: hidden;
 `
 

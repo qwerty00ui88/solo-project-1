@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import useGet, { MovieDetail, TVDetail } from '../utils/useGet'
 import Outline from '../components/Outline'
-import Cast from '../components/\bCast'
+import Cast from '../components/Cast'
 
 const DetailWrapper = styled.main``
 
