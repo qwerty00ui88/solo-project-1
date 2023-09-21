@@ -19,7 +19,6 @@ function Detail() {
         }
     )
 
-    console.log(data)
     return (
         data && (
             <DetailWrapper>

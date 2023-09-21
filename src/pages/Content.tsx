@@ -35,8 +35,6 @@ function Content() {
         [menu, category]
     )
 
-    console.log(data)
-
     return (
         data && (
             <ContentWrapper>

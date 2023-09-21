@@ -55,7 +55,6 @@ const Vote = styled.div`
 `
 
 function ContentCard({ data }: { data: ContentType }) {
-    console.log(data)
     return (
         data && (
             <ContentCardWrapper>

@@ -23,7 +23,6 @@ const KnownForList = styled.ul`
 `
 
 function PersonCard({ data, rank }: { data: PersonType; rank: number }) {
-    console.log(data)
     return (
         data && (
             <PersonCardWrapper>
