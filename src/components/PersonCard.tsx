@@ -1,46 +1,52 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Person } from '../utils/useGet'
-import { boldWeight } from '../style/font'
+import { PersonType } from '../utils/useGet'
+import { ReactComponent as Heart } from '../assets/heart.svg'
+import ContentCard from './ContentCard'
 
 const PersonCardWrapper = styled.li`
     display: flex;
-    /* border: 1px solid #e5e5e5; */
-    border: 2px solid #e5e5e53f;
-    border-radius: 15px;
-    background-color: black;
-    width: 24%;
-    overflow: hidden;
 `
 
-const Profile = styled.img`
-    width: 45px;
-    aspect-ratio: 2/3;
-    margin-right: 1rem;
-`
-
-const NameAndCharacter = styled.div`
+const Popularity = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
 `
 
-const Name = styled.div`
-    font-weight: ${boldWeight};
+const Image = styled.img`
+    width: 200px;
+    aspect-ratio: 2/3;
 `
 
-function PersonCard({ personData }: { personData: Person }) {
+const KnownForList = styled.ul`
+    display: flex;
+`
+
+function PersonCard({ data, rank }: { data: PersonType; rank: number }) {
+    console.log(data)
     return (
-        <PersonCardWrapper>
-            <Profile
-                src={`https://image.tmdb.org/t/p/w92${personData.profile_path}`}
-                alt=""
-            />
-            <NameAndCharacter>
-                <Name>{personData.name}</Name>
-                <div>{`${personData.character}역`}</div>
-            </NameAndCharacter>
-        </PersonCardWrapper>
+        data && (
+            <PersonCardWrapper>
+                <div>{rank}</div>
+
+                <div>
+                    <Image
+                        src={`https://image.tmdb.org/t/p/w500${data.profile_path}`}
+                        alt=""
+                    />
+                    <div>{data.name}</div>
+                    <Popularity>
+                        <Heart />
+                        {data.popularity.toFixed(1)}
+                    </Popularity>
+                </div>
+                <KnownForList>
+                    {data.known_for?.map((el) => {
+                        return <ContentCard key={el.id} data={el} />
+                    })}
+                </KnownForList>
+            </PersonCardWrapper>
+        )
     )
 }
 

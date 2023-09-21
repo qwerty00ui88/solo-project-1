@@ -55,21 +55,24 @@ const Vote = styled.div`
 `
 
 function ContentCard({ data }: { data: ContentType }) {
+    console.log(data)
     return (
-        <ContentCardWrapper>
-            <Image
-                src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-                alt="fds"
-            />
-            <Description>
-                <Title>{data.title || data.name}</Title>
-                <div>{data.release_date || data.first_air_date}</div>
-                <Vote>
-                    <Star />
-                    {data.vote_average.toFixed(1)}
-                </Vote>
-            </Description>
-        </ContentCardWrapper>
+        data && (
+            <ContentCardWrapper>
+                <Image
+                    src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                    alt="fds"
+                />
+                <Description>
+                    <Title>{data.title || data.name}</Title>
+                    <div>{data.release_date || data.first_air_date}</div>
+                    <Vote>
+                        <Star />
+                        {data.vote_average?.toFixed(1)}
+                    </Vote>
+                </Description>
+            </ContentCardWrapper>
+        )
     )
 }
 

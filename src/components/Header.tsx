@@ -118,7 +118,7 @@ function Header() {
             ],
         },
         {
-            nav: { id: 'people', nameKr: '인물', nameEn: 'People' },
+            nav: { id: 'person', nameKr: '인물', nameEn: 'People' },
             subNav: [{ id: 'popular', nameKr: '인기', nameEn: 'Popular' }],
         },
     ]

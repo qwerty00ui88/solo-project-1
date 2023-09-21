@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import PersonCard from './PersonCard'
+import CastCard from './CastCard'
 import { Credits } from '../utils/useGet'
 import { largeSize } from '../style/font'
 
@@ -22,7 +22,7 @@ function Cast({ credits }: { credits: Credits }) {
             <Title>출연</Title>
             <CastList>
                 {credits.cast.slice(0, 12).map((el) => {
-                    return <PersonCard key={el.id} personData={el} />
+                    return <CastCard key={el.id} personData={el} />
                 })}
             </CastList>
         </div>
