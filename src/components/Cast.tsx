@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import CastCard from './CastCard'
 import { Credits } from '../utils/useGet'
-import { largeSize } from '../style/font'
+import { xlargeSize } from '../style/font'
 
 const CastList = styled.ul`
     display: flex;
@@ -11,8 +11,8 @@ const CastList = styled.ul`
     gap: 10px;
 `
 
-const Title = styled.h4`
-    font-size: ${largeSize};
+const Title = styled.h3`
+    font-size: ${xlargeSize};
     margin-bottom: 10px;
 `
 
