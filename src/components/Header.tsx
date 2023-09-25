@@ -85,8 +85,6 @@ const Menu = styled.div`
 function Header() {
     const dispatch = useAppDispatch()
     const isLogin = useAppSelector((state) => {
-        // eslint-disable-next-line no-console
-        console.log(state.ui.status)
         return !!state.user.user
     })
 

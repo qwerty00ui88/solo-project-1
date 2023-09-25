@@ -37,6 +37,7 @@ const Title = styled.h2`
 
 const SubTitle = styled.h3`
     font-size: ${xlargeSize};
+    margin-bottom: 10px;
 `
 
 const Facts = styled.div`
@@ -91,14 +92,14 @@ function Outline({
                         <Facts>
                             <span>{releaseDate}</span>
                             <GenreList>
-                                {data.genres.map((el) => {
+                                {data.genres?.map((el) => {
                                     return <li key={el.name}>{el.name}</li>
                                 })}
                             </GenreList>
                             {media === 'movie' && <span>{`${runtime}분`}</span>}
                         </Facts>
                     </MainInfo>
-                    <VoteAvg>{data.vote_average.toFixed(1)}</VoteAvg>
+                    <VoteAvg>{data.vote_average?.toFixed(1)}</VoteAvg>
                     <DetailedInfo>
                         {media === 'movie' && <Tagline>{data.tagline}</Tagline>}
                         {data.overview && (

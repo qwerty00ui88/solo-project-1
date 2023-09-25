@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { xlargeRadius } from '../style/border'
 import { ContentType } from '../utils/useGet'
 
@@ -23,7 +24,7 @@ const CardContainer = styled.div`
     display: flex;
 `
 
-const Card = styled.div`
+const Card = styled(Link)`
     flex: 1;
     width: 18%;
     display: flex;
@@ -51,7 +52,10 @@ function Slide({ data, slideRef }: SlideProps) {
             <CardContainer>
                 {data.map((el) => {
                     return (
-                        <Card key={el.id}>
+                        <Card
+                            to={`/detail/${el.media_type}/${el.id}`}
+                            key={el.id}
+                        >
                             <Img
                                 alt=""
                                 src={`https://image.tmdb.org/t/p/w500${el?.poster_path}`}

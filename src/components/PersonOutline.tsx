@@ -32,6 +32,7 @@ const Title = styled.h2`
 
 const SubTitle = styled.h3`
     font-size: ${xlargeSize};
+    margin-bottom: 10px;
 `
 
 const AlsoKnownAs = styled.div``
@@ -85,11 +86,11 @@ function PersonOutline({ data }: { data: PersonDetail }) {
                     </Popularity>
                 </DayAndGender>
                 <AlsoKnownAs>
-                    {data.also_known_as.length > 0 && (
+                    {data.also_known_as?.length > 0 && (
                         <>
                             <SubTitle>Also Known As</SubTitle>
                             <AlsoKnownAsList>
-                                {data.also_known_as.map((el) => {
+                                {data.also_known_as?.map((el) => {
                                     return <li key={el}>{el}</li>
                                 })}
                             </AlsoKnownAsList>

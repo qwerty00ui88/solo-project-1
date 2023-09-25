@@ -8,6 +8,7 @@ import PersonOutline from '../components/PersonOutline'
 import Credits from '../components/Credits'
 import Biography from '../components/Biography'
 import NumberOfWorks from '../components/NumberOfWorks'
+import { xlargeSize } from '../style/font'
 
 const DetailWrapper = styled.main`
     display: flex;
@@ -16,6 +17,11 @@ const DetailWrapper = styled.main`
 `
 
 const CreditsList = styled.ul``
+
+const SubTitle = styled.h3`
+    font-size: ${xlargeSize};
+    margin-bottom: 10px;
+`
 
 function Detail() {
     const { media, id } = useParams() as { media: string; id: string }
@@ -50,6 +56,11 @@ function Detail() {
         }).length,
     }
 
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+    })
+
     return (
         data && (
             <DetailWrapper>
@@ -57,11 +68,11 @@ function Detail() {
                     <>
                         <PersonOutline data={data as PersonDetail} />
                         <Biography data={(data as PersonDetail).biography} />
-                        <NumberOfWorks data={NumberOfWorksData} />
                         <div>
-                            <div>출연</div>
+                            <SubTitle>출연</SubTitle>
+                            <NumberOfWorks data={NumberOfWorksData} />
                             <CreditsList>
-                                {creditListEl.map((el) => {
+                                {creditListEl?.map((el) => {
                                     return (
                                         <Credits
                                             key={`${el.id}${Math.random()}`}

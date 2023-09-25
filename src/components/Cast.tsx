@@ -21,7 +21,7 @@ function Cast({ credits }: { credits: Credits }) {
         <div>
             <Title>출연</Title>
             <CastList>
-                {credits.cast.slice(0, 12).map((el) => {
+                {credits?.cast.slice(0, 12)?.map((el) => {
                     return <CastCard key={el.id} personData={el} />
                 })}
             </CastList>
