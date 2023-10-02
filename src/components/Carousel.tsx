@@ -7,7 +7,6 @@ import { ContentType } from '../utils/useGet'
 const Viewer = styled.div`
     flex: 1; // 세로
     overflow: hidden;
-    margin-bottom: 10px;
 `
 
 interface SlidesProps {

@@ -13,7 +13,6 @@ const CastList = styled.ul`
 
 const Title = styled.h3`
     font-size: ${xlargeSize};
-    margin-bottom: 10px;
 `
 
 function Cast({ credits }: { credits: Credits }) {

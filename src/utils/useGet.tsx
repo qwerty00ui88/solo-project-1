@@ -3,10 +3,17 @@ import { useEffect, useState } from 'react'
 
 export interface Params {
     query?: string
-    include_adult?: string
+    include_adult?: boolean
+    include_video?: boolean
     language?: string
-    page?: string
+    page?: number
     append_to_response?: string
+    sort_by?: string
+    without_genres?: string
+    'vote_count.gte'?: number | null
+    with_release_type?: number | null
+    'release_date.gte'?: string | null
+    'release_date.lte'?: string | null
 }
 
 export interface ContentType {

@@ -12,16 +12,6 @@ export const LoginWrapper = styled.main`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    & > * {
-        margin-bottom: 10px;
-    }
-
-    & > h2,
-    input:last-of-type,
-    a {
-        margin-bottom: 30px;
-    }
 `
 
 export const Title = styled.h2`

@@ -20,7 +20,6 @@ const CreditsList = styled.ul``
 
 const SubTitle = styled.h3`
     font-size: ${xlargeSize};
-    margin-bottom: 10px;
 `
 
 function Detail() {

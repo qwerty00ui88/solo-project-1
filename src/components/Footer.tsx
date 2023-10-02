@@ -46,7 +46,6 @@ const FooterLeftUl = styled.ul`
 `
 
 const FooterRightSelect = styled.select`
-    margin-bottom: auto;
     width: 7rem;
     padding: 3px 0 3px 3px;
     font-weight: ${mediumWeight};
@@ -55,8 +54,10 @@ const FooterRightSelect = styled.select`
 `
 
 const FooterLinks = styled.ul`
+    flex: 1;
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 `
 
 function Footer() {

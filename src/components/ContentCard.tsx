@@ -54,13 +54,21 @@ const Vote = styled.div`
     align-items: center;
 `
 
-function ContentCard({ data }: { data: ContentType }) {
+function ContentCard({
+    id,
+    data,
+    setRef,
+}: {
+    id: string
+    data: ContentType
+    setRef: (node: HTMLLIElement) => void
+}) {
     return (
         data && (
-            <ContentCardWrapper>
+            <ContentCardWrapper id={id} ref={setRef}>
                 <Image
                     src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-                    alt="fds"
+                    alt=""
                 />
                 <Description>
                     <Title>{data.title || data.name}</Title>

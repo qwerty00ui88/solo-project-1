@@ -22,6 +22,9 @@ const GlobalStyle = createGlobalStyle`
   main {
     margin: 0 10vw;
     font-family: ${fontKR};
+    & > *:not(:last-child) {
+      margin-bottom: 1rem;
+    }
     &::after {
         content: '';
         display: block;

@@ -24,9 +24,6 @@ const OutlineRight = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    & > *:not(:last-child) {
-        margin-bottom: 1rem;
-    }
 `
 
 const MainInfo = styled.div``
@@ -37,7 +34,6 @@ const Title = styled.h2`
 
 const SubTitle = styled.h3`
     font-size: ${xlargeSize};
-    margin-bottom: 10px;
 `
 
 const Facts = styled.div`
@@ -61,9 +57,7 @@ const VoteAvg = styled.div``
 
 const DetailedInfo = styled.div``
 
-const Tagline = styled.div`
-    margin-bottom: 0.5rem;
-`
+const Tagline = styled.div``
 
 function Outline({
     media,

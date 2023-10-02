@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { PersonType } from '../utils/useGet'
 import { ReactComponent as Heart } from '../assets/heart.svg'
-import ContentCard from './ContentCard'
 
 const PersonCardWrapper = styled.li`
     display: flex;
@@ -18,16 +17,18 @@ const Image = styled.img`
     aspect-ratio: 2/3;
 `
 
-const KnownForList = styled.ul`
-    display: flex;
-`
-
-function PersonCard({ data, rank }: { data: PersonType; rank: number }) {
+function PersonCard({
+    id,
+    data,
+    setRef,
+}: {
+    id: string
+    data: PersonType
+    setRef: (node: HTMLLIElement) => void
+}) {
     return (
         data && (
-            <PersonCardWrapper>
-                <div>{rank}</div>
-
+            <PersonCardWrapper id={id} ref={setRef}>
                 <div>
                     <Image
                         src={`https://image.tmdb.org/t/p/w500${data.profile_path}`}
@@ -36,14 +37,9 @@ function PersonCard({ data, rank }: { data: PersonType; rank: number }) {
                     <div>{data.name}</div>
                     <Popularity>
                         <Heart />
-                        {data.popularity.toFixed(1)}
+                        {data.popularity?.toFixed(1)}
                     </Popularity>
                 </div>
-                <KnownForList>
-                    {data.known_for?.map((el) => {
-                        return <ContentCard key={el.id} data={el} />
-                    })}
-                </KnownForList>
             </PersonCardWrapper>
         )
     )

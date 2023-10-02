@@ -19,7 +19,6 @@ const UtilityBar = styled.div<UtilityBarProps>`
     height: ${(props) => (props.$isOpen ? null : `6vw`)};
     min-height: ${(props) => (props.$isOpen ? null : `44px`)};
     max-height: ${(props) => (props.$isOpen ? null : `57px`)};
-    margin-bottom: 16px;
 `
 
 function Main() {
@@ -56,17 +55,20 @@ function Main() {
     return (
         data && (
             <MainWrapper>
-                <Carousel data={data.results} />
-                <UtilityBar $isOpen={isOpen}>
-                    <SearchBar
-                        isOpen={isOpen}
-                        handleSetIsOpen={handleSetIsOpen}
-                    />
-                    <FloatingBar
-                        isOpen={isOpen}
-                        isScrolledDown={isScrolledDown}
-                    />
-                </UtilityBar>
+                <div>
+                    <Carousel data={data.results} />
+                    <UtilityBar $isOpen={isOpen}>
+                        <SearchBar
+                            isOpen={isOpen}
+                            handleSetIsOpen={handleSetIsOpen}
+                        />
+                        <FloatingBar
+                            isOpen={isOpen}
+                            isScrolledDown={isScrolledDown}
+                        />
+                    </UtilityBar>
+                </div>
+
                 <Trending />
                 <RecommendedVideo videoData={data.results} />
             </MainWrapper>

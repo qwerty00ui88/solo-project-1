@@ -41,7 +41,6 @@ const CancelButton = styled.button`
 `
 
 const InputContainer = styled.div`
-    margin-bottom: 15px;
     & input {
         width: 100%;
         border-bottom: 1px solid #e5e5e5;
@@ -87,9 +86,9 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         'https://api.themoviedb.org/3/search/multi',
         {
             query: `${word}`,
-            include_adult: 'false',
+            include_adult: false,
             language: 'ko-KR',
-            page: '1',
+            page: 1,
         },
         [word]
     )

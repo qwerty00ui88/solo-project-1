@@ -26,7 +26,6 @@ const TrendingWrapper = styled.div`
     }
 
     width: 100%;
-    margin-bottom: 25px;
 `
 
 const TrendingLeft = styled.div``
@@ -56,7 +55,6 @@ const Detail = styled.p`
 `
 
 const Select = styled.select`
-    margin-bottom: auto;
     width: 7rem;
     padding: 3px 0 3px 3px;
     font-weight: ${mediumWeight};
@@ -70,9 +68,9 @@ const CategoryGroup = styled.fieldset`
     flex-direction: column;
     height: fit-content;
     border: none;
-    margin-bottom: 1rem;
     @media screen and (max-width: 1024px) {
         flex-direction: row;
+        margin-bottom: 1rem;
     }
 `
 

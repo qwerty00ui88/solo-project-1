@@ -21,9 +21,6 @@ const Left = styled.img`
 const Right = styled.div`
     display: flex;
     flex-direction: column;
-    & > *:not(:last-child) {
-        margin-bottom: 1rem;
-    }
 `
 
 const Title = styled.h2`
@@ -32,7 +29,6 @@ const Title = styled.h2`
 
 const SubTitle = styled.h3`
     font-size: ${xlargeSize};
-    margin-bottom: 10px;
 `
 
 const AlsoKnownAs = styled.div``
