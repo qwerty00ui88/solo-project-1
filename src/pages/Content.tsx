@@ -87,7 +87,7 @@ function Content() {
                 }
             )
 
-            if (node?.id === String(dataList.at(-5)?.id)) {
+            if (node?.id === String(dataList.at(-10)?.id)) {
                 lastElement.current = node
                 observer.observe(lastElement.current)
             }
@@ -101,6 +101,10 @@ function Content() {
         language: 'ko-KR',
         page,
         sort_by: sort,
+    }
+
+    const popularParams = {
+        ...commonParams,
     }
 
     const nowPlayingParams = {
@@ -124,8 +128,15 @@ function Content() {
         'vote_count.gte': 200,
     }
 
-    const popularParams = {
+    const airingTodayParams = {
         ...commonParams,
+        'air_date.lte': new Date(`${new Date()}z`).toISOString().slice(0, 10),
+        'air_date.gte': new Date(`${new Date()}z`).toISOString().slice(0, 10),
+    }
+
+    const onTheAirParams = {
+        ...commonParams,
+        'air_date.gte': new Date(`${new Date()}z`).toISOString().slice(0, 10),
     }
 
     const { data } = useGet<Contents | People>(
@@ -144,6 +155,10 @@ function Content() {
                           return upcomingParams
                       case 'top_rated':
                           return topRatedParams
+                      case 'airing_today':
+                          return airingTodayParams
+                      case 'on_the_air':
+                          return onTheAirParams
                       default:
                           return {}
                   }
@@ -173,8 +188,6 @@ function Content() {
             <ContentWrapper>
                 {menu !== 'person' && (
                     <Sort
-                        name="pets"
-                        id="pet-select"
                         onChange={(e) => {
                             setSort(e.target.value)
                         }}

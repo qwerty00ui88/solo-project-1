@@ -102,20 +102,20 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         }
     ) as { data: { genres: Genre[] } }
 
-    const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        handleSetIsOpen()
-        e.stopPropagation()
-    }
-
     const changeSearchWord = (e: ChangeEvent<HTMLInputElement>) => {
         setWord(e.target.value)
     }
 
     return (
-        <SearchBarWrapper onClick={handleSetIsOpen} $isOpen={isOpen}>
+        <SearchBarWrapper
+            onClick={() => {
+                if (!isOpen) handleSetIsOpen()
+            }}
+            $isOpen={isOpen}
+        >
             {isOpen ? (
                 <>
-                    <CancelButton type="button" onClick={handleOnClick}>
+                    <CancelButton type="button" onClick={handleSetIsOpen}>
                         <Cancel width={20} height={20} />
                     </CancelButton>
                     <InputContainer>
