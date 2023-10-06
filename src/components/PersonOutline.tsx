@@ -10,7 +10,6 @@ const PersonOutlineWrapper = styled.div`
     align-items: center;
     position: relative;
     column-gap: 3rem;
-    /* height: 450px; */
 `
 
 const Left = styled.img`

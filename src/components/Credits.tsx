@@ -32,7 +32,6 @@ const YearAndTitle = styled.div<{ $media: string }>`
     width: fit-content;
     text-align: ${(props) => (props.$media === 'movie' ? 'right' : `left`)};
     position: absolute;
-    /* top: -20%; */
     left: ${(props) => (props.$media === 'movie' ? null : `53%`)};
     right: ${(props) => (props.$media === 'movie' ? '53%' : null)};
 `

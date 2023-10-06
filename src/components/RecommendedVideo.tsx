@@ -17,7 +17,6 @@ const RecommendedVideoWrapper = styled.div`
 const Title = styled.h2`
     font-size: ${titleWeb};
     font-weight: ${mediumWeight};
-    /* margin-bottom: max(1vw, 8px); */
     @media screen and (max-width: 768px) {
         font-size: ${titleTablet};
     }
