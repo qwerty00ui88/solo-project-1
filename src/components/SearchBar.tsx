@@ -41,11 +41,12 @@ const CancelButton = styled.button`
 `
 
 const InputContainer = styled.div`
+    margin-bottom: 0.7rem;
     & input {
         width: 100%;
         border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 0.7rem;
         font-size: ${xxlargeSize};
-        padding-bottom: 10px;
         &::placeholder {
             color: #e5e5e53f;
         }
