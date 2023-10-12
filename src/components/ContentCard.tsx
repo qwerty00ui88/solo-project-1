@@ -1,5 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
+import { Link } from 'react-router-dom'
 import { xlargeRadius } from '../style/border'
 import { ContentType } from '../utils/useGet'
 import { boldWeight, largeSize } from '../style/font'
@@ -38,7 +39,6 @@ const Description = styled.div`
         rgba(0, 0, 0, 0.7),
         rgba(0, 0, 0, 1)
     );
-    /* background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); */
 `
 
 const Title = styled.div`
@@ -57,27 +57,31 @@ const Vote = styled.div`
 function ContentCard({
     id,
     data,
-    setRef,
+    mediaType,
+    setRef = () => {},
 }: {
     id: string
     data: ContentType
-    setRef: (node: HTMLLIElement) => void
+    mediaType: string
+    setRef?: (node: HTMLLIElement) => void
 }) {
     return (
         data && (
             <ContentCardWrapper id={id} ref={setRef}>
-                <Image
-                    src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-                    alt=""
-                />
-                <Description>
-                    <Title>{data.title || data.name}</Title>
-                    <div>{data.release_date || data.first_air_date}</div>
-                    <Vote>
-                        <Star />
-                        {data.vote_average?.toFixed(1)}
-                    </Vote>
-                </Description>
+                <Link to={`/detail/${mediaType}/${data.id}`}>
+                    <Image
+                        src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                        alt=""
+                    />
+                    <Description>
+                        <Title>{data.title || data.name}</Title>
+                        <div>{data.release_date || data.first_air_date}</div>
+                        <Vote>
+                            <Star />
+                            {data.vote_average?.toFixed(1)}
+                        </Vote>
+                    </Description>
+                </Link>
             </ContentCardWrapper>
         )
     )

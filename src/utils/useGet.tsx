@@ -279,6 +279,13 @@ export interface PersonDetail {
     }
 }
 
+export interface SearchData {
+    page: number
+    results: (ContentType | PersonType)[]
+    total_pages: number
+    total_results: number
+}
+
 function useGet<T>(url: string, params: Params, dependency?: string[]) {
     const [data, setData] = useState<T | null>(null)
     // const [loading, setLoading] = useState(true)

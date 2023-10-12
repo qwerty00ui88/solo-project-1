@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { PersonType } from '../utils/useGet'
 import { ReactComponent as Heart } from '../assets/heart.svg'
 
@@ -20,16 +21,16 @@ const Image = styled.img`
 function PersonCard({
     id,
     data,
-    setRef,
+    setRef = () => {},
 }: {
     id: string
     data: PersonType
-    setRef: (node: HTMLLIElement) => void
+    setRef?: (node: HTMLLIElement) => void
 }) {
     return (
         data && (
             <PersonCardWrapper id={id} ref={setRef}>
-                <div>
+                <Link to={`/detail/person/${data.id}`}>
                     <Image
                         src={`https://image.tmdb.org/t/p/w500${data.profile_path}`}
                         alt=""
@@ -39,7 +40,7 @@ function PersonCard({
                         <Heart />
                         {data.popularity?.toFixed(1)}
                     </Popularity>
-                </div>
+                </Link>
             </PersonCardWrapper>
         )
     )

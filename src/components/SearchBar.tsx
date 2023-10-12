@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { styled } from 'styled-components'
+import { Link } from 'react-router-dom'
 import { xxlargeSize } from '../style/font'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
 import useGet, { Genre, Contents } from '../utils/useGet'
@@ -132,7 +133,15 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                     {result.length > 0 && (
                         <Autocomplete>
                             {result.map((d) => {
-                                return <li key={d.id}>{d.name || d.title}</li>
+                                return (
+                                    <li key={d.id}>
+                                        <Link
+                                            to={`/search/${d.name || d.title}`}
+                                        >
+                                            {d.name || d.title}
+                                        </Link>
+                                    </li>
+                                )
                             })}
                         </Autocomplete>
                     )}

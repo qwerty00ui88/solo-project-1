@@ -223,6 +223,7 @@ function Content() {
                                     key={el.id}
                                     id={String(el.id)}
                                     data={el as ContentType}
+                                    mediaType={menu}
                                     setRef={setRef}
                                 />
                             )
