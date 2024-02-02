@@ -4,8 +4,9 @@ import styled from 'styled-components'
 import useGet, { ContentType, PersonType, SearchData } from '../utils/useGet'
 import PersonCard from '../components/PersonCard'
 import ContentCard from '../components/ContentCard'
+import { ContentList, PeopleList } from './Content'
 
-const SearchWrapper = styled.div``
+const SearchWrapper = styled.main``
 
 function Search() {
     const { word } = useParams()
@@ -30,37 +31,43 @@ function Search() {
         data && (
             <SearchWrapper>
                 <div>person</div>
-                {person.map((el) => {
-                    return (
-                        <PersonCard
-                            key={el.id}
-                            id={String(el.id)}
-                            data={el as PersonType}
-                        />
-                    )
-                })}
+                <PeopleList>
+                    {person.map((el) => {
+                        return (
+                            <PersonCard
+                                key={el.id}
+                                id={String(el.id)}
+                                data={el as PersonType}
+                            />
+                        )
+                    })}
+                </PeopleList>
                 <div>movie</div>
-                {movie.map((el) => {
-                    return (
-                        <ContentCard
-                            key={el.id}
-                            id={String(el.id)}
-                            data={el as ContentType}
-                            mediaType="movie"
-                        />
-                    )
-                })}
+                <ContentList>
+                    {movie.map((el) => {
+                        return (
+                            <ContentCard
+                                key={el.id}
+                                id={String(el.id)}
+                                data={el as ContentType}
+                                mediaType="movie"
+                            />
+                        )
+                    })}
+                </ContentList>
                 <div>tv</div>
-                {tv.map((el) => {
-                    return (
-                        <ContentCard
-                            key={el.id}
-                            id={String(el.id)}
-                            data={el as ContentType}
-                            mediaType="tv"
-                        />
-                    )
-                })}
+                <ContentList>
+                    {tv.map((el) => {
+                        return (
+                            <ContentCard
+                                key={el.id}
+                                id={String(el.id)}
+                                data={el as ContentType}
+                                mediaType="tv"
+                            />
+                        )
+                    })}
+                </ContentList>
             </SearchWrapper>
         )
     )

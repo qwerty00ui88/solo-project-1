@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { xxlargeSize } from '../style/font'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
 import useGet, { Genre, Contents } from '../utils/useGet'
-import { largeRadius, xlargeRadius } from '../style/border'
+import { xlargeRadius } from '../style/border'
+import AutoComplete from './AutoComplete'
 
 const SearchBarWrapper = styled.div<{ $isOpen: boolean }>`
     flex: 1 1 70%;
@@ -54,16 +55,6 @@ const InputContainer = styled.div`
     }
 `
 
-const Autocomplete = styled.ul`
-    position: absolute;
-    width: 40%;
-    background-color: black;
-    margin-top: -15px;
-    border-radius: ${largeRadius};
-    padding: 10px;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
-`
-
 const GenrePanel = styled.ul`
     display: flex;
     flex-wrap: wrap;
@@ -75,6 +66,11 @@ const GenrePanel = styled.ul`
         border-radius: ${xlargeRadius};
         padding: 5px 10px;
     }
+
+    & > a {
+        width: 100%;
+        height: 100%;
+    }
 `
 
 interface SearchBarProps {
@@ -84,6 +80,7 @@ interface SearchBarProps {
 
 function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
     const [word, setWord] = useState('')
+    const [autoCompleteVisible, setAutoCompleteVisible] = useState(false)
     const { data } = useGet<Contents>(
         'https://api.themoviedb.org/3/search/multi',
         {
@@ -108,6 +105,19 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         setWord(e.target.value)
     }
 
+    const handleCancelButton = () => {
+        handleSetIsOpen()
+        setWord('')
+    }
+
+    useEffect(() => {
+        if (result?.length > 0) {
+            setAutoCompleteVisible(true)
+        } else {
+            setAutoCompleteVisible(false)
+        }
+    }, [data])
+
     return (
         <SearchBarWrapper
             onClick={() => {
@@ -117,7 +127,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
         >
             {isOpen ? (
                 <>
-                    <CancelButton type="button" onClick={handleSetIsOpen}>
+                    <CancelButton type="button" onClick={handleCancelButton}>
                         <Cancel width={20} height={20} />
                     </CancelButton>
                     <InputContainer>
@@ -130,25 +140,22 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                             />
                         </label>
                     </InputContainer>
-                    {result.length > 0 && (
-                        <Autocomplete>
-                            {result.map((d) => {
-                                return (
-                                    <li key={d.id}>
-                                        <Link
-                                            to={`/search/${d.name || d.title}`}
-                                        >
-                                            {d.name || d.title}
-                                        </Link>
-                                    </li>
-                                )
-                            })}
-                        </Autocomplete>
+                    {autoCompleteVisible && (
+                        <AutoComplete
+                            data={result}
+                            autoCompleteVisible={autoCompleteVisible}
+                        />
                     )}
                     <GenrePanel>
                         {genres.genres.length > 0 &&
                             genres.genres.map((g: Genre) => {
-                                return <li key={g.id}>{g.name}</li>
+                                return (
+                                    <li key={g.id}>
+                                        <Link to="/movie/popular">
+                                            {g.name}
+                                        </Link>
+                                    </li>
+                                )
                             })}
                     </GenrePanel>
                 </>

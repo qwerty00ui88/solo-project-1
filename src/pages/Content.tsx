@@ -12,14 +12,14 @@ import PersonCard from '../components/PersonCard'
 
 const ContentWrapper = styled.main``
 
-const ContentList = styled.ul`
+export const ContentList = styled.ul`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     row-gap: 1.2rem;
 `
 
-const PeopleList = styled.ul`
+export const PeopleList = styled.ul`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -65,11 +65,35 @@ const sortArr = [
     { id: 'original_title.asc', ko: '제목 오름차순', en: 'Title (A-Z)' },
 ]
 
+const genreArr = [
+    {
+        id: 'popularity.desc',
+        ko: '인기도 내림차순',
+        en: 'Popularity Descending',
+    },
+    {
+        id: 'popularity.desc',
+        ko: '인기도 내림차순',
+        en: 'Popularity Descending',
+    },
+    {
+        id: 'popularity.desc',
+        ko: '인기도 내림차순',
+        en: 'Popularity Descending',
+    },
+    {
+        id: 'popularity.desc',
+        ko: '인기도 내림차순',
+        en: 'Popularity Descending',
+    },
+]
+
 function Content() {
     const { menu, category } = useParams() as { menu: string; category: string }
     const [sort, setSort] = useState('popularity.desc')
     const [page, setPage] = useState(1)
     const [dataList, setdataList] = useState<ContentType[] | PersonType[]>([])
+    const [genre, setGenre] = useState('all')
     const lastElement = useRef<HTMLLIElement | null>(null)
     const setRef = useCallback(
         (node: HTMLLIElement) => {
@@ -101,6 +125,7 @@ function Content() {
         language: 'ko-KR',
         page,
         sort_by: sort,
+        genres: genre === 'all' ? undefined : genre,
     }
 
     const popularParams = {
@@ -187,19 +212,34 @@ function Content() {
         dataList && (
             <ContentWrapper>
                 {menu !== 'person' && (
-                    <Sort
-                        onChange={(e) => {
-                            setSort(e.target.value)
-                        }}
-                    >
-                        {sortArr.map((el) => {
-                            return (
-                                <option key={el.id} value={el.id}>
-                                    {el.ko}
-                                </option>
-                            )
-                        })}
-                    </Sort>
+                    <>
+                        <Sort
+                            onChange={(e) => {
+                                setSort(e.target.value)
+                            }}
+                        >
+                            {sortArr.map((el) => {
+                                return (
+                                    <option key={el.id} value={el.id}>
+                                        {el.ko}
+                                    </option>
+                                )
+                            })}
+                        </Sort>
+                        <Sort
+                            onChange={(e) => {
+                                setGenre(e.target.value)
+                            }}
+                        >
+                            {genreArr.map((el) => {
+                                return (
+                                    <option key={el.id} value={el.id}>
+                                        {el.ko}
+                                    </option>
+                                )
+                            })}
+                        </Sort>
+                    </>
                 )}
                 {menu === 'person' && (
                     <PeopleList>
