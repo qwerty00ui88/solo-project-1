@@ -11,7 +11,7 @@ const InputWrapper = styled.input<InputWrapperProps>`
     width: ${(props) => `${props.$width}`};
     height: ${(props) => `${props.$height}`};
     padding: 5px 10px;
-    border: 1px solid white;
+    border: 1px solid #e5e5e5;
     border-radius: ${xsmallRadius};
 `
 interface InputProps {
