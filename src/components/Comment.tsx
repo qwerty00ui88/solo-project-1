@@ -11,11 +11,16 @@ const CommentWrapper = styled.div`
     }
 `
 
-function Comment() {
+export interface CommentProps {
+    nickname: string
+    commentText: string
+}
+
+function Comment({ nickname, commentText }: CommentProps) {
     return (
         <CommentWrapper>
-            <div>코멘트 작성자</div>
-            <div>코멘트 내용</div>
+            <div>{nickname}</div>
+            <div>{commentText}</div>
         </CommentWrapper>
     )
 }
