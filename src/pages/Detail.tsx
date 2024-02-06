@@ -63,11 +63,19 @@ const GoodBadComment = styled.div`
     }
 `
 
+export interface ResponseDataType {
+    recommendStatus: null | 'good' | 'bad'
+    isFavorite: boolean
+    goodCommentViewList: []
+    badCommentViewList: []
+    unratedCommentViewList: []
+}
+
 function Detail() {
     const [comment, setComment] = useState('')
-    const [goodComment, setGoodComment] = useState([])
-    const [badComment, setBadComment] = useState([])
-    const [unratedComment, setUnratedComment] = useState([])
+    const [responseData, setResponseData] = useState<null | ResponseDataType>(
+        null
+    )
     const { media, id } = useParams() as { media: string; id: string }
     const { data } = useGet<MovieDetail | TVDetail | PersonDetail>(
         `https://api.themoviedb.org/3/${media}/${id}`,
@@ -174,9 +182,7 @@ function Detail() {
             .then((response) => {
                 // eslint-disable-next-line no-console
                 console.log(response.data, '댓글 조회 성공!')
-                setGoodComment(response.data.goodCommentViewList)
-                setBadComment(response.data.badCommentViewList)
-                setUnratedComment(response.data.unratedCommentViewList)
+                setResponseData(response.data)
             })
             .catch((error) => {
                 // eslint-disable-next-line no-console
@@ -185,7 +191,8 @@ function Detail() {
     }, [])
 
     return (
-        data && (
+        data &&
+        responseData && (
             <DetailWrapper>
                 {media === 'person' ? (
                     <>
@@ -211,6 +218,8 @@ function Detail() {
                         <Outline
                             media={media}
                             data={data as MovieDetail | TVDetail}
+                            recommendStatus={responseData.recommendStatus}
+                            isFavorite={responseData.isFavorite}
                         />
                         <Cast
                             credits={(data as MovieDetail | TVDetail).credits}
@@ -236,8 +245,8 @@ function Detail() {
                                         handlePostRequest(
                                             'http://localhost/comment/create',
                                             {
-                                                tmdbId: Number(id),
                                                 mediaType: media,
+                                                tmdbId: Number(id),
                                                 text: comment,
                                             }
                                         )
@@ -275,8 +284,45 @@ function Detail() {
                     {/* 추천/비추천 리뷰 */}
                     <GoodBadComment>
                         <div>
-                            <Good />
-                            {goodComment.map((el: CommentType) => {
+                            <Good fill="#019e74" />
+                            {responseData?.goodCommentViewList?.map(
+                                (el: CommentType) => {
+                                    const commentData = el.comment
+                                    return (
+                                        <li key={commentData.id}>
+                                            <Comment
+                                                nickname="닉네임"
+                                                commentText={commentData.text}
+                                            />
+                                        </li>
+                                    )
+                                }
+                            )}
+                        </div>
+                        <div>
+                            <Bad fill="rgb(229, 9, 20)" />
+                            {responseData?.badCommentViewList?.map(
+                                (el: CommentType) => {
+                                    const userData = '닉네임'
+                                    const commentData = el.comment
+                                    return (
+                                        <li key={commentData.id}>
+                                            <Comment
+                                                nickname={userData}
+                                                commentText={commentData.text}
+                                            />
+                                        </li>
+                                    )
+                                }
+                            )}
+                        </div>
+                    </GoodBadComment>
+
+                    {/* 미평가 리뷰 */}
+                    <div>
+                        <NotRated />
+                        {responseData?.unratedCommentViewList?.map(
+                            (el: CommentType) => {
                                 const commentData = el.comment
                                 return (
                                     <li key={commentData.id}>
@@ -286,39 +332,8 @@ function Detail() {
                                         />
                                     </li>
                                 )
-                            })}
-                        </div>
-                        <div>
-                            <Bad />
-                            {badComment.map((el: CommentType) => {
-                                const userData = '닉네임'
-                                const commentData = el.comment
-                                return (
-                                    <li key={commentData.id}>
-                                        <Comment
-                                            nickname={userData}
-                                            commentText={commentData.text}
-                                        />
-                                    </li>
-                                )
-                            })}
-                        </div>
-                    </GoodBadComment>
-
-                    {/* 미평가 리뷰 */}
-                    <div>
-                        <NotRated />
-                        {unratedComment.map((el: CommentType) => {
-                            const commentData = el.comment
-                            return (
-                                <li key={commentData.id}>
-                                    <Comment
-                                        nickname="닉네임"
-                                        commentText={commentData.text}
-                                    />
-                                </li>
-                            )
-                        })}
+                            }
+                        )}
                     </div>
                 </CommentSection>
             </DetailWrapper>

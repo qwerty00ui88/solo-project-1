@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
+import axios from 'axios'
 import { MovieDetail, TVDetail } from '../utils/useGet'
 import { titleWeb, xlargeSize } from '../style/font'
+import { ReactComponent as Good } from '../assets/good.svg'
+import { ReactComponent as Bad } from '../assets/bad.svg'
+import { ReactComponent as Favorite } from '../assets/favorite.svg'
 
 const OutlineWrapper = styled.div<{ $backdrop: string }>`
     height: 100%;
@@ -62,16 +66,43 @@ const Tagline = styled.div``
 function Outline({
     media,
     data,
+    recommendStatus,
+    isFavorite,
 }: {
     media: string
     data: MovieDetail | TVDetail
+    recommendStatus: null | 'good' | 'bad'
+    isFavorite: boolean
 }) {
+    const [favorite, setFavorite] = useState<boolean>(isFavorite)
+    const [recommend, setRecommend] = useState<null | 'good' | 'bad'>(
+        recommendStatus
+    )
     const title = (data as MovieDetail).title || (data as TVDetail).name
-
     const releaseDate =
         (data as MovieDetail).release_date || (data as TVDetail).first_air_date
-
     const { runtime } = data as MovieDetail
+
+    const handleGetRequest = (
+        url: string,
+        config: { params: object },
+        fn: () => void
+    ) => {
+        axios
+            .get(url, config)
+            .then((response) => {
+                if (response.data.code === 200) {
+                    fn()
+                } else {
+                    // eslint-disable-next-line no-alert
+                    alert(response.data.error_message)
+                }
+            })
+            .catch((error) => {
+                // eslint-disable-next-line no-alert
+                alert(error)
+            })
+    }
 
     return (
         data && (
@@ -103,6 +134,91 @@ function Outline({
                             </>
                         )}
                     </DetailedInfo>
+                    <div>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                axios
+                                    .get('http://localhost/recommend', {
+                                        params: {
+                                            mediaType: media,
+                                            tmdbId: data.id,
+                                            status: 'good',
+                                        },
+                                    })
+                                    .then((response) => {
+                                        if (response.data.code === 200) {
+                                            setRecommend(response.data.result)
+                                        } else {
+                                            // eslint-disable-next-line no-alert
+                                            alert(response.data.error_message)
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        // eslint-disable-next-line no-alert
+                                        alert(error)
+                                    })
+                            }}
+                        >
+                            <Good
+                                fill={
+                                    recommend === 'good' ? '#019e74' : '#e5e5e5'
+                                }
+                            />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                axios
+                                    .get('http://localhost/recommend', {
+                                        params: {
+                                            mediaType: media,
+                                            tmdbId: data.id,
+                                            status: 'bad',
+                                        },
+                                    })
+                                    .then((response) => {
+                                        if (response.data.code === 200) {
+                                            setRecommend(response.data.result)
+                                        } else {
+                                            // eslint-disable-next-line no-alert
+                                            alert(response.data.error_message)
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        // eslint-disable-next-line no-alert
+                                        alert(error)
+                                    })
+                            }}
+                        >
+                            <Bad
+                                fill={
+                                    recommend === 'bad'
+                                        ? 'rgb(229, 9, 20)'
+                                        : '#e5e5e5'
+                                }
+                            />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                handleGetRequest(
+                                    'http://localhost/favorite',
+                                    {
+                                        params: {
+                                            mediaType: media,
+                                            tmdbId: data.id,
+                                        },
+                                    },
+                                    () => {
+                                        setFavorite(!favorite)
+                                    }
+                                )
+                            }}
+                        >
+                            <Favorite fill={favorite ? '#FFD700' : '#e5e5e5'} />
+                        </button>
+                    </div>
                 </OutlineRight>
             </OutlineWrapper>
         )
