@@ -15,10 +15,11 @@ const InputWrapper = styled.input<InputWrapperProps>`
     border-radius: ${xsmallRadius};
 `
 interface InputProps {
-    value: string | undefined
+    value: string | number | undefined
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     width?: string
     height?: string
+    id?: string
 }
 
 function Input({
@@ -26,9 +27,11 @@ function Input({
     onChange,
     width = 'calc(20rem - 20px)',
     height = 'calc(3rem - 10px)',
+    id = '',
 }: InputProps) {
     return (
         <InputWrapper
+            id={id}
             value={value}
             onChange={onChange}
             $width={width}

@@ -1,6 +1,8 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
+import axios from 'axios'
 import {
     fontLogo,
     largeSize,
@@ -10,9 +12,7 @@ import {
 } from '../style/font'
 import { ReactComponent as Sun } from '../assets/sun.svg'
 import { ReactComponent as Moon } from '../assets/moon.svg'
-import { useAppDispatch, useAppSelector } from '../hooks'
 import Button from './commons/Button'
-import { logout } from '../reducers/userReducer'
 import LinkTo from './commons/LinkTo'
 import { smallRadius } from '../style/border'
 
@@ -83,10 +83,7 @@ const Menu = styled.div`
 `
 
 function Header() {
-    const dispatch = useAppDispatch()
-    const isLogin = useAppSelector((state) => {
-        return !!state.user.user
-    })
+    const [cookies, , removeCookie] = useCookies(['userId'])
 
     const nav = [
         {
@@ -148,12 +145,20 @@ function Header() {
                     )
                 })}
             </Nav>
-            {isLogin ? (
+            {cookies.userId ? (
                 <Menu>
                     <Button
                         name="로그아웃"
                         onClick={() => {
-                            dispatch(logout())
+                            axios
+                                .get('http://localhost/user/logout', {
+                                    withCredentials: true,
+                                })
+                                .then(() => {
+                                    removeCookie('userId')
+                                    window.location.href =
+                                        'http://localhost:3000'
+                                })
                         }}
                         width="4.5rem"
                         height="2.4rem"
@@ -164,7 +169,7 @@ function Header() {
                     <Sun />
                     <Moon />
                     <LinkTo name="로그인" to="/login" height="2.4rem" />
-                    <LinkTo name="회원가입" to="/signup" height="2.4rem" />
+                    <LinkTo name="회원가입" to="signup/1" height="2.4rem" />
                 </Menu>
             )}
         </HeaderWrapper>

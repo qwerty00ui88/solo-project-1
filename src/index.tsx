@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { CookiesProvider } from 'react-cookie'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import GlobalStyle from './style/globalStyle'
@@ -15,7 +16,9 @@ root.render(
         <GlobalStyle />
         <BrowserRouter>
             <Provider store={store}>
-                <App />
+                <CookiesProvider defaultSetOptions={{ path: '/' }}>
+                    <App />
+                </CookiesProvider>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>

@@ -1,68 +1,121 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import { initializeApp } from 'firebase/app'
-import { useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 import { LoginWrapper as SignUpWrpper, Title } from './Login'
 import Button from '../components/commons/Button'
 import Input from '../components/commons/Input'
-
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGIN_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-}
+import LinkTo from '../components/commons/LinkTo'
 
 function SignUp() {
-    const navigate = useNavigate()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
-    initializeApp(firebaseConfig)
-    const auth = getAuth()
-
-    const createUser = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const { user } = userCredential
-                // eslint-disable-next-line no-console
-                console.log(user)
-            })
-            .then(() => {
-                navigate('/login')
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = error.message
-                // eslint-disable-next-line no-console
-                console.log({ errorCode, errorMessage })
-            })
-    }
+    const { page } = useParams()
+    const [name, setName] = useState<string>('')
+    const [nickname, setNickname] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [passwordCheck, setPasswordCheck] = useState<string>('')
+    const [birth, setBirth] = useState<number>(0)
+    const [gender, setGender] = useState<string>('')
 
     return (
         <SignUpWrpper>
             <Title>SignUp</Title>
-            <Input
-                value={email}
-                onChange={(e) => {
-                    setEmail(e.target.value)
-                }}
-            />
-            <Input
-                value={password}
-                onChange={(e) => {
-                    setPassword(e.target.value)
-                }}
-            />
-            <Button
-                name="회원가입"
-                onClick={createUser}
-                width="20rem"
-                height="3rem"
-            />
+            {page === '1' ? (
+                <>
+                    <label htmlFor="name">이름</label>
+                    <Input
+                        id="name"
+                        value={name}
+                        onChange={(e) => {
+                            setName(e.target.value)
+                        }}
+                    />
+                    <label htmlFor="nickname">닉네임</label>
+                    <Input
+                        id="nickname"
+                        value={nickname}
+                        onChange={(e) => {
+                            setNickname(e.target.value)
+                        }}
+                    />
+                    <Button
+                        name="닉네임중복"
+                        onClick={() => {}}
+                        width="20rem"
+                        height="3rem"
+                    />
+                    <label htmlFor="email">이메일</label>
+                    <Input
+                        id="email"
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value)
+                        }}
+                    />
+                    <Button
+                        name="이메일인증"
+                        onClick={() => {}}
+                        width="20rem"
+                        height="3rem"
+                    />
+                    <label htmlFor="password">비밀번호</label>
+                    <Input
+                        id="password"
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value)
+                        }}
+                    />
+                    <label htmlFor="passwordCheck">비밀번호 확인</label>
+                    <Input
+                        id="passwordCheck"
+                        value={passwordCheck}
+                        onChange={(e) => {
+                            setPasswordCheck(e.target.value)
+                        }}
+                    />
+                    <div>불일치</div>
+                    <div>일치</div>
+                    <LinkTo name="다음" to="/signup/2" height="2.4rem" />
+                </>
+            ) : (
+                <div>
+                    <label htmlFor="birth">출생연도</label>
+                    <Input
+                        id="birth"
+                        value={birth}
+                        onChange={(e) => {
+                            setBirth(Number(e.target.value))
+                        }}
+                    />
+                    <label htmlFor="gender">성별</label>
+                    <Input
+                        id="gender"
+                        value={gender}
+                        onChange={(e) => {
+                            setGender(e.target.value)
+                        }}
+                    />
+                    <Button
+                        name="회원가입"
+                        onClick={() => {
+                            axios.post(
+                                'http://localhost/user/create',
+                                {
+                                    name,
+                                    nickname,
+                                    email,
+                                    password,
+                                    birth,
+                                    gender,
+                                },
+                                { withCredentials: true }
+                            )
+                        }}
+                        width="20rem"
+                        height="3rem"
+                    />
+                </div>
+            )}
         </SignUpWrpper>
     )
 }

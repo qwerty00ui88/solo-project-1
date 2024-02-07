@@ -83,27 +83,6 @@ function Outline({
         (data as MovieDetail).release_date || (data as TVDetail).first_air_date
     const { runtime } = data as MovieDetail
 
-    const handleGetRequest = (
-        url: string,
-        config: { params: object },
-        fn: () => void
-    ) => {
-        axios
-            .get(url, config)
-            .then((response) => {
-                if (response.data.code === 200) {
-                    fn()
-                } else {
-                    // eslint-disable-next-line no-alert
-                    alert(response.data.error_message)
-                }
-            })
-            .catch((error) => {
-                // eslint-disable-next-line no-alert
-                alert(error)
-            })
-    }
-
     return (
         data && (
             <OutlineWrapper $backdrop={data.backdrop_path}>
@@ -145,6 +124,7 @@ function Outline({
                                             tmdbId: data.id,
                                             status: 'good',
                                         },
+                                        withCredentials: true,
                                     })
                                     .then((response) => {
                                         if (response.data.code === 200) {
@@ -176,6 +156,7 @@ function Outline({
                                             tmdbId: data.id,
                                             status: 'bad',
                                         },
+                                        withCredentials: true,
                                     })
                                     .then((response) => {
                                         if (response.data.code === 200) {
@@ -202,18 +183,22 @@ function Outline({
                         <button
                             type="button"
                             onClick={() => {
-                                handleGetRequest(
-                                    'http://localhost/favorite',
-                                    {
+                                axios
+                                    .get('http://localhost/favorite', {
                                         params: {
                                             mediaType: media,
                                             tmdbId: data.id,
                                         },
-                                    },
-                                    () => {
-                                        setFavorite(!favorite)
-                                    }
-                                )
+                                        withCredentials: true,
+                                    })
+                                    .then((response) => {
+                                        if (response.data.code === 200) {
+                                            setFavorite(!favorite)
+                                        } else {
+                                            // eslint-disable-next-line no-alert
+                                            alert(response.data.error_message)
+                                        }
+                                    })
                             }}
                         >
                             <Favorite fill={favorite ? '#FFD700' : '#e5e5e5'} />

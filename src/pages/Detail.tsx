@@ -17,6 +17,8 @@ import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as NotRated } from '../assets/comment.svg'
 
 interface CommentType {
+    userId: number
+    nickname: string
     comment: {
         contentId: number
         createdAt: string
@@ -110,7 +112,7 @@ function Detail() {
 
     const handlePostRequest = async (url: string, postData: unknown) => {
         axios
-            .post(url, postData)
+            .post(url, postData, { withCredentials: true })
             .then((response) => {
                 if (response.data.code === 200) {
                     window.location.reload()
@@ -129,7 +131,7 @@ function Detail() {
 
     const handlePutRequest = async (url: string, putData: unknown) => {
         axios
-            .put(url, putData)
+            .put(url, putData, { withCredentials: true })
             .then((response) => {
                 if (response.data.code === 200) {
                     window.location.reload()
@@ -150,6 +152,7 @@ function Detail() {
         axios
             .delete(url, {
                 data: deleteData,
+                withCredentials: true,
             })
             .then((response) => {
                 if (response.data.code === 200) {
@@ -170,15 +173,14 @@ function Detail() {
     // })
 
     useEffect(() => {
-        const config = {
-            params: {
-                mediaType: media,
-                tmdbId: Number(id),
-            },
-        }
-
         axios
-            .get('http://localhost/detail', config)
+            .get('http://localhost/detail', {
+                params: {
+                    mediaType: media,
+                    tmdbId: Number(id),
+                },
+                withCredentials: true,
+            })
             .then((response) => {
                 // eslint-disable-next-line no-console
                 console.log(response.data, '댓글 조회 성공!')
@@ -287,12 +289,12 @@ function Detail() {
                             <Good fill="#019e74" />
                             {responseData?.goodCommentViewList?.map(
                                 (el: CommentType) => {
-                                    const commentData = el.comment
                                     return (
-                                        <li key={commentData.id}>
+                                        <li key={el.comment.id}>
                                             <Comment
-                                                nickname="닉네임"
-                                                commentText={commentData.text}
+                                                id={el.userId}
+                                                nickname={el.nickname}
+                                                commentText={el.comment.text}
                                             />
                                         </li>
                                     )
@@ -303,13 +305,12 @@ function Detail() {
                             <Bad fill="rgb(229, 9, 20)" />
                             {responseData?.badCommentViewList?.map(
                                 (el: CommentType) => {
-                                    const userData = '닉네임'
-                                    const commentData = el.comment
                                     return (
-                                        <li key={commentData.id}>
+                                        <li key={el.comment.id}>
                                             <Comment
-                                                nickname={userData}
-                                                commentText={commentData.text}
+                                                id={el.userId}
+                                                nickname={el.nickname}
+                                                commentText={el.comment.text}
                                             />
                                         </li>
                                     )
@@ -323,12 +324,12 @@ function Detail() {
                         <NotRated />
                         {responseData?.unratedCommentViewList?.map(
                             (el: CommentType) => {
-                                const commentData = el.comment
                                 return (
-                                    <li key={commentData.id}>
+                                    <li key={el.comment.id}>
                                         <Comment
-                                            nickname="닉네임"
-                                            commentText={commentData.text}
+                                            id={el.userId}
+                                            nickname={el.nickname}
+                                            commentText={el.comment.text}
                                         />
                                     </li>
                                 )

@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import axios from 'axios'
 import Input from '../components/commons/Input'
-import { useAppDispatch } from '../hooks'
 import Button from '../components/commons/Button'
 import { logoSize } from '../style/font'
-import { login } from '../reducers/userReducer'
 
 export const LoginWrapper = styled.main`
     display: flex;
@@ -19,33 +18,51 @@ export const Title = styled.h2`
 `
 
 function Login() {
-    const dispatch = useAppDispatch()
-    const [email, setEmail] = useState<string>('')
+    const [nickname, setNickname] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-
-    const logIn = () => {
-        if (email && password) {
-            dispatch(login({ email, password }))
-        }
-    }
 
     return (
         <LoginWrapper>
             <Title>Login</Title>
+            <label htmlFor="nickname">닉네임</label>
             <Input
-                value={email}
+                value={nickname}
                 onChange={(e) => {
-                    setEmail(e.target.value)
+                    setNickname(e.target.value)
                 }}
             />
+            <label htmlFor="password">비밀번호</label>
             <Input
                 value={password}
                 onChange={(e) => {
                     setPassword(e.target.value)
                 }}
             />
-            <Link to="/signup">회원이 아니십니까?</Link>
-            <Button name="로그인" onClick={logIn} width="20rem" height="3rem" />
+            <Link to="/signup/1">회원이 아니십니까?</Link>
+            <Button
+                name="로그인"
+                onClick={() => {
+                    axios
+                        .post(
+                            'http://localhost/user/login',
+                            {
+                                nickname,
+                                password,
+                            },
+                            { withCredentials: true }
+                        )
+                        .then((response) => {
+                            // eslint-disable-next-line no-alert
+                            alert(response.data.code)
+                        })
+                        .catch((error) => {
+                            // eslint-disable-next-line no-alert
+                            alert(error)
+                        })
+                }}
+                width="20rem"
+                height="3rem"
+            />
         </LoginWrapper>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { smallRadius } from '../style/border'
 
-const CommentWrapper = styled.div`
+const CommentWrapper = styled.div<{ id: number }>`
     background-color: #e5e5e5;
     border-radius: ${smallRadius};
     padding: 0.5rem;
@@ -12,13 +12,14 @@ const CommentWrapper = styled.div`
 `
 
 export interface CommentProps {
+    id: number
     nickname: string
     commentText: string
 }
 
-function Comment({ nickname, commentText }: CommentProps) {
+function Comment({ id, nickname, commentText }: CommentProps) {
     return (
-        <CommentWrapper>
+        <CommentWrapper id={id}>
             <div>{nickname}</div>
             <div>{commentText}</div>
         </CommentWrapper>
