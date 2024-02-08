@@ -20,6 +20,7 @@ interface InputProps {
     width?: string
     height?: string
     id?: string
+    name?: string
 }
 
 function Input({
@@ -28,10 +29,12 @@ function Input({
     width = 'calc(20rem - 20px)',
     height = 'calc(3rem - 10px)',
     id = '',
+    name = '',
 }: InputProps) {
     return (
         <InputWrapper
             id={id}
+            name={name}
             value={value}
             onChange={onChange}
             $width={width}
