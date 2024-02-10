@@ -46,12 +46,6 @@ function SignUp1({
                 }}
                 name="email"
             />
-            <Button
-                name="이메일인증"
-                onClick={() => {}}
-                width="20rem"
-                height="3rem"
-            />
             <label htmlFor="password">비밀번호</label>
             <Input
                 id="password"
