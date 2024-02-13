@@ -27,7 +27,7 @@ const Rank = styled.div`
     font-size: ${xlargeSize};
 `
 
-const Poster = styled.img`
+export const Poster = styled.img`
     width: 60px;
     aspect-ratio: 2/3;
     margin-right: 20px;

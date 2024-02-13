@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 import Input from '../components/commons/Input'
@@ -20,6 +20,7 @@ export const Title = styled.h2`
 function Login() {
     const [nickname, setNickname] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const navigate = useNavigate()
 
     return (
         <LoginWrapper>
@@ -52,8 +53,9 @@ function Login() {
                             { withCredentials: true }
                         )
                         .then((response) => {
-                            // eslint-disable-next-line no-alert
-                            alert(response.data.code)
+                            if (response.data.code === 200) {
+                                navigate(`/`)
+                            }
                         })
                         .catch((error) => {
                             // eslint-disable-next-line no-alert

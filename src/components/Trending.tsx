@@ -12,7 +12,7 @@ import useGet, { Contents, People } from '../utils/useGet'
 import Rank from './Rank'
 import { xlargeRadius, smallRadius, xsmallRadius } from '../style/border'
 
-const TrendingWrapper = styled.div`
+export const TrendingWrapper = styled.div`
     display: flex;
     column-gap: 2vw;
     height: 100%;
@@ -28,9 +28,9 @@ const TrendingWrapper = styled.div`
     width: 100%;
 `
 
-const TrendingLeft = styled.div``
+export const TrendingLeft = styled.div``
 
-const TrendingRight = styled.div`
+export const TrendingRight = styled.div`
     flex: 1;
     display: flex;
     @media screen and (max-width: 1024px) {
@@ -38,7 +38,7 @@ const TrendingRight = styled.div`
     }
 `
 
-const Title = styled.h2`
+export const Title = styled.h2`
     font-size: ${titleWeb};
     font-weight: ${mediumWeight};
     margin-bottom: max(1vw, 8px);
@@ -50,11 +50,11 @@ const Title = styled.h2`
     }
 `
 
-const Detail = styled.p`
+export const Detail = styled.p`
     margin-bottom: max(3vw, 32px);
 `
 
-const Select = styled.select`
+export const Select = styled.select`
     width: 7rem;
     padding: 3px 0 3px 3px;
     font-weight: ${mediumWeight};
@@ -63,7 +63,7 @@ const Select = styled.select`
     border-radius: ${xsmallRadius};
 `
 
-const CategoryGroup = styled.fieldset`
+export const CategoryGroup = styled.fieldset`
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -74,7 +74,7 @@ const CategoryGroup = styled.fieldset`
     }
 `
 
-const Label = styled.label<{ $isChecked: boolean }>`
+export const Label = styled.label<{ $isChecked: boolean }>`
     display: block;
     padding: 0.8rem;
     min-width: 60px;
@@ -120,7 +120,7 @@ function Trending() {
     }
 
     const changeCategory = (e: ChangeEvent<HTMLInputElement>) => {
-        setCategory(e.currentTarget.value as 'movie' | 'tv' | 'person')
+        setCategory(e.currentTarget.value as Category)
     }
 
     return (

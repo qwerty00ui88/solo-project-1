@@ -15,6 +15,7 @@ import Loading from './pages/Loading'
 import Error from './pages/Error'
 import Content from './pages/Content'
 import Search from './pages/Search'
+import Mypage from './pages/Mypage'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -72,6 +73,7 @@ function App() {
                         <Route path="/signup/:page" element={<SignUp />} />
                         <Route path="/:menu/:category" element={<Content />} />
                         <Route path="/search/:word" element={<Search />} />
+                        <Route path="/mypage/:category" element={<Mypage />} />
                     </Routes>
                     <Footer />
                 </>

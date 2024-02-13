@@ -184,7 +184,7 @@ function Outline({
                             type="button"
                             onClick={() => {
                                 axios
-                                    .get('http://localhost/favorite', {
+                                    .get('http://localhost/favorite/toggle', {
                                         params: {
                                             mediaType: media,
                                             tmdbId: data.id,

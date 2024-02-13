@@ -12,6 +12,7 @@ import {
 } from '../style/font'
 import { ReactComponent as Sun } from '../assets/sun.svg'
 import { ReactComponent as Moon } from '../assets/moon.svg'
+import { ReactComponent as User } from '../assets/user.svg'
 import Button from './commons/Button'
 import LinkTo from './commons/LinkTo'
 import { smallRadius } from '../style/border'
@@ -147,6 +148,9 @@ function Header() {
             </Nav>
             {cookies.userId ? (
                 <Menu>
+                    <Link to="/mypage">
+                        <User />
+                    </Link>
                     <Button
                         name="로그아웃"
                         onClick={() => {
