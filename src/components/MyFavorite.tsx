@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import { useCookies } from 'react-cookie'
 
 function MyFavorite() {
-    const [cookies] = useCookies(['userId'])
-
     useEffect(() => {
         axios
-            .post('http://localhost/mypage/favorite', {
-                userId: cookies.userId,
-            })
+            .get('http://localhost/favorite/my-list', { withCredentials: true })
             .then((response) => {
                 // eslint-disable-next-line no-console
                 console.log(response.data)

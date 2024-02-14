@@ -84,7 +84,7 @@ const Menu = styled.div`
 `
 
 function Header() {
-    const [cookies, , removeCookie] = useCookies(['userId'])
+    const [cookies, , removeCookie] = useCookies(['JSESSIONID'])
 
     const nav = [
         {
@@ -146,9 +146,9 @@ function Header() {
                     )
                 })}
             </Nav>
-            {cookies.userId ? (
+            {cookies.JSESSIONID ? (
                 <Menu>
-                    <Link to="/mypage">
+                    <Link to="/mypage/favorite">
                         <User />
                     </Link>
                     <Button
@@ -159,7 +159,7 @@ function Header() {
                                     withCredentials: true,
                                 })
                                 .then(() => {
-                                    removeCookie('userId')
+                                    removeCookie('JSESSIONID')
                                     window.location.href =
                                         'http://localhost:3000'
                                 })
