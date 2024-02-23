@@ -67,7 +67,7 @@ const GoodBadComment = styled.div`
 
 export interface ResponseDataType {
     recommendStatus: null | 'good' | 'bad'
-    isFavorite: boolean
+    favorite: boolean
     goodCommentViewList: []
     badCommentViewList: []
     unratedCommentViewList: []
@@ -221,7 +221,7 @@ function Detail() {
                             media={media}
                             data={data as MovieDetail | TVDetail}
                             recommendStatus={responseData.recommendStatus}
-                            isFavorite={responseData.isFavorite}
+                            favorite={responseData.favorite}
                         />
                         <Cast
                             credits={(data as MovieDetail | TVDetail).credits}

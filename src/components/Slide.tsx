@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { xlargeRadius } from '../style/border'
 import { ContentType } from '../utils/useGet'
+import Poster from './commons/Poster'
 
 const SlideWrapper = styled.div<{ ref: React.ForwardedRef<HTMLDivElement> }>`
     flex: 0 0 calc(100% + 30vw);
@@ -16,7 +16,7 @@ const SlideWrapper = styled.div<{ ref: React.ForwardedRef<HTMLDivElement> }>`
     }
 `
 
-const CardContainer = styled.div`
+const CardContainer = styled.ul`
     flex: 0 0 calc(100% - 30vw);
     column-gap: 20px;
     justify-content: space-between;
@@ -24,7 +24,7 @@ const CardContainer = styled.div`
     display: flex;
 `
 
-const Card = styled(Link)`
+export const PosterLi = styled.li`
     flex: 1;
     width: 18%;
     display: flex;
@@ -36,7 +36,7 @@ const Card = styled(Link)`
     }
 `
 
-const Img = styled.img`
+export const Img = styled.img`
     flex: 1 0; // 세로
     border-radius: ${xlargeRadius};
 `
@@ -52,15 +52,13 @@ function Slide({ data, slideRef }: SlideProps) {
             <CardContainer>
                 {data.map((el) => {
                     return (
-                        <Card
-                            to={`/detail/${el.media_type}/${el.id}`}
-                            key={el.id}
-                        >
-                            <Img
-                                alt=""
-                                src={`https://image.tmdb.org/t/p/w500${el?.poster_path}`}
+                        <PosterLi key={el.id}>
+                            <Poster
+                                mediaType={el.media_type}
+                                id={el.id}
+                                posterPath={el.poster_path}
                             />
-                        </Card>
+                        </PosterLi>
                     )
                 })}
             </CardContainer>

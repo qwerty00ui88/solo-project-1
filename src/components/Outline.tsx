@@ -67,14 +67,14 @@ function Outline({
     media,
     data,
     recommendStatus,
-    isFavorite,
+    favorite,
 }: {
     media: string
     data: MovieDetail | TVDetail
     recommendStatus: null | 'good' | 'bad'
-    isFavorite: boolean
+    favorite: boolean
 }) {
-    const [favorite, setFavorite] = useState<boolean>(isFavorite)
+    const [isFavorite, setIsFavorite] = useState<boolean>(favorite)
     const [recommend, setRecommend] = useState<null | 'good' | 'bad'>(
         recommendStatus
     )
@@ -193,7 +193,7 @@ function Outline({
                                     })
                                     .then((response) => {
                                         if (response.data.code === 200) {
-                                            setFavorite(!favorite)
+                                            setIsFavorite(!isFavorite)
                                         } else {
                                             // eslint-disable-next-line no-alert
                                             alert(response.data.error_message)
