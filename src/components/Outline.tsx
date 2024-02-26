@@ -6,6 +6,8 @@ import { titleWeb, xlargeSize } from '../style/font'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as Favorite } from '../assets/favorite.svg'
+import { ReactComponent as Edit } from '../assets/edit.svg'
+import { Comment } from '../pages/Detail'
 
 const OutlineWrapper = styled.div<{ $backdrop: string }>`
     height: 100%;
@@ -68,21 +70,27 @@ function Outline({
     data,
     recommendStatus,
     favorite,
+    myComment,
+    handleIsClick,
 }: {
     media: string
     data: MovieDetail | TVDetail
     recommendStatus: null | 'good' | 'bad'
     favorite: boolean
+    myComment: Comment
+    handleIsClick: () => void
 }) {
-    const [isFavorite, setIsFavorite] = useState<boolean>(favorite)
     const [recommend, setRecommend] = useState<null | 'good' | 'bad'>(
         recommendStatus
     )
+    const [isFavorite, setIsFavorite] = useState<boolean>(favorite)
+
     const title = (data as MovieDetail).title || (data as TVDetail).name
     const releaseDate =
         (data as MovieDetail).release_date || (data as TVDetail).first_air_date
     const { runtime } = data as MovieDetail
-
+    // eslint-disable-next-line no-console
+    console.log(myComment)
     return (
         data && (
             <OutlineWrapper $backdrop={data.backdrop_path}>
@@ -201,7 +209,17 @@ function Outline({
                                     })
                             }}
                         >
-                            <Favorite fill={favorite ? '#FFD700' : '#e5e5e5'} />
+                            <Favorite
+                                fill={isFavorite ? '#FFD700' : '#e5e5e5'}
+                            />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                handleIsClick()
+                            }}
+                        >
+                            <Edit fill={myComment ? '#FFD700' : '#e5e5e5'} />
                         </button>
                     </div>
                 </OutlineRight>

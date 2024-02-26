@@ -34,8 +34,6 @@ function App() {
         if (/(_ERROR$)/.test(state.ui.status)) return 'ERROR'
         return 'NORMAL'
     })
-    // eslint-disable-next-line no-console
-    console.log(`⭐️${status}`)
     useEffect(() => {
         dispatch(setUi('AUTH_LOADING'))
         initializeApp(firebaseConfig)
@@ -43,8 +41,6 @@ function App() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 dispatch(setUi('AUTH_SUCCESS'))
-                // eslint-disable-next-line no-console
-                console.log('🌈 로그인 중', { user })
                 dispatch(
                     setUser({
                         uid: user.uid,
@@ -53,8 +49,6 @@ function App() {
             } else {
                 dispatch(setUi('AUTH_FAIL'))
                 dispatch(setUser(null))
-                // eslint-disable-next-line no-console
-                console.log('🌈 로그인 중 아님', { user })
             }
         })
     }, [])

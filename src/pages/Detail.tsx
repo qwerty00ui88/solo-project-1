@@ -10,23 +10,25 @@ import Credits from '../components/Credits'
 import Biography from '../components/Biography'
 import NumberOfWorks from '../components/NumberOfWorks'
 import { xlargeSize } from '../style/font'
-import Button from '../components/commons/Button'
 import Comment from '../components/Comment'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as NotRated } from '../assets/comment.svg'
+import CommentModal from '../components/commons/CommentModal'
 
-interface CommentType {
+export interface CommentType {
     userId: number
     nickname: string
-    comment: {
-        contentId: number
-        createdAt: string
-        id: number
-        text: string
-        updatedAt: string
-        userId: number
-    }
+    comment: Comment
+}
+
+export interface Comment {
+    contentId: number
+    createdAt: string
+    id: number
+    text: string
+    updatedAt: string
+    userId: number
 }
 
 const DetailWrapper = styled.main`
@@ -43,20 +45,6 @@ const SubTitle = styled.h3`
 
 const CommentSection = styled.section``
 
-const CommentTextarea = styled.div`
-    display: flex;
-    flex-direction: column;
-
-    > textarea {
-        color: black;
-    }
-`
-
-const CommentButton = styled.div`
-    display: flex;
-    justify-content: end;
-`
-
 const GoodBadComment = styled.div`
     display: flex;
     justify-content: space-between;
@@ -71,13 +59,15 @@ export interface ResponseDataType {
     goodCommentViewList: []
     badCommentViewList: []
     unratedCommentViewList: []
+    myComment: Comment
 }
 
 function Detail() {
-    const [comment, setComment] = useState('')
     const [responseData, setResponseData] = useState<null | ResponseDataType>(
         null
     )
+    const [isClick, setIsClick] = useState(false)
+
     const { media, id } = useParams() as { media: string; id: string }
     const { data } = useGet<MovieDetail | TVDetail | PersonDetail>(
         `https://api.themoviedb.org/3/${media}/${id}`,
@@ -110,67 +100,14 @@ function Detail() {
         }).length,
     }
 
-    const handlePostRequest = async (url: string, postData: unknown) => {
-        axios
-            .post(url, postData, { withCredentials: true })
-            .then((response) => {
-                if (response.data.code === 200) {
-                    window.location.reload()
-                    // eslint-disable-next-line no-console
-                    console.log('댓글 생성 성공!')
-                } else {
-                    // eslint-disable-next-line no-console
-                    console.log(response.data.error_message)
-                }
-            })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.log(error)
-            })
-    }
-
-    const handlePutRequest = async (url: string, putData: unknown) => {
-        axios
-            .put(url, putData, { withCredentials: true })
-            .then((response) => {
-                if (response.data.code === 200) {
-                    window.location.reload()
-                    // eslint-disable-next-line no-console
-                    console.log('댓글 수정 성공!')
-                } else {
-                    // eslint-disable-next-line no-console
-                    console.log(response.data.error_message)
-                }
-            })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.log(error)
-            })
-    }
-
-    const handleDeleteRequest = async (url: string, deleteData: unknown) => {
-        axios
-            .delete(url, {
-                data: deleteData,
-                withCredentials: true,
-            })
-            .then((response) => {
-                if (response.data.code === 200) {
-                    window.location.reload()
-                    // eslint-disable-next-line no-console
-                    console.log('댓글 삭제 성공!')
-                }
-            })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.log(error)
-            })
-    }
-
     // window.scrollTo({
     //     top: 0,
     //     behavior: 'smooth',
     // })
+
+    const handleIsClick = () => {
+        setIsClick(!isClick)
+    }
 
     useEffect(() => {
         axios
@@ -182,9 +119,9 @@ function Detail() {
                 withCredentials: true,
             })
             .then((response) => {
-                // eslint-disable-next-line no-console
-                console.log(response.data, '댓글 조회 성공!')
                 setResponseData(response.data)
+                // eslint-disable-next-line no-console
+                console.log(response.data)
             })
             .catch((error) => {
                 // eslint-disable-next-line no-console
@@ -195,149 +132,117 @@ function Detail() {
     return (
         data &&
         responseData && (
-            <DetailWrapper>
-                {media === 'person' ? (
-                    <>
-                        <PersonOutline data={data as PersonDetail} />
-                        <Biography data={(data as PersonDetail).biography} />
+            <>
+                <DetailWrapper>
+                    {media === 'person' ? (
+                        <>
+                            <PersonOutline data={data as PersonDetail} />
+                            <Biography
+                                data={(data as PersonDetail).biography}
+                            />
+                            <div>
+                                <SubTitle>출연</SubTitle>
+                                <NumberOfWorks data={NumberOfWorksData} />
+                                <CreditsList>
+                                    {creditListEl?.map((el) => {
+                                        return (
+                                            <Credits
+                                                key={`${el.id}${Math.random()}`}
+                                                data={el}
+                                            />
+                                        )
+                                    })}
+                                </CreditsList>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <Outline
+                                media={media}
+                                data={data as MovieDetail | TVDetail}
+                                recommendStatus={responseData.recommendStatus}
+                                favorite={responseData.favorite}
+                                myComment={responseData.myComment}
+                                handleIsClick={handleIsClick}
+                            />
+                            <Cast
+                                credits={
+                                    (data as MovieDetail | TVDetail).credits
+                                }
+                            />
+                        </>
+                    )}
+                    <CommentSection>
+                        <SubTitle>코멘트</SubTitle>
+
+                        {/* 추천/비추천 리뷰 */}
+                        <GoodBadComment>
+                            <div>
+                                <Good fill="#019e74" />
+                                {responseData?.goodCommentViewList?.map(
+                                    (el: CommentType) => {
+                                        return (
+                                            <li key={el.comment.id}>
+                                                <Comment
+                                                    id={el.userId}
+                                                    nickname={el.nickname}
+                                                    commentText={
+                                                        el.comment.text
+                                                    }
+                                                />
+                                            </li>
+                                        )
+                                    }
+                                )}
+                            </div>
+                            <div>
+                                <Bad fill="rgb(229, 9, 20)" />
+                                {responseData?.badCommentViewList?.map(
+                                    (el: CommentType) => {
+                                        return (
+                                            <li key={el.comment.id}>
+                                                <Comment
+                                                    id={el.userId}
+                                                    nickname={el.nickname}
+                                                    commentText={
+                                                        el.comment.text
+                                                    }
+                                                />
+                                            </li>
+                                        )
+                                    }
+                                )}
+                            </div>
+                        </GoodBadComment>
+
+                        {/* 미평가 리뷰 */}
                         <div>
-                            <SubTitle>출연</SubTitle>
-                            <NumberOfWorks data={NumberOfWorksData} />
-                            <CreditsList>
-                                {creditListEl?.map((el) => {
+                            <NotRated />
+                            {responseData?.unratedCommentViewList?.map(
+                                (el: CommentType) => {
                                     return (
-                                        <Credits
-                                            key={`${el.id}${Math.random()}`}
-                                            data={el}
-                                        />
+                                        <li key={el.comment.id}>
+                                            <Comment
+                                                id={el.userId}
+                                                nickname={el.nickname}
+                                                commentText={el.comment.text}
+                                            />
+                                        </li>
                                     )
-                                })}
-                            </CreditsList>
+                                }
+                            )}
                         </div>
-                    </>
-                ) : (
-                    <>
-                        <Outline
-                            media={media}
-                            data={data as MovieDetail | TVDetail}
-                            recommendStatus={responseData.recommendStatus}
-                            favorite={responseData.favorite}
-                        />
-                        <Cast
-                            credits={(data as MovieDetail | TVDetail).credits}
-                        />
-                    </>
+                    </CommentSection>
+                </DetailWrapper>
+                {isClick && (
+                    <CommentModal
+                        handleClose={handleIsClick}
+                        mediaType={media}
+                        tmdbId={id}
+                        myComment={responseData.myComment}
+                    />
                 )}
-                <CommentSection>
-                    <SubTitle>코멘트</SubTitle>
-
-                    {/* 코멘트 작성/수정/삭제 */}
-                    <CommentTextarea>
-                        <textarea
-                            value={comment}
-                            onChange={(e) => {
-                                setComment(e.target.value)
-                            }}
-                        />
-                        <CommentButton>
-                            <div>
-                                <Button
-                                    name="저장"
-                                    onClick={() => {
-                                        handlePostRequest(
-                                            'http://localhost/comment/create',
-                                            {
-                                                mediaType: media,
-                                                tmdbId: Number(id),
-                                                text: comment,
-                                            }
-                                        )
-                                    }}
-                                />
-                            </div>
-                            <div>
-                                <Button
-                                    name="수정"
-                                    onClick={() => {
-                                        handlePutRequest(
-                                            'http://localhost/comment/update',
-                                            {
-                                                commentId: 6,
-                                                text: comment,
-                                            }
-                                        )
-                                    }}
-                                />
-                                <Button
-                                    name="삭제"
-                                    onClick={() => {
-                                        handleDeleteRequest(
-                                            'http://localhost/comment/delete',
-                                            {
-                                                commentId: 6,
-                                            }
-                                        )
-                                    }}
-                                />
-                            </div>
-                        </CommentButton>
-                    </CommentTextarea>
-
-                    {/* 추천/비추천 리뷰 */}
-                    <GoodBadComment>
-                        <div>
-                            <Good fill="#019e74" />
-                            {responseData?.goodCommentViewList?.map(
-                                (el: CommentType) => {
-                                    return (
-                                        <li key={el.comment.id}>
-                                            <Comment
-                                                id={el.userId}
-                                                nickname={el.nickname}
-                                                commentText={el.comment.text}
-                                            />
-                                        </li>
-                                    )
-                                }
-                            )}
-                        </div>
-                        <div>
-                            <Bad fill="rgb(229, 9, 20)" />
-                            {responseData?.badCommentViewList?.map(
-                                (el: CommentType) => {
-                                    return (
-                                        <li key={el.comment.id}>
-                                            <Comment
-                                                id={el.userId}
-                                                nickname={el.nickname}
-                                                commentText={el.comment.text}
-                                            />
-                                        </li>
-                                    )
-                                }
-                            )}
-                        </div>
-                    </GoodBadComment>
-
-                    {/* 미평가 리뷰 */}
-                    <div>
-                        <NotRated />
-                        {responseData?.unratedCommentViewList?.map(
-                            (el: CommentType) => {
-                                return (
-                                    <li key={el.comment.id}>
-                                        <Comment
-                                            id={el.userId}
-                                            nickname={el.nickname}
-                                            commentText={el.comment.text}
-                                        />
-                                    </li>
-                                )
-                            }
-                        )}
-                    </div>
-                </CommentSection>
-            </DetailWrapper>
+            </>
         )
     )
 }
