@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar'
 import FloatingBar from '../components/FloatingBar'
 import Trending from '../components/Trending'
 import RecommendedVideo from '../components/RecommendedVideo'
+import StatModal from '../components/StatModal'
 
 const MainWrapper = styled.main``
 
@@ -29,6 +30,7 @@ function Main() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolledDown, setIsScrollDown] = useState(false)
+    const [floatingBarOpen, setFloatingBarOpen] = useState(false)
 
     const handleSetIsOpen = () => {
         setIsOpen(!isOpen)
@@ -39,6 +41,10 @@ function Main() {
             top: window.innerHeight * 0.62,
             behavior: 'smooth',
         })
+    }
+
+    const handleSetFloatingBarOpen = () => {
+        setFloatingBarOpen(!floatingBarOpen)
     }
 
     window.addEventListener('scroll', () => {
@@ -62,13 +68,21 @@ function Main() {
                             isOpen={isOpen}
                             handleSetIsOpen={handleSetIsOpen}
                         />
-                        <FloatingBar
-                            isOpen={isOpen}
-                            isScrolledDown={isScrolledDown}
-                        />
+                        {floatingBarOpen ? (
+                            <StatModal handleClose={handleSetFloatingBarOpen} />
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={handleSetFloatingBarOpen}
+                            >
+                                <FloatingBar
+                                    isOpen={isOpen}
+                                    isScrolledDown={isScrolledDown}
+                                />
+                            </button>
+                        )}
                     </UtilityBar>
                 </div>
-
                 <Trending />
                 <RecommendedVideo videoData={data.results} />
             </MainWrapper>
