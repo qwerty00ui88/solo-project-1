@@ -121,10 +121,6 @@ function Detail() {
             .then((response) => {
                 setResponseData(response.data)
             })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.log(error)
-            })
     }, [])
 
     return (

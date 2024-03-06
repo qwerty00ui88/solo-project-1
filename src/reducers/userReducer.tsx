@@ -19,8 +19,6 @@ export const login = createAsyncThunk(
         initializeApp(firebaseConfig)
         const auth = getAuth()
         const { user } = await signInWithEmailAndPassword(auth, email, password)
-        // eslint-disable-next-line no-console
-        console.log('🌈 로그인 성공', { user })
         return { uid: user.uid }
     }
 )

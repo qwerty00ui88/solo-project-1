@@ -5,8 +5,6 @@ import RecommendItem from './RecommendItem'
 
 function MyComment() {
     const [comment, setComment] = useState([])
-    // eslint-disable-next-line no-console
-    console.log(comment)
     useEffect(() => {
         axios
             .get('http://localhost/mypage/comment-list', {

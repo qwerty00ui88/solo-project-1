@@ -36,8 +36,7 @@ const RecommendItemLi = styled.li`
 
 function MyRecommend() {
     const [recommend, setRecommend] = useState([])
-    // eslint-disable-next-line no-console
-    console.log(recommend)
+
     useEffect(() => {
         axios
             .get('http://localhost/mypage/recommend-list', {
