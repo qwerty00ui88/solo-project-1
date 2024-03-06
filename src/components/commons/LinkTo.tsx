@@ -5,7 +5,7 @@ import { xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 
 interface LinkWrapperProps {
-    $width?: string
+    $width?: string | null
     $height?: string | null
 }
 
@@ -19,16 +19,17 @@ const LinkWrapper = styled(Link)<LinkWrapperProps>`
     border-radius: ${xsmallRadius};
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};
+    padding: 0.5rem;
 `
 
 interface LinkToProps {
     name: string
     to: string
-    width?: string
+    width?: string | null
     height?: string | null
 }
 
-function LinkTo({ name, to, width = '4.5rem', height = null }: LinkToProps) {
+function LinkTo({ name, to, width = null, height = null }: LinkToProps) {
     return (
         <LinkWrapper to={to} $width={width} $height={height}>
             {name}

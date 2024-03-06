@@ -4,7 +4,7 @@ import { xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 
 export interface ButtonWrapperProps {
-    $width: string
+    $width: string | null
     $height: string | null
 }
 
@@ -15,20 +15,16 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
     border-radius: ${xsmallRadius};
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};
+    padding: 0.5rem;
 `
 interface ButtonProps {
     name: string
     onClick: (e?: MouseEvent<HTMLButtonElement>) => void
-    width?: string
+    width?: string | null
     height?: string | null
 }
 
-function Button({
-    name,
-    onClick,
-    width = '4.5rem',
-    height = null,
-}: ButtonProps) {
+function Button({ name, onClick, width = null, height = null }: ButtonProps) {
     return (
         <ButtonWrapper
             type="button"

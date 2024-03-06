@@ -1,10 +1,9 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { mediumWeight, xsmallSize } from '../style/font'
+import { xsmallSize } from '../style/font'
 import { ReactComponent as Velog } from '../assets/velog.svg'
 import { ReactComponent as GitHub } from '../assets/github.svg'
 import { ReactComponent as Gmail } from '../assets/gmail.svg'
-import { xsmallRadius } from '../style/border'
 
 const FooterWrapper = styled.div`
     display: flex;
@@ -43,14 +42,6 @@ const FooterLeftUl = styled.ul`
     &:nth-child(5) {
         margin-bottom: 0.8rem;
     }
-`
-
-const FooterRightSelect = styled.select`
-    width: 7rem;
-    padding: 3px 0 3px 3px;
-    font-weight: ${mediumWeight};
-    color: black;
-    border-radius: ${xsmallRadius};
 `
 
 const FooterLinks = styled.ul`
@@ -95,10 +86,6 @@ function Footer() {
                 })}
             </FooterLeft>
             <FooterRight>
-                <FooterRightSelect name="language">
-                    <option>한국어</option>
-                    <option>영어</option>
-                </FooterRightSelect>
                 <FooterLinks>
                     <Gmail width="24" fill="#848485" />
                     <GitHub width="24" fill="#848485" />

@@ -31,12 +31,7 @@ function SignUp1({
                 }}
                 name="nickname"
             />
-            <Button
-                name="닉네임중복"
-                onClick={() => {}}
-                width="20rem"
-                height="3rem"
-            />
+            <Button name="닉네임 중복" onClick={() => {}} />
             <label htmlFor="email">이메일</label>
             <Input
                 id="email"

@@ -164,8 +164,6 @@ function Header() {
                                         'http://localhost:3000'
                                 })
                         }}
-                        width="4.5rem"
-                        height="2.4rem"
                     />
                 </Menu>
             ) : (

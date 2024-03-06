@@ -89,8 +89,7 @@ function Outline({
     const releaseDate =
         (data as MovieDetail).release_date || (data as TVDetail).first_air_date
     const { runtime } = data as MovieDetail
-    // eslint-disable-next-line no-console
-    console.log(myComment)
+
     return (
         data && (
             <OutlineWrapper $backdrop={data.backdrop_path}>

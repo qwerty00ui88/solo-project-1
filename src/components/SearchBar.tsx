@@ -36,7 +36,7 @@ const SearchBarWrapper = styled.div<{ $isOpen: boolean }>`
     }
 `
 
-const CancelButton = styled.button`
+export const CancelButton = styled.button`
     position: absolute;
     top: 20px;
     right: 20px;
@@ -128,7 +128,7 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
             {isOpen ? (
                 <>
                     <CancelButton type="button" onClick={handleCancelButton}>
-                        <Cancel width={20} height={20} />
+                        <Cancel />
                     </CancelButton>
                     <InputContainer>
                         <label htmlFor="search">

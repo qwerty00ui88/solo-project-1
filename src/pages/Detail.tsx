@@ -120,8 +120,6 @@ function Detail() {
             })
             .then((response) => {
                 setResponseData(response.data)
-                // eslint-disable-next-line no-console
-                console.log(response.data)
             })
             .catch((error) => {
                 // eslint-disable-next-line no-console

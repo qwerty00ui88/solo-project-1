@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import styled from 'styled-components'
 import { mediumWeight } from '../../style/font'
 import { xsmallRadius } from '../../style/border'
@@ -12,25 +12,25 @@ const SelectWrapper = styled.select`
 `
 
 function DropDown({
-    selectName,
     selectId,
+    onChange,
     options,
     labelText = undefined,
 }: {
-    selectName: string
     selectId: string
-    options: { name: string; value: string }[]
+    onChange: (e: ChangeEvent<HTMLSelectElement>) => void
+    options: { value: string; name: string }[]
     labelText?: string | undefined
 }) {
     return (
         <>
             {labelText && <label htmlFor={selectId}>{labelText}</label>}
 
-            <SelectWrapper name={selectName} id={selectId}>
+            <SelectWrapper id={selectId} onChange={onChange}>
                 {options.map((option) => {
                     return (
                         <option key={option.value} value={option.value}>
-                            {option.value}
+                            {option.name}
                         </option>
                     )
                 })}

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { ReactComponent as Good } from '../assets/good.svg'
-import { ReactComponent as Bad } from '../assets/bad.svg'
-import { ReactComponent as Favorite } from '../assets/favorite.svg'
-import Map from './Map'
 import { TrendingWrapper } from './Trending'
+import StatModal1 from './StatModal1'
+import { ReactComponent as Cancel } from '../assets/cancel.svg'
+import StatModal2 from './StatModal2'
+import IconButton from './commons/IconButton'
 
 const StatModalWrapper = styled(TrendingWrapper)`
     display: flex;
@@ -20,38 +20,32 @@ const StatModalWrapper = styled(TrendingWrapper)`
     z-index: 3;
 `
 
-declare global {
-    interface Window {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        kakao: any
-    }
-}
-
-const MapSection = styled.div`
-    width: 100%;
-    flex: 1;
-
-    .overlaybox {
-        background-color: black;
-    }
+const CancelIconButton = styled.div`
+    position: absolute;
+    top: 20px;
+    right: 20px;
 `
 
 function StatModal({ handleClose }: { handleClose: () => void }) {
-    const [mapPosition] = useState([37.5172, 127.0473])
+    const [page, setPage] = useState(1)
+    const [mapPosition] = useState([36.5, 128])
+
+    const handlePage = () => {
+        setPage(page === 1 ? 2 : 1)
+    }
 
     return (
         <StatModalWrapper>
-            <div>
-                <Good fill="#019e74" />
-                <Bad fill="rgb(229, 9, 20)" />
-                <Favorite fill="#FFD700" />
-                <button type="button" onClick={handleClose}>
-                    X
-                </button>
-            </div>
-            <MapSection>
-                <Map mapPosition={mapPosition} />
-            </MapSection>
+            <CancelIconButton>
+                <IconButton onClick={handleClose}>
+                    <Cancel />
+                </IconButton>
+            </CancelIconButton>
+            {page === 1 ? (
+                <StatModal1 mapPosition={mapPosition} handlePage={handlePage} />
+            ) : (
+                <StatModal2 handlePage={handlePage} />
+            )}
         </StatModalWrapper>
     )
 }

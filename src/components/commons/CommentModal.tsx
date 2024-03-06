@@ -90,7 +90,7 @@ function Modal({
                                     'http://localhost/comment/create',
                                     {
                                         mediaType,
-                                        tmdbId,
+                                        tmdbId: Number(tmdbId),
                                         text: comment,
                                     },
                                     { withCredentials: true }

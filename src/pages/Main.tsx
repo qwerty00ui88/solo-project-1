@@ -12,11 +12,16 @@ const MainWrapper = styled.main``
 
 interface UtilityBarProps {
     $isOpen: boolean
+    $isScrolledDown: boolean
+    $floatingBarOpen: boolean
 }
 
 const UtilityBar = styled.div<UtilityBarProps>`
     display: flex;
-    column-gap: 10px;
+    column-gap: ${(props) =>
+        props.$isOpen || props.$isScrolledDown || props.$floatingBarOpen
+            ? null
+            : `10px`};
     height: ${(props) => (props.$isOpen ? null : `6vw`)};
     min-height: ${(props) => (props.$isOpen ? null : `44px`)};
     max-height: ${(props) => (props.$isOpen ? null : `57px`)};
@@ -63,7 +68,11 @@ function Main() {
             <MainWrapper>
                 <div>
                     <Carousel data={data.results} />
-                    <UtilityBar $isOpen={isOpen}>
+                    <UtilityBar
+                        $isOpen={isOpen}
+                        $isScrolledDown={isScrolledDown}
+                        $floatingBarOpen={floatingBarOpen}
+                    >
                         <SearchBar
                             isOpen={isOpen}
                             handleSetIsOpen={handleSetIsOpen}
