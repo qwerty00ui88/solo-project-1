@@ -3,22 +3,31 @@ import styled from 'styled-components'
 import axios from 'axios'
 import Button from './Button'
 import { Comment } from '../../pages/Detail'
+import { xlargeRadius } from '../../style/border'
 
 const ModalWrapper = styled.div`
     position: fixed;
     top: 50%;
     right: 50%;
     transform: translate(50%, -50%);
-    background-color: skyblue;
+    background-color: black;
     width: 50vw;
     height: 50vh;
     padding: 2.4vw 3vw;
+    border-radius: ${xlargeRadius};
+    border: 1px solid rgba(255, 255, 255, 0.534);
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.36);
 `
 
 const Textarea = styled.textarea`
     color: black;
     width: 100%;
     height: 80%;
+`
+
+const Buttons = styled.div`
+    display: flex;
+    justify-content: end;
 `
 
 function Modal({
@@ -41,7 +50,7 @@ function Modal({
                     setComment(e.target.value)
                 }}
             />
-            <div>
+            <Buttons>
                 {myComment ? (
                     <>
                         <Button
@@ -104,7 +113,7 @@ function Modal({
                     />
                 )}
                 <Button name="취소" onClick={handleClose} />
-            </div>
+            </Buttons>
         </ModalWrapper>
     )
 }
