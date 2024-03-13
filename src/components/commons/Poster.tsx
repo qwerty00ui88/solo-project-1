@@ -17,7 +17,7 @@ const Image = styled.img`
 const Empty = styled.div`
     width: 100%;
     aspect-ratio: 2/3;
-    background-color: gray;
+    background-color: #878787;
     border-radius: ${xlargeRadius};
 `
 
