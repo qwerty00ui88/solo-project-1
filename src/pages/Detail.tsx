@@ -63,6 +63,7 @@ export interface ResponseDataType {
 }
 
 function Detail() {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [responseData, setResponseData] = useState<null | ResponseDataType>(
         null
     )
@@ -100,10 +101,10 @@ function Detail() {
         }).length,
     }
 
-    // window.scrollTo({
-    //     top: 0,
-    //     behavior: 'smooth',
-    // })
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+    })
 
     const handleIsClick = () => {
         setIsClick(!isClick)
@@ -111,7 +112,7 @@ function Detail() {
 
     useEffect(() => {
         axios
-            .get('http://localhost/detail', {
+            .get(`${serverUrl}/detail`, {
                 params: {
                     mediaType: media,
                     tmdbId: Number(id),

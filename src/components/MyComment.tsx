@@ -4,10 +4,11 @@ import { MyRecommendWrapper, RecommendItemType } from './MyRecommend'
 import RecommendItem from './RecommendItem'
 
 function MyComment() {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [comment, setComment] = useState([])
     useEffect(() => {
         axios
-            .get('http://localhost/mypage/comment-list', {
+            .get(`${serverUrl}/mypage/comment-list`, {
                 withCredentials: true,
             })
             .then((response) => {

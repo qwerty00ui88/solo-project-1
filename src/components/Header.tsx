@@ -84,6 +84,7 @@ const Menu = styled.div`
 `
 
 function Header() {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [cookies, , removeCookie] = useCookies(['JSESSIONID'])
 
     const nav = [
@@ -155,7 +156,7 @@ function Header() {
                         name="로그아웃"
                         onClick={() => {
                             axios
-                                .get('http://localhost/user/logout', {
+                                .get(`${serverUrl}/user/logout`, {
                                     withCredentials: true,
                                 })
                                 .then(() => {

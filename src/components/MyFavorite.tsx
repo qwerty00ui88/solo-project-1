@@ -66,11 +66,12 @@ interface FavoriteType {
 }
 
 function MyFavorite() {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [data, setData] = useState<FavoriteType[]>([])
 
     useEffect(() => {
         axios
-            .get('http://localhost/mypage/favorite-list', {
+            .get(`${serverUrl}/mypage/favorite-list`, {
                 withCredentials: true,
             })
             .then((response) => {
@@ -137,7 +138,7 @@ function MyFavorite() {
                                     name="삭제"
                                     onClick={() => {
                                         axios.delete(
-                                            'http://localhost/favorite/delete',
+                                            `${serverUrl}/favorite/delete`,
                                             {
                                                 data: {
                                                     mediaType: el.mediaType,

@@ -18,6 +18,7 @@ export const Title = styled.h2`
 `
 
 function Login() {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [nickname, setNickname] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const navigate = useNavigate()
@@ -45,7 +46,7 @@ function Login() {
                 onClick={() => {
                     axios
                         .post(
-                            'http://localhost/user/login',
+                            `${serverUrl}/user/login`,
                             {
                                 nickname,
                                 password,

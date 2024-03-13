@@ -5,6 +5,7 @@ import Button from './commons/Button'
 import { SignUpUser } from '../pages/SignUp'
 
 function SignUp3({ user }: { user: SignUpUser }) {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const { state } = useLocation()
     const navigate = useNavigate()
     return (
@@ -19,7 +20,7 @@ function SignUp3({ user }: { user: SignUpUser }) {
                 onClick={() => {
                     axios
                         .post(
-                            `http://localhost/user/resend-verification-email`,
+                            `${serverUrl}/user/resend-verification-email`,
                             {
                                 userId: state,
                                 purpose: '회원가입',

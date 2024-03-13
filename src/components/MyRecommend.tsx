@@ -35,11 +35,12 @@ const RecommendItemLi = styled.li`
 `
 
 function MyRecommend() {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [recommend, setRecommend] = useState([])
 
     useEffect(() => {
         axios
-            .get('http://localhost/mypage/recommend-list', {
+            .get(`${serverUrl}/mypage/recommend-list`, {
                 withCredentials: true,
             })
             .then((response) => {

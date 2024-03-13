@@ -80,6 +80,7 @@ function Outline({
     myComment: Comment
     handleIsClick: () => void
 }) {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [recommend, setRecommend] = useState<null | 'good' | 'bad'>(
         recommendStatus
     )
@@ -125,7 +126,7 @@ function Outline({
                             type="button"
                             onClick={() => {
                                 axios
-                                    .get('http://localhost/recommend', {
+                                    .get(`${serverUrl}/recommend`, {
                                         params: {
                                             mediaType: media,
                                             tmdbId: data.id,
@@ -157,7 +158,7 @@ function Outline({
                             type="button"
                             onClick={() => {
                                 axios
-                                    .get('http://localhost/recommend', {
+                                    .get(`${serverUrl}/recommend`, {
                                         params: {
                                             mediaType: media,
                                             tmdbId: data.id,
@@ -191,7 +192,7 @@ function Outline({
                             type="button"
                             onClick={() => {
                                 axios
-                                    .get('http://localhost/favorite/toggle', {
+                                    .get(`${serverUrl}/favorite/toggle`, {
                                         params: {
                                             mediaType: media,
                                             tmdbId: data.id,

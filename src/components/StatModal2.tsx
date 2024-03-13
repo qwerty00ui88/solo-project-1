@@ -46,6 +46,7 @@ const FilterSection = styled.div`
 `
 
 function StatModal2({ handlePage }: { handlePage: () => void }) {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [region1, setRegion1] = useState<string>('서울특별시')
     const [region2, setRegion2] = useState<string>('강남구')
     const [gender, setGender] = useState<string>('male')
@@ -111,7 +112,7 @@ function StatModal2({ handlePage }: { handlePage: () => void }) {
                         onClick={() => {
                             axios
                                 .get(
-                                    'http://localhost/statistics/by-region-gender-ageGroup',
+                                    `${serverUrl}/statistics/by-region-gender-ageGroup`,
                                     {
                                         params: {
                                             region: `${region1} ${region2}`,

@@ -288,8 +288,6 @@ export interface SearchData {
 
 function useGet<T>(url: string, params: Params, dependency?: string[]) {
     const [data, setData] = useState<T | null>(null)
-    // const [loading, setLoading] = useState(true)
-    // const [error, setError] = useState<null | Error>(null)
 
     const options = {
         method: 'GET',

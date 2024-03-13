@@ -41,6 +41,7 @@ function Modal({
     tmdbId: string
     myComment: Comment
 }) {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [comment, setComment] = useState(myComment ? myComment.text : '')
     return (
         <ModalWrapper>
@@ -58,7 +59,7 @@ function Modal({
                             onClick={() => {
                                 axios
                                     .put(
-                                        'http://localhost/comment/update',
+                                        `${serverUrl}/comment/update`,
                                         {
                                             commentId: myComment.id,
                                             text: comment,
@@ -76,7 +77,7 @@ function Modal({
                             name="삭제"
                             onClick={() => {
                                 axios
-                                    .delete('http://localhost/comment/delete', {
+                                    .delete(`${serverUrl}/comment/delete`, {
                                         data: {
                                             commentId: myComment.id,
                                         },
@@ -96,7 +97,7 @@ function Modal({
                         onClick={() => {
                             axios
                                 .post(
-                                    'http://localhost/comment/create',
+                                    `${serverUrl}/comment/create`,
                                     {
                                         mediaType,
                                         tmdbId: Number(tmdbId),

@@ -12,6 +12,7 @@ function SignUp2({
     user: SignUpUser
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const navigate = useNavigate()
     return (
         <div>
@@ -38,7 +39,7 @@ function SignUp2({
                 onClick={() => {
                     axios
                         .post(
-                            'http://localhost/user/create',
+                            `${serverUrl}/user/create`,
                             {
                                 name: user.name,
                                 nickname: user.nickname,
