@@ -38,7 +38,7 @@ const InputWrapper = styled.input<InputWrapperProps>`
 function Input({
     onChange,
     type = 'text',
-    value = undefined,
+    value = '',
     width = undefined,
     height = undefined,
     id = undefined,

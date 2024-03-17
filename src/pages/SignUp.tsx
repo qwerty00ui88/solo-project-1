@@ -8,13 +8,13 @@ import SignUp3 from '../components/SignUp3'
 import SignUp4 from '../components/SignUp4'
 
 export interface SignUpUser {
-    name?: string
-    email?: string
-    nickname?: string
-    password?: string
-    passwordCheck?: string
+    name: string
+    email: string
+    nickname: string
+    password: string
+    passwordCheck: string
     birth?: number
-    gender?: string
+    gender: string
 }
 
 const ChildrenWrapper = styled.div`
@@ -33,13 +33,13 @@ const ChildrenWrapper = styled.div`
 function SignUp() {
     const { page } = useParams()
     const [user, setUser] = useState<SignUpUser>({
-        name: undefined,
-        email: undefined,
-        nickname: undefined,
-        password: undefined,
-        passwordCheck: undefined,
+        name: '',
+        email: '',
+        nickname: '',
+        password: '',
+        passwordCheck: '',
         birth: undefined,
-        gender: undefined,
+        gender: '',
     })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

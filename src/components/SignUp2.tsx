@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 import Button from './commons/Button'
 import Input from './commons/Input'
 import LinkTo from './commons/LinkTo'
@@ -31,7 +32,9 @@ function SignUp1({
     user: SignUpUser
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) {
+    const [isDuplicated, setIsDuplicated] = useState<boolean | null>(null)
     const [isSame, setIsSame] = useState<boolean | null>(null)
+    const serverUrl = process.env.REACT_APP_SERVER_URL
 
     useEffect(() => {
         if (user.passwordCheck === '') {
@@ -55,10 +58,24 @@ function SignUp1({
                     name="nickname"
                     label="닉네임"
                 />
-                <Button name="중복 확인" onClick={() => {}} />
+                <Button
+                    name="중복 확인"
+                    onClick={() => {
+                        axios
+                            .get(`${serverUrl}/user/isDuplicated`, {
+                                params: {
+                                    nickname: user.nickname,
+                                },
+                                withCredentials: true,
+                            })
+                            .then((response) => {
+                                setIsDuplicated(response.data.result)
+                            })
+                    }}
+                />
             </NicknameSet>
-            <div>이미 사용중인 닉네임입니다.</div>
-            <div>사용 가능한 닉네임입니다.</div>
+            {isDuplicated === true && <div>이미 사용중인 닉네임입니다.</div>}
+            {isDuplicated === false && <div>사용 가능한 닉네임입니다.</div>}
             <Input
                 type="password"
                 id="password"
@@ -79,7 +96,6 @@ function SignUp1({
                 name="passwordCheck"
                 label="비밀번호 확인"
             />
-            {isSame === null && <div />}
             {isSame === false && <div>불일치</div>}
             {isSame === true && <div>일치</div>}
             <Buttons>
