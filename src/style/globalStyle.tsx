@@ -50,10 +50,13 @@ const GlobalStyle = createGlobalStyle`
   button {
     all: unset;
     cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
   }
 
   input {
     all: unset;
+    box-sizing: border-box;
   }
 `
 

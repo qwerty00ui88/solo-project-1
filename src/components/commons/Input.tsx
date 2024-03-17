@@ -3,9 +3,29 @@ import { styled } from 'styled-components'
 import { xsmallRadius } from '../../style/border'
 
 interface InputWrapperProps {
-    $width: string
-    $height: string
+    $width?: string
+    $height?: string
 }
+
+interface InputProps {
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+    type?: string
+    value?: string | number
+    width?: string
+    height?: string
+    id?: string
+    name?: string
+    label?: string
+}
+
+const InputSetWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const Label = styled.label`
+    text-align: left;
+`
 
 const InputWrapper = styled.input<InputWrapperProps>`
     width: ${(props) => `${props.$width}`};
@@ -14,32 +34,30 @@ const InputWrapper = styled.input<InputWrapperProps>`
     border: 1px solid #e5e5e5;
     border-radius: ${xsmallRadius};
 `
-interface InputProps {
-    value: string | number | undefined
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
-    width?: string
-    height?: string
-    id?: string
-    name?: string
-}
 
 function Input({
-    value,
     onChange,
-    width = 'calc(20rem - 20px)',
-    height = 'calc(3rem - 10px)',
-    id = '',
-    name = '',
+    type = 'text',
+    value = undefined,
+    width = undefined,
+    height = undefined,
+    id = undefined,
+    name = undefined,
+    label = undefined,
 }: InputProps) {
     return (
-        <InputWrapper
-            id={id}
-            name={name}
-            value={value}
-            onChange={onChange}
-            $width={width}
-            $height={height}
-        />
+        <InputSetWrapper>
+            <Label htmlFor={id}>{label}</Label>
+            <InputWrapper
+                type={type}
+                id={id}
+                name={name}
+                value={value}
+                onChange={onChange}
+                $width={width}
+                $height={height}
+            />
+        </InputSetWrapper>
     )
 }
 

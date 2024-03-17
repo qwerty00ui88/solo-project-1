@@ -1,14 +1,15 @@
-import React, { MouseEvent } from 'react'
+import React, { MouseEvent, ReactElement } from 'react'
 import { styled } from 'styled-components'
 import { xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 
 export interface ButtonWrapperProps {
-    $width: string | null
-    $height: string | null
+    $width?: string
+    $height?: string
 }
 
 export const ButtonWrapper = styled.button<ButtonWrapperProps>`
+    display: block;
     width: ${(props) => `${props.$width}`};
     height: ${(props) => `${props.$height}`};
     text-align: center;
@@ -18,13 +19,20 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
     padding: 0.5rem;
 `
 interface ButtonProps {
-    name: string
     onClick: (e?: MouseEvent<HTMLButtonElement>) => void
-    width?: string | null
-    height?: string | null
+    name?: string
+    children?: ReactElement
+    width?: string
+    height?: string
 }
 
-function Button({ name, onClick, width = null, height = null }: ButtonProps) {
+function Button({
+    onClick,
+    name = undefined,
+    children = undefined,
+    width = undefined,
+    height = undefined,
+}: ButtonProps) {
     return (
         <ButtonWrapper
             type="button"
@@ -32,7 +40,7 @@ function Button({ name, onClick, width = null, height = null }: ButtonProps) {
             $width={width}
             $height={height}
         >
-            {name}
+            {name || children}
         </ButtonWrapper>
     )
 }

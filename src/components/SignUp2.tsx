@@ -1,71 +1,97 @@
-import React, { ChangeEvent } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import Input from './commons/Input'
-import { SignUpUser } from '../pages/SignUp'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import styled from 'styled-components'
 import Button from './commons/Button'
+import Input from './commons/Input'
+import LinkTo from './commons/LinkTo'
+import { SignUpUser } from '../pages/SignUp'
+import { ReactComponent as Pre } from '../assets/pre.svg'
+import { ReactComponent as Next } from '../assets/next.svg'
 
-function SignUp2({
+const NicknameSet = styled.div`
+    display: flex;
+    gap: 1rem;
+    > div {
+        flex: 1;
+    }
+
+    button {
+        margin-top: auto;
+    }
+`
+
+export const Buttons = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+function SignUp1({
     user,
     handleChange,
 }: {
     user: SignUpUser
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
-    const navigate = useNavigate()
+    const [isSame, setIsSame] = useState<boolean | null>(null)
+
+    useEffect(() => {
+        if (user.passwordCheck === '') {
+            setIsSame(null)
+        } else if (user.password === user.passwordCheck) {
+            setIsSame(true)
+        } else {
+            setIsSame(false)
+        }
+    }, [user.password, user.passwordCheck])
+
     return (
-        <div>
-            <label htmlFor="birth">출생연도</label>
+        <>
+            <NicknameSet>
+                <Input
+                    id="nickname"
+                    value={user.nickname}
+                    onChange={(e) => {
+                        handleChange(e)
+                    }}
+                    name="nickname"
+                    label="닉네임"
+                />
+                <Button name="중복 확인" onClick={() => {}} />
+            </NicknameSet>
+            <div>이미 사용중인 닉네임입니다.</div>
+            <div>사용 가능한 닉네임입니다.</div>
             <Input
-                id="birth"
-                value={user.birth}
+                type="password"
+                id="password"
+                value={user.password}
                 onChange={(e) => {
                     handleChange(e)
                 }}
-                name="birth"
+                name="password"
+                label="비밀번호"
             />
-            <label htmlFor="gender">성별</label>
             <Input
-                id="gender"
-                value={user.gender}
+                type="password"
+                id="passwordCheck"
+                value={user.passwordCheck}
                 onChange={(e) => {
                     handleChange(e)
                 }}
-                name="gender"
+                name="passwordCheck"
+                label="비밀번호 확인"
             />
-            <Button
-                name="회원가입"
-                onClick={() => {
-                    axios
-                        .post(
-                            `${serverUrl}/user/create`,
-                            {
-                                name: user.name,
-                                nickname: user.nickname,
-                                email: user.email,
-                                password: user.password,
-                                birth: user.birth,
-                                gender: user.gender,
-                            },
-                            { withCredentials: true }
-                        )
-                        .then((response) => {
-                            if (response.data.code === 200) {
-                                navigate('/signup/3', {
-                                    state: response.data.userId,
-                                })
-                            } else {
-                                // eslint-disable-next-line no-alert
-                                alert(response.data.error_message)
-                            }
-                        })
-                }}
-                width="20rem"
-                height="3rem"
-            />
-        </div>
+            {isSame === null && <div />}
+            {isSame === false && <div>불일치</div>}
+            {isSame === true && <div>일치</div>}
+            <Buttons>
+                <LinkTo to="/signup/1">
+                    <Pre />
+                </LinkTo>
+                <LinkTo to="/signup/3">
+                    <Next />
+                </LinkTo>
+            </Buttons>
+        </>
     )
 }
 
-export default SignUp2
+export default SignUp1

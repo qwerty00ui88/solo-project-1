@@ -1,44 +1,85 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
+import styled from 'styled-components'
 import axios from 'axios'
-import { useLocation, useNavigate } from 'react-router-dom'
-import Button from './commons/Button'
+import { useNavigate } from 'react-router-dom'
+import Input from './commons/Input'
 import { SignUpUser } from '../pages/SignUp'
+import LinkTo from './commons/LinkTo'
+import { ReactComponent as Pre } from '../assets/pre.svg'
+import { ReactComponent as Next } from '../assets/next.svg'
+import Button from './commons/Button'
 
-function SignUp3({ user }: { user: SignUpUser }) {
+const Buttons = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+function SignUp3({
+    user,
+    handleChange,
+}: {
+    user: SignUpUser
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void
+}) {
     const serverUrl = process.env.REACT_APP_SERVER_URL
-    const { state } = useLocation()
     const navigate = useNavigate()
     return (
-        <div>
-            <h2>인증 메일이 발송되었습니다</h2>
-            <div>
-                메일함에서{user.email} 인증 메일을 확인 바랍니다. 이메일의 인증
-                링크를 클릭하면 회원가입이 완료됩니다.
-            </div>
-            <Button
-                name="인증 메일 다시 보내기"
-                onClick={() => {
-                    axios
-                        .post(
-                            `${serverUrl}/user/resend-verification-email`,
-                            {
-                                userId: state,
-                                purpose: '회원가입',
-                            },
-                            { withCredentials: true }
-                        )
-                        .then((response) => {
-                            if (response.data.code === 200) {
-                                // eslint-disable-next-line no-alert
-                                alert('회원가입 완료')
-                                navigate('/login')
-                            }
-                        })
+        <>
+            <Input
+                id="birth"
+                value={user.birth}
+                onChange={(e) => {
+                    handleChange(e)
                 }}
-                width="20rem"
-                height="3rem"
+                name="birth"
+                label="출생연도"
             />
-        </div>
+            <Input
+                id="gender"
+                value={user.gender}
+                onChange={(e) => {
+                    handleChange(e)
+                }}
+                name="gender"
+                label="성별"
+            />
+
+            <Buttons>
+                <LinkTo to="/signup/2">
+                    <Pre />
+                </LinkTo>
+                <Button
+                    onClick={() => {
+                        axios
+                            .post(
+                                `${serverUrl}/user/create`,
+                                {
+                                    name: user.name,
+                                    nickname: user.nickname,
+                                    email: user.email,
+                                    password: user.password,
+                                    birth: user.birth,
+                                    gender: user.gender,
+                                },
+                                { withCredentials: true }
+                            )
+                            .then((response) => {
+                                if (response.data.code === 200) {
+                                    navigate('/signup/4', {
+                                        state: response.data.userId,
+                                    })
+                                } else {
+                                    // eslint-disable-next-line no-alert
+                                    alert(response.data.error_message)
+                                }
+                            })
+                    }}
+                >
+                    <Next />
+                </Button>
+            </Buttons>
+        </>
     )
 }
+
 export default SignUp3
