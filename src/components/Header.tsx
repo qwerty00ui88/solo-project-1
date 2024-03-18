@@ -86,7 +86,8 @@ const Menu = styled.div`
 function Header() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [cookies, , removeCookie] = useCookies(['JSESSIONID'])
-
+    // eslint-disable-next-line no-console
+    console.log(cookies)
     const nav = [
         {
             nav: { id: 'movie', nameKr: '영화', nameEn: 'Movie' },
