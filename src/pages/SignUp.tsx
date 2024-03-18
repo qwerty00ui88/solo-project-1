@@ -13,14 +13,15 @@ export interface SignUpUser {
     nickname: string
     password: string
     passwordCheck: string
-    birth?: number
+    birth?: number | string
     gender: string
 }
 
 const ChildrenWrapper = styled.div`
     width: 35vw;
-    input,
-    Link,
+    input[type='text'],
+    input[type='password'],
+    select,
     a,
     button {
         height: 3rem;
@@ -42,7 +43,9 @@ function SignUp() {
         gender: '',
     })
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (
+        e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    ) => {
         const { name, value } = e.target
         setUser(() => ({
             ...user,

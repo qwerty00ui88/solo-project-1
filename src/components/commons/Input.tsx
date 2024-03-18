@@ -16,6 +16,7 @@ interface InputProps {
     id?: string
     name?: string
     label?: string
+    placeholder?: string
 }
 
 const InputSetWrapper = styled.div`
@@ -44,6 +45,7 @@ function Input({
     id = undefined,
     name = undefined,
     label = undefined,
+    placeholder = undefined,
 }: InputProps) {
     return (
         <InputSetWrapper>
@@ -54,6 +56,7 @@ function Input({
                 name={name}
                 value={value}
                 onChange={onChange}
+                placeholder={placeholder}
                 $width={width}
                 $height={height}
             />

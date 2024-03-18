@@ -10,16 +10,15 @@ interface LinkWrapperProps {
 }
 
 const LinkWrapper = styled(Link)<LinkWrapperProps>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: ${(props) => `${props.$width}`};
     height: ${(props) => `${props.$height}`};
-    text-align: center;
     border-radius: ${xsmallRadius};
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};
     padding: 0.5rem;
+    > * {
+        height: 100%;
+    }
 `
 
 interface LinkToProps {

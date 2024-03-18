@@ -58,6 +58,14 @@ const GlobalStyle = createGlobalStyle`
     all: unset;
     box-sizing: border-box;
   }
+
+  input[type="radio"]{
+    display: none;
+  }
+
+  fieldset {
+    all: unset;
+  }
 `
 
 export default GlobalStyle

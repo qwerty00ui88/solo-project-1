@@ -42,16 +42,14 @@ export const CancelButton = styled.button`
     right: 20px;
 `
 
-const InputContainer = styled.div`
-    margin-bottom: 0.7rem;
-    & input {
-        width: 100%;
-        border-bottom: 1px solid #e5e5e5;
-        padding-bottom: 0.7rem;
-        font-size: ${xxlargeSize};
-        &::placeholder {
-            color: #e5e5e53f;
-        }
+const SearchInput = styled.input`
+    margin-bottom: 1rem;
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 0.7rem;
+    font-size: ${xxlargeSize};
+    &::placeholder {
+        color: #e5e5e53f;
     }
 `
 
@@ -130,16 +128,12 @@ function SearchBar({ isOpen, handleSetIsOpen }: SearchBarProps) {
                     <CancelButton type="button" onClick={handleCancelButton}>
                         <Cancel />
                     </CancelButton>
-                    <InputContainer>
-                        <label htmlFor="search">
-                            <input
-                                id="search"
-                                placeholder="검색해보세요"
-                                value={word}
-                                onChange={changeSearchWord}
-                            />
-                        </label>
-                    </InputContainer>
+                    <SearchInput
+                        id="search"
+                        placeholder="검색해보세요"
+                        value={word}
+                        onChange={changeSearchWord}
+                    />
                     {autoCompleteVisible && (
                         <AutoComplete
                             data={result}
