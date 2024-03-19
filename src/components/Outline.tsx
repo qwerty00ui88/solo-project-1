@@ -7,6 +7,7 @@ import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as Favorite } from '../assets/favorite.svg'
 import { ReactComponent as Edit } from '../assets/edit.svg'
+import { ReactComponent as Star } from '../assets/star.svg'
 import { Comment } from '../pages/Detail'
 
 const OutlineWrapper = styled.div<{ $backdrop: string }>`
@@ -30,6 +31,7 @@ const OutlineRight = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 1rem;
 `
 
 const MainInfo = styled.div``
@@ -59,11 +61,20 @@ const GenreList = styled.ul`
     }
 `
 
-const VoteAvg = styled.div``
+const VoteAvg = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 2px;
+`
 
 const DetailedInfo = styled.div``
 
 const Tagline = styled.div``
+
+const Buttons = styled.div`
+    display: flex;
+    gap: 0.8rem;
+`
 
 function Outline({
     media,
@@ -111,9 +122,12 @@ function Outline({
                             {media === 'movie' && <span>{`${runtime}분`}</span>}
                         </Facts>
                     </MainInfo>
-                    <VoteAvg>{data.vote_average?.toFixed(1)}</VoteAvg>
+                    <VoteAvg>
+                        <Star />
+                        {data.vote_average?.toFixed(1)}
+                    </VoteAvg>
+                    {media === 'movie' && <Tagline>{data.tagline}</Tagline>}
                     <DetailedInfo>
-                        {media === 'movie' && <Tagline>{data.tagline}</Tagline>}
                         {data.overview && (
                             <>
                                 <SubTitle>개요</SubTitle>
@@ -121,7 +135,7 @@ function Outline({
                             </>
                         )}
                     </DetailedInfo>
-                    <div>
+                    <Buttons>
                         <button
                             type="button"
                             onClick={() => {
@@ -221,7 +235,7 @@ function Outline({
                         >
                             <Edit fill={myComment ? '#FFD700' : '#e5e5e5'} />
                         </button>
-                    </div>
+                    </Buttons>
                 </OutlineRight>
             </OutlineWrapper>
         )
