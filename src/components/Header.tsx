@@ -161,9 +161,11 @@ function Header() {
                                     withCredentials: true,
                                 })
                                 .then(() => {
+                                    // eslint-disable-next-line no-console
+                                    console.log(cookies.JSESSIONID)
                                     removeCookie('JSESSIONID')
                                     window.location.href =
-                                        'http://localhost:3000'
+                                        'https://goodorbad.site'
                                 })
                         }}
                     />
