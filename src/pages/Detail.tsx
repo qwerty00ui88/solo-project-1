@@ -165,69 +165,75 @@ function Detail() {
                                     (data as MovieDetail | TVDetail).credits
                                 }
                             />
+                            <CommentSection>
+                                <SubTitle>코멘트</SubTitle>
+
+                                {/* 추천/비추천 리뷰 */}
+                                <GoodBadComment>
+                                    <div>
+                                        <Good fill="#019e74" />
+                                        {responseData?.goodCommentViewList?.map(
+                                            (el: CommentType) => {
+                                                return (
+                                                    <li key={el.comment.id}>
+                                                        <Comment
+                                                            id={el.userId}
+                                                            nickname={
+                                                                el.nickname
+                                                            }
+                                                            commentText={
+                                                                el.comment.text
+                                                            }
+                                                        />
+                                                    </li>
+                                                )
+                                            }
+                                        )}
+                                    </div>
+                                    <div>
+                                        <Bad fill="rgb(229, 9, 20)" />
+                                        {responseData?.badCommentViewList?.map(
+                                            (el: CommentType) => {
+                                                return (
+                                                    <li key={el.comment.id}>
+                                                        <Comment
+                                                            id={el.userId}
+                                                            nickname={
+                                                                el.nickname
+                                                            }
+                                                            commentText={
+                                                                el.comment.text
+                                                            }
+                                                        />
+                                                    </li>
+                                                )
+                                            }
+                                        )}
+                                    </div>
+                                </GoodBadComment>
+
+                                {/* 미평가 리뷰 */}
+                                <div>
+                                    <NotRated />
+                                    {responseData?.unratedCommentViewList?.map(
+                                        (el: CommentType) => {
+                                            return (
+                                                <li key={el.comment.id}>
+                                                    <Comment
+                                                        id={el.userId}
+                                                        nickname={el.nickname}
+                                                        commentText={
+                                                            el.comment.text
+                                                        }
+                                                    />
+                                                </li>
+                                            )
+                                        }
+                                    )}
+                                </div>
+                            </CommentSection>
                         </>
                     )}
-                    <CommentSection>
-                        <SubTitle>코멘트</SubTitle>
-
-                        {/* 추천/비추천 리뷰 */}
-                        <GoodBadComment>
-                            <div>
-                                <Good fill="#019e74" />
-                                {responseData?.goodCommentViewList?.map(
-                                    (el: CommentType) => {
-                                        return (
-                                            <li key={el.comment.id}>
-                                                <Comment
-                                                    id={el.userId}
-                                                    nickname={el.nickname}
-                                                    commentText={
-                                                        el.comment.text
-                                                    }
-                                                />
-                                            </li>
-                                        )
-                                    }
-                                )}
-                            </div>
-                            <div>
-                                <Bad fill="rgb(229, 9, 20)" />
-                                {responseData?.badCommentViewList?.map(
-                                    (el: CommentType) => {
-                                        return (
-                                            <li key={el.comment.id}>
-                                                <Comment
-                                                    id={el.userId}
-                                                    nickname={el.nickname}
-                                                    commentText={
-                                                        el.comment.text
-                                                    }
-                                                />
-                                            </li>
-                                        )
-                                    }
-                                )}
-                            </div>
-                        </GoodBadComment>
-
-                        {/* 미평가 리뷰 */}
-                        <div>
-                            <NotRated />
-                            {responseData?.unratedCommentViewList?.map(
-                                (el: CommentType) => {
-                                    return (
-                                        <li key={el.comment.id}>
-                                            <Comment
-                                                id={el.userId}
-                                                nickname={el.nickname}
-                                                commentText={el.comment.text}
-                                            />
-                                        </li>
-                                    )
-                                }
-                            )}
-                        </div>
-                    </CommentSection>
                 </DetailWrapper>
                 {isClick && (
                     <CommentModal
