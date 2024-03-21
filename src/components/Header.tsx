@@ -85,7 +85,7 @@ const Menu = styled.div`
 
 function Header() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
-    const [cookies, , removeCookie] = useCookies(['JSESSIONID'])
+    const [cookies, , removeCookie] = useCookies(['JSESSIONID', 'isLogin'])
     // eslint-disable-next-line no-console
     console.log(cookies)
     const nav = [
@@ -148,7 +148,7 @@ function Header() {
                     )
                 })}
             </Nav>
-            {cookies.JSESSIONID ? (
+            {cookies.JSESSIONID && cookies.isLogin ? (
                 <Menu>
                     <Link to="/mypage/favorite">
                         <User />
@@ -162,8 +162,9 @@ function Header() {
                                 })
                                 .then(() => {
                                     // eslint-disable-next-line no-console
-                                    console.log(cookies.JSESSIONID)
+                                    console.log(cookies)
                                     removeCookie('JSESSIONID')
+                                    removeCookie('isLogin')
                                     window.location.href =
                                         'https://goodorbad.site'
                                 })
