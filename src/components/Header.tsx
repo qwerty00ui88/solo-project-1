@@ -1,8 +1,8 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     fontLogo,
     largeSize,
@@ -16,6 +16,8 @@ import { ReactComponent as User } from '../assets/user.svg'
 import Button from './commons/Button'
 import LinkTo from './commons/LinkTo'
 import { smallRadius } from '../style/border'
+import { logout } from '../reducers/userReducer'
+import { RootState } from '../store'
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -85,9 +87,10 @@ const Menu = styled.div`
 
 function Header() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
-    const [cookies, , removeCookie] = useCookies(['JSESSIONID', 'isLogin'])
-    // eslint-disable-next-line no-console
-    console.log(cookies)
+    const clientUrl = process.env.REACT_APP_CLIENT_URL
+    const dispatch = useDispatch()
+    const { isLoggedIn } = useSelector((state: RootState) => state.user)
+
     const nav = [
         {
             nav: { id: 'movie', nameKr: '영화', nameEn: 'Movie' },
@@ -148,7 +151,7 @@ function Header() {
                     )
                 })}
             </Nav>
-            {cookies.JSESSIONID && cookies.isLogin ? (
+            {isLoggedIn ? (
                 <Menu>
                     <Link to="/mypage/favorite">
                         <User />
@@ -161,12 +164,8 @@ function Header() {
                                     withCredentials: true,
                                 })
                                 .then(() => {
-                                    // eslint-disable-next-line no-console
-                                    console.log(cookies)
-                                    removeCookie('JSESSIONID')
-                                    removeCookie('isLogin')
-                                    window.location.href =
-                                        'https://goodorbad.site'
+                                    dispatch(logout())
+                                    window.location.href = `${clientUrl}`
                                 })
                         }}
                     />

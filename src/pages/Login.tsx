@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
 import Input from '../components/commons/Input'
 import Button from '../components/commons/Button'
 import { logoSize } from '../style/font'
+import { login } from '../reducers/userReducer'
 
 export const LoginWrapper = styled.main`
     display: flex;
@@ -33,6 +35,8 @@ export const Title = styled.h2`
 
 function Login() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
+    const dispatch = useDispatch()
+    // const { isLoggedIn } = useSelector((state: RootState) => state.user)
     const [nickname, setNickname] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const navigate = useNavigate()
@@ -71,6 +75,7 @@ function Login() {
                             )
                             .then((response) => {
                                 if (response.data.code === 200) {
+                                    dispatch(login())
                                     navigate(`/`)
                                 }
                             })
