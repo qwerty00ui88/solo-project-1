@@ -161,6 +161,7 @@ function Outline({
                                         alert(error)
                                     })
                             }}
+                            aria-label="good"
                         >
                             <Good
                                 fill={
@@ -193,6 +194,7 @@ function Outline({
                                         alert(error)
                                     })
                             }}
+                            aria-label="bad"
                         >
                             <Bad
                                 fill={
@@ -222,6 +224,7 @@ function Outline({
                                         }
                                     })
                             }}
+                            aria-label="favorite"
                         >
                             <Favorite
                                 fill={isFavorite ? '#FFD700' : '#e5e5e5'}
@@ -232,6 +235,7 @@ function Outline({
                             onClick={() => {
                                 handleIsClick()
                             }}
+                            aria-label="edit"
                         >
                             <Edit fill={myComment ? '#FFD700' : '#e5e5e5'} />
                         </button>
