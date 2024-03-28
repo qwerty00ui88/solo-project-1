@@ -83,6 +83,7 @@ function Main() {
                             <button
                                 type="button"
                                 onClick={handleSetFloatingBarOpen}
+                                aria-label="floatingBar"
                             >
                                 <FloatingBar
                                     isOpen={isOpen}
