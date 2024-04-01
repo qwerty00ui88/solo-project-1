@@ -96,7 +96,6 @@ function Outline({
         recommendStatus
     )
     const [isFavorite, setIsFavorite] = useState<boolean>(favorite)
-
     const title = (data as MovieDetail).title || (data as TVDetail).name
     const releaseDate =
         (data as MovieDetail).release_date || (data as TVDetail).first_air_date

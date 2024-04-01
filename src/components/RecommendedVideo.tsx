@@ -1,7 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { titleWeb, mediumWeight, titleTablet, titleMobile } from '../style/font'
-import useGet, { ContentType, Video } from '../utils/useGet'
 import { xlargeRadius } from '../style/border'
 
 const RecommendedVideoWrapper = styled.div`
@@ -57,30 +56,13 @@ const VideoList = styled.ul`
     }
 `
 
-function RecommendedVideo({ videoData }: { videoData: ContentType[] }) {
-    const videoList = videoData
-        .reduce((acc: string[], cur) => {
-            const [mediaType, id] = [cur.media_type, cur.id]
-            const { data } = useGet(
-                `https://api.themoviedb.org/3/${mediaType}/${id}/videos`,
-                { language: 'ko-KR' }
-            ) as { data: Video }
-            const n = data?.results.length
-
-            if (n === 1) acc.push(data?.results[0]?.key)
-            else if (n > 1)
-                acc.push(data?.results[Math.floor(Math.random() * n)]?.key)
-
-            return acc
-        }, [])
-        .slice(0, 7)
-
+function RecommendedVideo({ videoData }: { videoData: string[] }) {
     return (
         <RecommendedVideoWrapper>
             <Title>추천 영상</Title>
             <Detail>관심 있는 영상을 시청해 보세요.</Detail>
             <VideoList>
-                {videoList.concat(videoList).map((el, idx) => {
+                {videoData.concat(videoData).map((el, idx) => {
                     return (
                         <li key={el + String(idx)}>
                             <a

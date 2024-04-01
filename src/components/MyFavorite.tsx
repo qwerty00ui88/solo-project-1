@@ -9,7 +9,7 @@ import { semiboldWeight } from '../style/font'
 
 export interface ContentType {
     id: number
-    mediaType: string
+    media_type: string
     poster_path: string
     backdrop_path?: string
     popularity?: number
@@ -77,19 +77,19 @@ function MyFavorite() {
             .then((response) => {
                 const template = [
                     {
-                        id: null,
+                        id: null || 1,
                         mediaType: null,
                         poster_path: null,
                         contentTitle: null,
                     },
                     {
-                        id: null,
+                        id: null || 2,
                         mediaType: null,
                         poster_path: null,
                         contentTitle: null,
                     },
                     {
-                        id: null,
+                        id: null || 3,
                         mediaType: null,
                         poster_path: null,
                         contentTitle: null,

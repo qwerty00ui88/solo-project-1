@@ -17,6 +17,7 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};
     padding: 0.5rem;
+    white-space: nowrap;
 `
 interface ButtonProps {
     onClick: (e?: MouseEvent<HTMLButtonElement>) => void

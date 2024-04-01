@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { xlargeRadius } from '../style/border'
-import { ContentType } from '../utils/useGet'
 import Poster from './commons/Poster'
+import { MovieType, TVType } from './MyFavorite'
 
 const SlideWrapper = styled.div<{ ref: React.ForwardedRef<HTMLDivElement> }>`
     flex: 0 0 calc(100% + 30vw);
@@ -42,7 +42,7 @@ export const Img = styled.img`
 `
 
 interface SlideProps {
-    data: ContentType[]
+    data: (MovieType | TVType)[]
     slideRef: React.ForwardedRef<HTMLDivElement>
 }
 

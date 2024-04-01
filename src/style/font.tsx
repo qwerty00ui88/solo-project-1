@@ -5,7 +5,7 @@ export const semiboldWeight = 600
 export const boldWeight = 700
 
 export const fontKR = 'IBM Plex Sans KR'
-export const fontLogo = 'Yesteryear'
+export const fontLogo = 'Ibarra Real Nova'
 
 export const xxsmallSize = '0.7rem'
 export const xsmallSize = '0.8rem'

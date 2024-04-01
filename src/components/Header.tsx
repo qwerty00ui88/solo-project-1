@@ -10,8 +10,6 @@ import {
     logoSize,
     semiboldWeight,
 } from '../style/font'
-import { ReactComponent as Sun } from '../assets/sun.svg'
-import { ReactComponent as Moon } from '../assets/moon.svg'
 import { ReactComponent as User } from '../assets/user.svg'
 import Button from './commons/Button'
 import LinkTo from './commons/LinkTo'
@@ -78,7 +76,7 @@ const SubNavList = styled.ul`
 `
 
 const Menu = styled.div`
-    column-gap: 10px;
+    column-gap: 1rem;
     @media screen and (max-width: 768px) {
         flex: 1;
         justify-content: flex-end;
@@ -127,7 +125,7 @@ function Header() {
     return (
         <HeaderWrapper>
             <Link to="/">
-                <Logo>CUT</Logo>
+                <Logo>GOODORBAD</Logo>
             </Link>
             <Nav>
                 {nav.map((list) => {
@@ -172,8 +170,6 @@ function Header() {
                 </Menu>
             ) : (
                 <Menu>
-                    <Sun />
-                    <Moon />
                     <LinkTo name="로그인" to="/login" height="2.4rem" />
                     <LinkTo name="회원가입" to="signup/1" height="2.4rem" />
                 </Menu>

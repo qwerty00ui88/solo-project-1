@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components'
 import Slide from './Slide'
 import Indicator from './Indicator'
-import { ContentType } from '../utils/useGet'
+import { MovieType, TVType } from './MyFavorite'
 
 const Viewer = styled.div`
     flex: 1; // 세로
@@ -29,7 +29,7 @@ const CarouselWrapper = styled.div`
     height: 100%;
 `
 
-function Carousel({ data }: { data: ContentType[] }) {
+function Carousel({ data }: { data: (MovieType | TVType)[] }) {
     const [currentIndex, setCurrentIndex] = useState(1)
     const [slideWidth, setSlideWidth] = useState<number>(0)
     const [animation, setAnimation] = useState(false)
@@ -50,7 +50,7 @@ function Carousel({ data }: { data: ContentType[] }) {
 
     const count = updateSlideCount()
 
-    const slideData: { id: number; data: ContentType[] }[] = [
+    const slideData: { id: number; data: (MovieType | TVType)[] }[] = [
         { id: 0, data: data.slice(count * 2, count * 3) },
         { id: 1, data: data.slice(0, count) },
         { id: 2, data: data.slice(count, count * 2) },

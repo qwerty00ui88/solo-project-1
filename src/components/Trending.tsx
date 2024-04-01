@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { styled } from 'styled-components'
+import axios from 'axios'
 import {
     largeSize,
     mediumWeight,
@@ -8,9 +9,10 @@ import {
     titleTablet,
     titleWeb,
 } from '../style/font'
-import useGet, { Contents, People } from '../utils/useGet'
 import Rank from './Rank'
 import { xlargeRadius, smallRadius, xsmallRadius } from '../style/border'
+import { MovieType, TVType } from './MyFavorite'
+import { PersonType } from '../utils/useGet'
 
 export const TrendingWrapper = styled.div`
     display: flex;
@@ -93,16 +95,12 @@ export const Label = styled.label<{ $isChecked: boolean }>`
 export type Duration = 'day' | 'week'
 export type Category = 'movie' | 'tv' | 'person'
 
-function Trending() {
+function Trending({ trendingData }: { trendingData: MovieType[] }) {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [duration, setDuration] = useState<Duration>('day')
     const [category, setCategory] = useState<Category>('movie')
-
-    type TrendingData = typeof category extends 'person' ? People : Contents
-
-    const { data } = useGet<TrendingData>(
-        `https://api.themoviedb.org/3/trending/${category}/${duration}`,
-        { language: 'ko-KR' }
-    ) as { data: TrendingData }
+    const [data, setData] =
+        useState<(MovieType | TVType | PersonType)[]>(trendingData)
 
     const categoryArr = [
         { id: 'movie', name: '영화' },
@@ -111,15 +109,39 @@ function Trending() {
     ]
 
     const dataArr = [
-        { id: 0, data: data?.results.slice(0, 5) },
-        { id: 1, data: data?.results.slice(5, 10) },
+        { id: 0, data: data?.slice(0, 5) },
+        { id: 1, data: data?.slice(5, 10) },
     ]
 
     const changeDuration = (e: ChangeEvent<HTMLSelectElement>) => {
+        axios
+            .get(`${serverUrl}/content/trending`, {
+                withCredentials: true,
+                params: {
+                    category,
+                    duration: e.currentTarget.value,
+                },
+            })
+            .then((response) => {
+                setData(response.data)
+            })
         setDuration(e.currentTarget.value as 'day' | 'week')
     }
 
     const changeCategory = (e: ChangeEvent<HTMLInputElement>) => {
+        axios
+            .get(`${serverUrl}/mainpage/trending`, {
+                withCredentials: true,
+                params: {
+                    category: e.currentTarget.value,
+                    duration,
+                },
+            })
+            .then((response) => {
+                // eslint-disable-next-line no-console
+                console.log(response)
+                setData(response.data)
+            })
         setCategory(e.currentTarget.value as Category)
     }
 

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useGet, { Contents } from '../utils/useGet'
+import axios from 'axios'
 import Carousel from '../components/Carousel'
 import SearchBar from '../components/SearchBar'
 import FloatingBar from '../components/FloatingBar'
 import Trending from '../components/Trending'
 import RecommendedVideo from '../components/RecommendedVideo'
 import StatModal from '../components/StatModal'
+import { MovieType, TVType } from '../components/MyFavorite'
 
 const MainWrapper = styled.main``
 
@@ -14,6 +15,12 @@ interface UtilityBarProps {
     $isOpen: boolean
     $isScrolledDown: boolean
     $floatingBarOpen: boolean
+}
+
+interface DataType {
+    allTrending: (MovieType | TVType)[]
+    movieTrending: MovieType[]
+    allTrendingVideo: string[]
 }
 
 const UtilityBar = styled.div<UtilityBarProps>`
@@ -28,11 +35,8 @@ const UtilityBar = styled.div<UtilityBarProps>`
 `
 
 function Main() {
-    const { data } = useGet<Contents>(
-        'https://api.themoviedb.org/3/trending/all/day',
-        { language: 'ko-KR' }
-    )
-
+    const serverUrl = process.env.REACT_APP_SERVER_URL
+    const [data, setData] = useState<DataType | undefined>()
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolledDown, setIsScrollDown] = useState(false)
     const [floatingBarOpen, setFloatingBarOpen] = useState(false)
@@ -63,11 +67,21 @@ function Main() {
         }
     }, [isOpen])
 
+    useEffect(() => {
+        axios
+            .get(`${serverUrl}/mainpage/`, {
+                withCredentials: true,
+            })
+            .then((response) => {
+                setData(response.data)
+            })
+    }, [])
+
     return (
         data && (
             <MainWrapper>
                 <div>
-                    <Carousel data={data.results} />
+                    <Carousel data={data.allTrending} />
                     <UtilityBar
                         $isOpen={isOpen}
                         $isScrolledDown={isScrolledDown}
@@ -93,8 +107,8 @@ function Main() {
                         )}
                     </UtilityBar>
                 </div>
-                <Trending />
-                <RecommendedVideo videoData={data.results} />
+                <Trending trendingData={data.movieTrending} />
+                <RecommendedVideo videoData={data.allTrendingVideo} />
             </MainWrapper>
         )
     )

@@ -49,27 +49,31 @@ const FooterLinks = styled.ul`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    gap: 1rem;
 `
 
 function Footer() {
     const footerText = [
         { id: 1, list: ['서비스 이용약관', '개인정보 처리방침', '회사 안내'] },
-        { id: 2, list: ['고객센터', 'cs@cut.co.kr · 010-1234-5678'] },
+        { id: 2, list: ['고객센터', 'cs@goodorbad.co.kr · 010-1234-5678'] },
         {
             id: 3,
-            list: ['광고 문의', 'ad_sales@cut.com · 최신 광고 소개서'],
+            list: ['광고 문의', 'ad_sales@goodorbad.com · 최신 광고 소개서'],
         },
-        { id: 4, list: ['제휴 및 대외 협력', 'https://cut.team/contact'] },
+        {
+            id: 4,
+            list: ['제휴 및 대외 협력', 'https://goodorbad.team/contact'],
+        },
         {
             id: 5,
             list: [
-                '주식회사 CUT',
+                '주식회사 GOODORBAD',
                 '대표 홍길둥',
                 '서울특별시 서초구 강남대로 341 씨유티빌딩 9층',
             ],
         },
         { id: 6, list: ['사업자 등록 번호 212-78-89013'] },
-        { id: 7, list: ['© 2023 by CUT, Inc. All rights reserved.'] },
+        { id: 7, list: ['© 2023 by GOODORBAD, Inc. All rights reserved.'] },
     ]
 
     return (

@@ -1,8 +1,9 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import RankItem from './RankItem'
-import { ContentType, PersonType } from '../utils/useGet'
+import { PersonType } from '../utils/useGet'
 import { Category } from './Trending'
+import { MovieType, TVType } from './MyFavorite'
 
 const RankWrapper = styled.div`
     width: 100%;
@@ -10,7 +11,7 @@ const RankWrapper = styled.div`
 
 interface RankProps {
     category: Category
-    rankingArr: PersonType[] | ContentType[]
+    rankingArr: (MovieType | TVType | PersonType)[] | undefined
     start: number
 }
 
