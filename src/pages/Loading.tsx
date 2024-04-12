@@ -49,19 +49,19 @@ function Loading() {
     return (
         <SvgContainer viewBox="0 0 600 300">
             <TextElement textAnchor="middle" x="50%" y="50%" dy=".35em">
-                C U T
+                GOODORBAD
             </TextElement>
             <TextElement x="50%" y="50%" dy=".35em">
-                C U T
+                GOODORBAD
             </TextElement>
             <TextElement x="50%" y="50%" dy=".35em">
-                C U T
+                GOODORBAD
             </TextElement>
             <TextElement x="50%" y="50%" dy=".35em">
-                C U T
+                GOODORBAD
             </TextElement>
             <TextElement x="50%" y="50%" dy=".35em">
-                C U T
+                GOODORBAD
             </TextElement>
         </SvgContainer>
     )
