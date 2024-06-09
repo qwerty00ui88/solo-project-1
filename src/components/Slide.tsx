@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { xlargeRadius } from '../style/border'
 import Poster from './commons/Poster'
-import { MovieType, TVType } from './MyFavorite'
+import { RankItemType } from '../types/common'
 
 const SlideWrapper = styled.div<{ ref: React.ForwardedRef<HTMLDivElement> }>`
     flex: 0 0 calc(100% + 30vw);
@@ -42,7 +42,7 @@ export const Img = styled.img`
 `
 
 interface SlideProps {
-    data: (MovieType | TVType)[]
+    data: RankItemType[]
     slideRef: React.ForwardedRef<HTMLDivElement>
 }
 
@@ -52,12 +52,8 @@ function Slide({ data, slideRef }: SlideProps) {
             <CardContainer>
                 {data.map((el) => {
                     return (
-                        <PosterLi key={el.id}>
-                            <Poster
-                                mediaType={el.media_type}
-                                id={el.id}
-                                posterPath={el.poster_path}
-                            />
+                        <PosterLi key={el.mediaType + el.tmdbId}>
+                            <Poster data={el} />
                         </PosterLi>
                     )
                 })}

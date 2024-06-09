@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MovieType, TVType } from './MyFavorite'
 import { RecommendItemType } from './MyRecommend'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
@@ -36,15 +35,12 @@ function RecommendItem({ item }: { item: RecommendItemType }) {
             <Top>
                 <PosterSection>
                     <Poster
-                        mediaType={item.contentDetail.mediaType}
-                        id={item.contentDetail.id}
-                        posterPath={item?.contentDetail.poster_path}
+                        mediaType={item.contentEntity.mediaType}
+                        tmdbId={item.contentEntity.tmdbId}
+                        posterPath={item.contentEntity.posterPath}
                     />
                 </PosterSection>
-                <TitleSection>
-                    {(item.contentDetail as MovieType).title ||
-                        (item.contentDetail as TVType).name}
-                </TitleSection>
+                <TitleSection>{item.contentEntity.title}</TitleSection>
                 <RecommendSection>
                     {item.recommend && (
                         <>

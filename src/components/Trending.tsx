@@ -11,8 +11,7 @@ import {
 } from '../style/font'
 import Rank from './Rank'
 import { xlargeRadius, smallRadius, xsmallRadius } from '../style/border'
-import { MovieType, TVType } from './MyFavorite'
-import { PersonType } from '../utils/useGet'
+import { RankItemType } from '../types/common'
 
 export const TrendingWrapper = styled.div`
     display: flex;
@@ -95,12 +94,11 @@ export const Label = styled.label<{ $isChecked: boolean }>`
 export type Duration = 'day' | 'week'
 export type Category = 'movie' | 'tv' | 'person'
 
-function Trending({ trendingData }: { trendingData: MovieType[] }) {
+function Trending({ trendingData }: { trendingData: RankItemType[] }) {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [duration, setDuration] = useState<Duration>('day')
     const [category, setCategory] = useState<Category>('movie')
-    const [data, setData] =
-        useState<(MovieType | TVType | PersonType)[]>(trendingData)
+    const [data, setData] = useState<RankItemType[]>(trendingData)
 
     const categoryArr = [
         { id: 'movie', name: '영화' },
@@ -138,8 +136,6 @@ function Trending({ trendingData }: { trendingData: MovieType[] }) {
                 },
             })
             .then((response) => {
-                // eslint-disable-next-line no-console
-                console.log(response)
                 setData(response.data)
             })
         setCategory(e.currentTarget.value as Category)

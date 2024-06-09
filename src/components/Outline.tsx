@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import axios from 'axios'
-import { MovieDetail, TVDetail } from '../utils/useGet'
 import { titleWeb, xlargeSize } from '../style/font'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
@@ -9,14 +8,15 @@ import { ReactComponent as Favorite } from '../assets/favorite.svg'
 import { ReactComponent as Edit } from '../assets/edit.svg'
 import { ReactComponent as Star } from '../assets/star.svg'
 import { Comment } from '../pages/Detail'
+import { ContentDetail } from '../types/content'
 
-const OutlineWrapper = styled.div<{ $backdrop: string }>`
+const OutlineWrapper = styled.div<{ $backdropPath: string | undefined }>`
     height: 100%;
     display: flex;
     padding: 2.4vw 3vw;
     column-gap: 3rem;
     background: ${(props) =>
-        `no-repeat center url(https://image.tmdb.org/t/p/w1280${props.$backdrop})`};
+        `no-repeat center url(https://image.tmdb.org/t/p/w1280${props.$backdropPath})`};
     background-color: rgba(0, 0, 0, 0.83);
     background-blend-mode: overlay;
 `
@@ -77,15 +77,13 @@ const Buttons = styled.div`
 `
 
 function Outline({
-    media,
     data,
     recommendStatus,
     favorite,
     myComment,
     handleIsClick,
 }: {
-    media: string
-    data: MovieDetail | TVDetail
+    data: ContentDetail
     recommendStatus: null | 'good' | 'bad'
     favorite: boolean
     myComment: Comment
@@ -96,16 +94,13 @@ function Outline({
         recommendStatus
     )
     const [isFavorite, setIsFavorite] = useState<boolean>(favorite)
-    const title = (data as MovieDetail).title || (data as TVDetail).name
-    const releaseDate =
-        (data as MovieDetail).release_date || (data as TVDetail).first_air_date
-    const { runtime } = data as MovieDetail
+    const { title, releaseDate, runtime, tagline } = data
 
     return (
         data && (
-            <OutlineWrapper $backdrop={data.backdrop_path}>
+            <OutlineWrapper $backdropPath={data.backdropPath}>
                 <OutlineLeft
-                    src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/w500${data.posterPath}`}
                     alt=""
                 />
                 <OutlineRight>
@@ -118,14 +113,16 @@ function Outline({
                                     return <li key={el.name}>{el.name}</li>
                                 })}
                             </GenreList>
-                            {media === 'movie' && <span>{`${runtime}분`}</span>}
+                            {data.mediaType === 'movie' && (
+                                <span>{`${runtime}분`}</span>
+                            )}
                         </Facts>
                     </MainInfo>
                     <VoteAvg>
                         <Star />
-                        {data.vote_average?.toFixed(1)}
+                        {data.voteAverage?.toFixed(1)}
                     </VoteAvg>
-                    {media === 'movie' && <Tagline>{data.tagline}</Tagline>}
+                    {data.mediaType === 'movie' && <Tagline>{tagline}</Tagline>}
                     <DetailedInfo>
                         {data.overview && (
                             <>
@@ -141,8 +138,8 @@ function Outline({
                                 axios
                                     .get(`${serverUrl}/recommend`, {
                                         params: {
-                                            mediaType: media,
-                                            tmdbId: data.id,
+                                            mediaType: data.mediaType,
+                                            tmdbId: data.tmdbId,
                                             status: 'good',
                                         },
                                         withCredentials: true,
@@ -174,8 +171,8 @@ function Outline({
                                 axios
                                     .get(`${serverUrl}/recommend`, {
                                         params: {
-                                            mediaType: media,
-                                            tmdbId: data.id,
+                                            mediaType: data.mediaType,
+                                            tmdbId: data.tmdbId,
                                             status: 'bad',
                                         },
                                         withCredentials: true,
@@ -209,8 +206,8 @@ function Outline({
                                 axios
                                     .get(`${serverUrl}/favorite/toggle`, {
                                         params: {
-                                            mediaType: media,
-                                            tmdbId: data.id,
+                                            mediaType: data.mediaType,
+                                            tmdbId: data.tmdbId,
                                         },
                                         withCredentials: true,
                                     })

@@ -7,7 +7,7 @@ import FloatingBar from '../components/FloatingBar'
 import Trending from '../components/Trending'
 import RecommendedVideo from '../components/RecommendedVideo'
 import StatModal from '../components/StatModal'
-import { MovieType, TVType } from '../components/MyFavorite'
+import { RankItemType } from '../types/common'
 
 const MainWrapper = styled.main``
 
@@ -18,8 +18,8 @@ interface UtilityBarProps {
 }
 
 interface DataType {
-    allTrending: (MovieType | TVType)[]
-    movieTrending: MovieType[]
+    allTrending: RankItemType[]
+    movieTrending: RankItemType[]
     allTrendingVideo: string[]
 }
 
@@ -69,7 +69,7 @@ function Main() {
 
     useEffect(() => {
         axios
-            .get(`${serverUrl}/mainpage/`, {
+            .get(`${serverUrl}/trending/movie/day`, {
                 withCredentials: true,
             })
             .then((response) => {

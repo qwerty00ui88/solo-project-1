@@ -1,17 +1,15 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import RankItem from './RankItem'
-import { PersonType } from '../utils/useGet'
-import { Category } from './Trending'
-import { MovieType, TVType } from './MyFavorite'
+import { RankItemType } from '../types/common'
 
 const RankWrapper = styled.div`
     width: 100%;
 `
 
 interface RankProps {
-    category: Category
-    rankingArr: (MovieType | TVType | PersonType)[] | undefined
+    category: string
+    rankingArr: RankItemType[]
     start: number
 }
 
@@ -22,7 +20,7 @@ function Rank({ category, rankingArr, start }: RankProps) {
                 {rankingArr.map((d, idx) => {
                     return (
                         <RankItem
-                            key={d.id}
+                            key={d.tmdbId}
                             category={category}
                             data={d}
                             rank={start + idx}

@@ -2,9 +2,9 @@ import React from 'react'
 import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { xlargeRadius } from '../style/border'
-import { ContentType } from '../utils/useGet'
 import { boldWeight, largeSize } from '../style/font'
 import { ReactComponent as Star } from '../assets/star.svg'
+import { Content } from '../types/content'
 
 const ContentCardWrapper = styled.li`
     display: flex;
@@ -55,26 +55,24 @@ const Vote = styled.div`
 `
 
 function ContentCard({
-    id,
     data,
-    mediaType,
     setRef = () => {},
 }: {
-    id: string
-    data: ContentType
+    data: Content
     mediaType: string
     setRef?: (node: HTMLLIElement) => void
 }) {
+    console.log(data)
     return (
         data && (
-            <ContentCardWrapper id={id} ref={setRef}>
-                <Link to={`/detail/${mediaType}/${data.id}`}>
+            <ContentCardWrapper id={data.id} ref={setRef}>
+                <Link to={`/detail/${data.mediaType}/${data.tmdbId}`}>
                     <Image
-                        src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                        src={`https://image.tmdb.org/t/p/w500${data.posterPath}`}
                         alt=""
                     />
                     <Description>
-                        <Title>{data.title || data.name}</Title>
+                        <Title>{data.title}</Title>
                         <div>{data.release_date || data.first_air_date}</div>
                         <Vote>
                             <Star />

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
 import { largeRadius } from '../style/border'
-import { ContentType } from '../utils/useGet'
+import { ContentType } from '../types/content'
 
 const AutoCompleteWrapper = styled.ul`
     position: absolute;
@@ -60,11 +60,7 @@ function AutoComplete({
 
     useEffect(() => {
         if (pressEnter) {
-            navigate(
-                `/search/${
-                    data[focusedIndex]?.name || data[focusedIndex]?.title
-                }`
-            )
+            navigate(`/search/${data[focusedIndex]?.title}`)
             setPressEnter(false)
         }
     }, [pressEnter])
@@ -74,9 +70,7 @@ function AutoComplete({
             {data.map((d, index) => {
                 return (
                     <Li key={d.id} $isFocused={index === focusedIndex}>
-                        <Link to={`/search/${d?.name || d?.title}`}>
-                            {d?.name || d?.title}
-                        </Link>
+                        <Link to={`/search/${d?.title}`}>{d?.title}</Link>
                     </Li>
                 )
             })}

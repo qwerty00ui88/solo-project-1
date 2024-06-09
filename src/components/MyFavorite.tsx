@@ -7,28 +7,6 @@ import Poster from './commons/Poster'
 import { xsmallRadius } from '../style/border'
 import { semiboldWeight } from '../style/font'
 
-export interface ContentType {
-    id: number
-    media_type: string
-    poster_path: string
-    backdrop_path?: string
-    popularity?: number
-    vote_average?: number
-    vote_count?: number
-}
-
-export interface MovieType extends ContentType {
-    title: string
-    original_title: string
-    release_date?: string
-}
-
-export interface TVType extends ContentType {
-    name: string
-    original_name: string
-    first_air_date?: string
-}
-
 export const MyFavoriteWrapper = styled.ul`
     display: flex;
     gap: 5%;
@@ -59,10 +37,10 @@ const Title = styled.div`
 `
 
 interface FavoriteType {
-    id: number | null
-    mediaType: string | null
-    poster_path: string | null
-    contentTitle: string | null
+    id: number
+    mediaType: string
+    posterPath: string | undefined
+    contentTitle: string | undefined
 }
 
 function MyFavorite() {
@@ -101,9 +79,8 @@ function MyFavorite() {
                         ? {
                               id: responseData.id,
                               mediaType: responseData.mediaType,
-                              poster_path: responseData.poster_path,
-                              contentTitle:
-                                  responseData.title || responseData.name,
+                              posterPath: responseData.posterPath,
+                              contentTitle: responseData.title,
                           }
                         : el
                 })
@@ -121,7 +98,7 @@ function MyFavorite() {
                                     <Poster
                                         mediaType={el.mediaType}
                                         id={el.id}
-                                        posterPath={el.poster_path}
+                                        posterPath={el.posterPath}
                                     />
                                     <Title>{el.contentTitle}</Title>
                                 </div>
@@ -129,7 +106,7 @@ function MyFavorite() {
                                 <Poster
                                     mediaType={null}
                                     id={null}
-                                    posterPath={null}
+                                    posterPath={undefined}
                                 />
                             )}
 

@@ -2,10 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import RecommendItem from './RecommendItem'
-import { MovieType, TVType } from './MyFavorite'
+import { ContentType } from './MyFavorite'
 
 export interface RecommendItemType {
-    contentDetail: MovieType | TVType
+    contentEntity: ContentType
     recommend: {
         contentId: number
         userId: number
@@ -44,6 +44,8 @@ function MyRecommend() {
                 withCredentials: true,
             })
             .then((response) => {
+                // eslint-disable-next-line no-console
+                console.log(response.data)
                 setRecommend(response.data)
             })
     }, [])
@@ -52,7 +54,7 @@ function MyRecommend() {
             <MyRecommendWrapper>
                 {recommend.map((el: RecommendItemType) => {
                     return (
-                        <RecommendItemLi key={el.contentDetail.id}>
+                        <RecommendItemLi key={el.contentEntity.id}>
                             <RecommendItem item={el} />
                         </RecommendItemLi>
                     )

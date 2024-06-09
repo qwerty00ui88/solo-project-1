@@ -221,7 +221,6 @@ function Content() {
                             return (
                                 <ContentCard
                                     key={el.id}
-                                    id={String(el.id)}
                                     data={el as ContentType}
                                     mediaType={menu}
                                     setRef={setRef}

@@ -36,7 +36,7 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<Main />} />
-                <Route path="/detail/:media/:id" element={<Detail />} />
+                <Route path="/detail/:mediaType/:tmdbId" element={<Detail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup/:page" element={<SignUp />} />
                 <Route path="/:menu/:category" element={<Content />} />
