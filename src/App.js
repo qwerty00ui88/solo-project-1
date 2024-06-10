@@ -1,16 +1,9 @@
 import React, { useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import Main from './pages/Main'
-import Detail from './pages/Detail'
-import Login from './pages/Login'
-import SignUp from './pages/SignUp'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Content from './pages/Content'
-import Search from './pages/Search'
-import Mypage from './pages/Mypage'
 import { login, logout } from './reducers/userReducer'
 
 function App() {
@@ -34,15 +27,7 @@ function App() {
     return (
         <>
             <Header />
-            <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/detail/:mediaType/:tmdbId" element={<Detail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup/:page" element={<SignUp />} />
-                <Route path="/:menu/:category" element={<Content />} />
-                <Route path="/search/:word" element={<Search />} />
-                <Route path="/mypage/:category" element={<Mypage />} />
-            </Routes>
+            <Outlet />
             <Footer />
         </>
     )
