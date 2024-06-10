@@ -9,7 +9,7 @@ const Buttons = styled.div`
     justify-content: end;
 `
 
-function SignUp1({ user, handleChange }) {
+export default function SignUp1({ user, handleChange }) {
     return (
         <>
             <Input
@@ -38,5 +38,3 @@ function SignUp1({ user, handleChange }) {
         </>
     )
 }
-
-export default SignUp1

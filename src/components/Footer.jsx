@@ -52,7 +52,7 @@ const FooterLinks = styled.ul`
     gap: 1rem;
 `
 
-function Footer() {
+export default function Footer() {
     const footerText = [
         { id: 1, list: ['서비스 이용약관', '개인정보 처리방침', '회사 안내'] },
         { id: 2, list: ['고객센터', 'cs@goodorbad.co.kr · 010-1234-5678'] },
@@ -99,4 +99,3 @@ function Footer() {
         </FooterWrapper>
     )
 }
-export default Footer

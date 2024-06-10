@@ -14,7 +14,7 @@ const RecommendItemLi = styled.li`
     /* background-color: gray; */
 `
 
-function MyRecommend() {
+export default function MyRecommend() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [recommend, setRecommend] = useState([])
 
@@ -43,4 +43,3 @@ function MyRecommend() {
         )
     )
 }
-export default MyRecommend

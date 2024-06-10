@@ -53,7 +53,7 @@ const Vote = styled.div`
     align-items: center;
 `
 
-function ContentCard({ data, setRef = () => {} }) {
+export default function ContentCard({ data, setRef = () => {} }) {
     return (
         data && (
             <ContentCardWrapper id={data.id} ref={setRef}>
@@ -75,5 +75,3 @@ function ContentCard({ data, setRef = () => {} }) {
         )
     )
 }
-
-export default ContentCard

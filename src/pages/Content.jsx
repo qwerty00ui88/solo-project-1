@@ -60,7 +60,7 @@ const sortArr = [
     { id: 'original_title.asc', ko: '제목 오름차순', en: 'Title (A-Z)' },
 ]
 
-function Content() {
+export default function Content() {
     const { menu, category } = useParams()
     const [sort, setSort] = useState('popularity.desc')
     const [page, setPage] = useState(1)
@@ -225,5 +225,3 @@ function Content() {
         )
     )
 }
-
-export default Content

@@ -19,7 +19,7 @@ const InputWrapper = styled.input`
     border-radius: ${xsmallRadius};
 `
 
-function Input({
+export default function Input({
     onChange,
     type = 'text',
     value = '',
@@ -46,5 +46,3 @@ function Input({
         </InputSetWrapper>
     )
 }
-
-export default Input

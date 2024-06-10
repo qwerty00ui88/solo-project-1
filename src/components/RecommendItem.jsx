@@ -28,7 +28,7 @@ const RecommendSection = styled.div`
     width: 15%;
 `
 
-function RecommendItem({ item }) {
+export default function RecommendItem({ item }) {
     return (
         <>
             <Top>
@@ -57,4 +57,3 @@ function RecommendItem({ item }) {
         </>
     )
 }
-export default RecommendItem

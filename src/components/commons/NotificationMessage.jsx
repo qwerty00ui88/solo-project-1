@@ -6,7 +6,7 @@ const NotificationMessageWrapper = styled.div`
     align-items: center;
 `
 
-function NotificationMessage({ message, children = undefined }) {
+export default function NotificationMessage({ message, children = undefined }) {
     return (
         <NotificationMessageWrapper>
             {children}
@@ -14,5 +14,3 @@ function NotificationMessage({ message, children = undefined }) {
         </NotificationMessageWrapper>
     )
 }
-
-export default NotificationMessage

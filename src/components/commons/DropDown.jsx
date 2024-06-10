@@ -11,7 +11,12 @@ const SelectWrapper = styled.select`
     border-radius: ${xsmallRadius};
 `
 
-function DropDown({ selectId, onChange, options, labelText = undefined }) {
+export default function DropDown({
+    selectId,
+    onChange,
+    options,
+    labelText = undefined,
+}) {
     return (
         <>
             {labelText && <label htmlFor={selectId}>{labelText}</label>}
@@ -28,5 +33,3 @@ function DropDown({ selectId, onChange, options, labelText = undefined }) {
         </>
     )
 }
-
-export default DropDown

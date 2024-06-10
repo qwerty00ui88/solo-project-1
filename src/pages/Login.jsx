@@ -33,7 +33,7 @@ export const Title = styled.h2`
     font-size: ${logoSize};
 `
 
-function Login() {
+export default function Login() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const dispatch = useDispatch()
     // const { isLoggedIn } = useSelector((state: RootState) => state.user)
@@ -90,5 +90,3 @@ function Login() {
         </LoginWrapper>
     )
 }
-
-export default Login

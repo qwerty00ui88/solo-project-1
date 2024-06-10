@@ -48,7 +48,7 @@ const Text = styled.ul`
     }
 `
 
-function FloatingBar({ isOpen, isScrolledDown }) {
+export default function FloatingBar({ isOpen, isScrolledDown }) {
     return (
         <FloatingBarWrapper $isScrolledDown={isScrolledDown} $isOpen={isOpen}>
             <Text>
@@ -64,4 +64,3 @@ function FloatingBar({ isOpen, isScrolledDown }) {
         </FloatingBarWrapper>
     )
 }
-export default FloatingBar

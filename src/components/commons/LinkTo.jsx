@@ -16,7 +16,7 @@ const LinkWrapper = styled(Link)`
     }
 `
 
-function LinkTo({
+export default function LinkTo({
     to,
     name = undefined,
     children = undefined,
@@ -29,5 +29,3 @@ function LinkTo({
         </LinkWrapper>
     )
 }
-
-export default LinkTo

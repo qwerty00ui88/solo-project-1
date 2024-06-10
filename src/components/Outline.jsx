@@ -74,7 +74,7 @@ const Buttons = styled.div`
     gap: 0.8rem;
 `
 
-function Outline({
+export default function Outline({
     data,
     recommendStatus,
     favorite,
@@ -231,5 +231,3 @@ function Outline({
         )
     )
 }
-
-export default Outline

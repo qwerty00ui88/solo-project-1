@@ -36,7 +36,7 @@ const Title = styled.div`
     text-align: center;
 `
 
-function MyFavorite() {
+export default function MyFavorite() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [data, setData] = useState([])
 
@@ -131,4 +131,3 @@ function MyFavorite() {
         )
     )
 }
-export default MyFavorite

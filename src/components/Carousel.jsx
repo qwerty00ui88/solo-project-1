@@ -22,7 +22,7 @@ const CarouselWrapper = styled.div`
     height: 100%;
 `
 
-function Carousel({ data }) {
+export default function Carousel({ data }) {
     const [currentIndex, setCurrentIndex] = useState(1)
     const [slideWidth, setSlideWidth] = useState(0)
     const [animation, setAnimation] = useState(false)
@@ -118,5 +118,3 @@ function Carousel({ data }) {
         </CarouselWrapper>
     )
 }
-
-export default Carousel

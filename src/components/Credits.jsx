@@ -40,7 +40,7 @@ const Title = styled.div`
     font-weight: ${semiboldWeight};
 `
 
-function Credits({ data }) {
+export default function Credits({ data }) {
     return (
         <CreditsWrapper key={data.id}>
             <YearAndTitle $media={data.media_type}>
@@ -54,5 +54,3 @@ function Credits({ data }) {
         </CreditsWrapper>
     )
 }
-
-export default Credits

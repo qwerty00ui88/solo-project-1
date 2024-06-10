@@ -11,7 +11,7 @@ const CommentWrapper = styled.div`
     }
 `
 
-function Comment({ id, nickname, commentText }) {
+export default function Comment({ id, nickname, commentText }) {
     return (
         <CommentWrapper id={id}>
             <div>{nickname}</div>
@@ -19,5 +19,3 @@ function Comment({ id, nickname, commentText }) {
         </CommentWrapper>
     )
 }
-
-export default Comment

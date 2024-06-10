@@ -14,7 +14,7 @@ const Title = styled.h3`
     font-size: ${xlargeSize};
 `
 
-function Cast({ credits }) {
+export default function Cast({ credits }) {
     return (
         <div>
             <Title>출연</Title>
@@ -26,5 +26,3 @@ function Cast({ credits }) {
         </div>
     )
 }
-
-export default Cast

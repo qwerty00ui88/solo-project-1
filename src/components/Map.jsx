@@ -7,7 +7,7 @@ const MapWrapper = styled.div`
     height: 100%;
 `
 
-function Map({ mapPosition }) {
+export default function Map({ mapPosition }) {
     useEffect(() => {
         const container = document.getElementById('map')
         const options = {
@@ -59,4 +59,3 @@ function Map({ mapPosition }) {
 
     return <MapWrapper id="map" />
 }
-export default Map

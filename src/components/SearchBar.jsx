@@ -71,7 +71,7 @@ const GenrePanel = styled.ul`
     }
 `
 
-function SearchBar({ isOpen, handleSetIsOpen }) {
+export default function SearchBar({ isOpen, handleSetIsOpen }) {
     const [word, setWord] = useState('')
     const [autoCompleteVisible, setAutoCompleteVisible] = useState(false)
     const { data } = useGet(
@@ -154,4 +154,3 @@ function SearchBar({ isOpen, handleSetIsOpen }) {
         </SearchBarWrapper>
     )
 }
-export default SearchBar

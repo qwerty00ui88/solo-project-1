@@ -21,7 +21,7 @@ const UtilityBar = styled.div`
     max-height: ${(props) => (props.$isOpen ? null : `57px`)};
 `
 
-function Main() {
+export default function Main() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [data, setData] = useState()
     const [isOpen, setIsOpen] = useState(false)
@@ -100,5 +100,3 @@ function Main() {
         )
     )
 }
-
-export default Main

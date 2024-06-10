@@ -41,7 +41,7 @@ const BirthSelect = styled(Select)`
     text-align: center;
 `
 
-function SignUp3({ user, handleChange }) {
+export default function SignUp3({ user, handleChange }) {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const navigate = useNavigate()
 
@@ -143,5 +143,3 @@ function SignUp3({ user, handleChange }) {
         </>
     )
 }
-
-export default SignUp3

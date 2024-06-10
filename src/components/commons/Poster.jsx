@@ -15,7 +15,7 @@ const Empty = styled.div`
     border-radius: ${xlargeRadius};
 `
 
-function Poster({ data }) {
+export default function Poster({ data }) {
     const { mediaType, tmdbId, itemImagePath } = data
     return tmdbId ? (
         <Link to={`/detail/${mediaType}/${tmdbId}`}>
@@ -32,5 +32,3 @@ function Poster({ data }) {
         <Empty />
     )
 }
-
-export default Poster

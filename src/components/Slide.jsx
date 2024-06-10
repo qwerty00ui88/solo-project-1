@@ -40,7 +40,7 @@ export const Img = styled.img`
     border-radius: ${xlargeRadius};
 `
 
-function Slide({ data, slideRef }) {
+export default function Slide({ data, slideRef }) {
     return (
         <SlideWrapper ref={slideRef}>
             <CardContainer>
@@ -55,4 +55,3 @@ function Slide({ data, slideRef }) {
         </SlideWrapper>
     )
 }
-export default Slide

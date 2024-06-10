@@ -24,7 +24,7 @@ const Bullet = styled.div`
     background-color: gray;
     border-radius: ${roundRadius};
 `
-function Indicator({ goToPre, goToNext }) {
+export default function Indicator({ goToPre, goToNext }) {
     return (
         <IndicatorWrapper>
             <Pre onClick={goToPre} />
@@ -37,5 +37,3 @@ function Indicator({ goToPre, goToNext }) {
         </IndicatorWrapper>
     )
 }
-
-export default Indicator

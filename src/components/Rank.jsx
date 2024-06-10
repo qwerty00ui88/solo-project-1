@@ -6,7 +6,7 @@ const RankWrapper = styled.div`
     width: 100%;
 `
 
-function Rank({ category, rankingArr, start }) {
+export default function Rank({ category, rankingArr, start }) {
     return (
         rankingArr && (
             <RankWrapper>
@@ -24,5 +24,3 @@ function Rank({ category, rankingArr, start }) {
         )
     )
 }
-
-export default Rank

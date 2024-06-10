@@ -27,7 +27,7 @@ const ButtonSection = styled.div`
     margin: 1rem 0;
 `
 
-function StatModal1({ mapPosition, handlePage }) {
+export default function StatModal1({ mapPosition, handlePage }) {
     return (
         <>
             <ButtonSection>
@@ -50,4 +50,3 @@ function StatModal1({ mapPosition, handlePage }) {
         </>
     )
 }
-export default StatModal1

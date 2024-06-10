@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-function useGet(url, params, dependency) {
+export default function useGet(url, params, dependency) {
     const [data, setData] = useState(null)
 
     const options = {
@@ -30,5 +30,3 @@ function useGet(url, params, dependency) {
 
     return { data }
 }
-
-export default useGet

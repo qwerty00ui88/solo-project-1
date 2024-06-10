@@ -24,7 +24,7 @@ const Count = styled.div`
     font-size: 3rem;
 `
 
-function NumberOfWorks({ data }) {
+export default function NumberOfWorks({ data }) {
     return (
         <NumberOfWorksWrapper>
             <div>
@@ -38,5 +38,3 @@ function NumberOfWorks({ data }) {
         </NumberOfWorksWrapper>
     )
 }
-
-export default NumberOfWorks

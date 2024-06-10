@@ -26,7 +26,7 @@ const CancelIconButton = styled.div`
     right: 20px;
 `
 
-function StatModal({ handleClose }) {
+export default function StatModal({ handleClose }) {
     const [page, setPage] = useState(1)
     const [mapPosition] = useState([36.5, 128])
 
@@ -49,4 +49,3 @@ function StatModal({ handleClose }) {
         </StatModalWrapper>
     )
 }
-export default StatModal

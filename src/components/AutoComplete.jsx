@@ -28,7 +28,7 @@ const Li = styled.li`
     }
 `
 
-function AutoComplete({ data, autoCompleteVisible }) {
+export default function AutoComplete({ data, autoCompleteVisible }) {
     const ref = useRef(null)
     const navigate = useNavigate()
     const [focusedIndex, setFocusedIndex] = useState(0)
@@ -70,5 +70,3 @@ function AutoComplete({ data, autoCompleteVisible }) {
         </AutoCompleteWrapper>
     )
 }
-
-export default AutoComplete

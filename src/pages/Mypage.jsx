@@ -16,7 +16,7 @@ import MyInfo from '../components/MyInfo'
 
 const ContentWrapper = styled.main``
 
-function Mypage() {
+export default function Mypage() {
     const [category, setCategory] = useState('favoirte')
     const navigate = useNavigate()
 
@@ -75,5 +75,3 @@ function Mypage() {
         </ContentWrapper>
     )
 }
-
-export default Mypage

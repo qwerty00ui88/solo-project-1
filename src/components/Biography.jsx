@@ -8,7 +8,7 @@ const SubTitle = styled.h3`
     font-size: ${xlargeSize};
 `
 
-function Biography({ data }) {
+export default function Biography({ data }) {
     return (
         <BiographyWrapper>
             <SubTitle>Biography</SubTitle>
@@ -16,5 +16,3 @@ function Biography({ data }) {
         </BiographyWrapper>
     )
 }
-
-export default Biography

@@ -29,7 +29,7 @@ const Buttons = styled.div`
     justify-content: end;
 `
 
-function Modal({ handleClose, mediaType, tmdbId, myComment }) {
+export default function Modal({ handleClose, mediaType, tmdbId, myComment }) {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [comment, setComment] = useState(myComment ? myComment.text : '')
     return (
@@ -107,5 +107,3 @@ function Modal({ handleClose, mediaType, tmdbId, myComment }) {
         </ModalWrapper>
     )
 }
-
-export default Modal

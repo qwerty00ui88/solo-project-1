@@ -31,7 +31,7 @@ const GoodBadComment = styled.div`
     }
 `
 
-function Detail() {
+export default function Detail() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [responseData, setResponseData] = useState(null)
     const [isClick, setIsClick] = useState(false)
@@ -186,5 +186,3 @@ function Detail() {
         )
     )
 }
-
-export default Detail

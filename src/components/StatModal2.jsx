@@ -33,7 +33,7 @@ const FilterSection = styled.div`
     }
 `
 
-function StatModal2({ handlePage }) {
+export default function StatModal2({ handlePage }) {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [region1, setRegion1] = useState('서울특별시')
     const [region2, setRegion2] = useState('강남구')
@@ -166,4 +166,3 @@ function StatModal2({ handlePage }) {
         </>
     )
 }
-export default StatModal2

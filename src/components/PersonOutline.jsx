@@ -57,7 +57,7 @@ const HomePageLink = styled.a`
     width: fit-content;
 `
 
-function PersonOutline({ data }) {
+export default function PersonOutline({ data }) {
     const gender = ['Not set / not specified', 'Female', 'Male', 'Non-binary']
 
     return (
@@ -104,5 +104,3 @@ function PersonOutline({ data }) {
         </PersonOutlineWrapper>
     )
 }
-
-export default PersonOutline

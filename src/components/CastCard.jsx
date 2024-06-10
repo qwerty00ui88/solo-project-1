@@ -31,7 +31,7 @@ const Name = styled.div`
     font-weight: ${boldWeight};
 `
 
-function CastCard({ personData }) {
+export default function CastCard({ personData }) {
     return (
         <PersonCardWrapper>
             <Link to={`/detail/person/${personData.id}`}>
@@ -47,5 +47,3 @@ function CastCard({ personData }) {
         </PersonCardWrapper>
     )
 }
-
-export default CastCard

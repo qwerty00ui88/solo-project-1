@@ -21,7 +21,7 @@ const ChildrenWrapper = styled.div`
     }
 `
 
-function SignUp() {
+export default function SignUp() {
     const { page } = useParams()
     const [user, setUser] = useState({
         name: '',
@@ -59,5 +59,3 @@ function SignUp() {
         </SignUpWrpper>
     )
 }
-
-export default SignUp

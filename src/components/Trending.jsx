@@ -90,7 +90,7 @@ export const Label = styled.label`
     }
 `
 
-function Trending({ trendingData }) {
+export default function Trending({ trendingData }) {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [duration, setDuration] = useState('day')
     const [category, setCategory] = useState('movie')
@@ -184,4 +184,3 @@ function Trending({ trendingData }) {
         </TrendingWrapper>
     )
 }
-export default Trending

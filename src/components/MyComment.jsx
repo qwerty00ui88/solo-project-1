@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { MyRecommendWrapper } from './MyRecommend'
 import RecommendItem from './RecommendItem'
 
-function MyComment() {
+export default function MyComment() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const [comment, setComment] = useState([])
     useEffect(() => {
@@ -25,4 +25,3 @@ function MyComment() {
         )
     )
 }
-export default MyComment

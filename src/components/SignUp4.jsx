@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Button from './commons/Button'
 
-function SignUp4({ user }) {
+export default function SignUp4({ user }) {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const { state } = useLocation()
     const navigate = useNavigate()
@@ -40,4 +40,3 @@ function SignUp4({ user }) {
         </div>
     )
 }
-export default SignUp4

@@ -17,7 +17,7 @@ const Image = styled.img`
     aspect-ratio: 2/3;
 `
 
-function PersonCard({ id, data, setRef = () => {} }) {
+export default function PersonCard({ id, data, setRef = () => {} }) {
     return (
         data && (
             <PersonCardWrapper id={id} ref={setRef}>
@@ -36,5 +36,3 @@ function PersonCard({ id, data, setRef = () => {} }) {
         )
     )
 }
-
-export default PersonCard

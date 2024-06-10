@@ -33,7 +33,7 @@ const Title = styled(Link)`
     flex: 1;
 `
 
-function RankItem({ category, data, rank }) {
+export default function RankItem({ category, data, rank }) {
     const { itemImagePath, backgroundImagePath } = data
     const title = data.item
 
@@ -48,5 +48,3 @@ function RankItem({ category, data, rank }) {
         </ChartWrapper>
     )
 }
-
-export default RankItem

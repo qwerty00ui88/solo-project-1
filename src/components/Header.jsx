@@ -82,7 +82,7 @@ const Menu = styled.div`
     }
 `
 
-function Header() {
+export default function Header() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const clientUrl = process.env.REACT_APP_CLIENT_URL
     const dispatch = useDispatch()
@@ -176,4 +176,3 @@ function Header() {
         </HeaderWrapper>
     )
 }
-export default Header

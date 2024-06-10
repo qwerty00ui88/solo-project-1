@@ -27,7 +27,7 @@ export const Buttons = styled.div`
     justify-content: space-between;
 `
 
-function SignUp1({ user, handleChange }) {
+export default function SignUp1({ user, handleChange }) {
     const [isDuplicated, setIsDuplicated] = useState(null)
     const [isSame, setIsSame] = useState(null)
     const serverUrl = process.env.REACT_APP_SERVER_URL
@@ -125,5 +125,3 @@ function SignUp1({ user, handleChange }) {
         </>
     )
 }
-
-export default SignUp1

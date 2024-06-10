@@ -56,7 +56,7 @@ const VideoList = styled.ul`
     }
 `
 
-function RecommendedVideo({ videoData }) {
+export default function RecommendedVideo({ videoData }) {
     return (
         <RecommendedVideoWrapper>
             <Title>추천 영상</Title>
@@ -83,5 +83,3 @@ function RecommendedVideo({ videoData }) {
         </RecommendedVideoWrapper>
     )
 }
-
-export default RecommendedVideo

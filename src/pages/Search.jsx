@@ -8,7 +8,7 @@ import { ContentList, PeopleList } from './Content'
 
 const SearchWrapper = styled.main``
 
-function Search() {
+export default function Search() {
     const { word } = useParams()
     const { data } = useGet('https://api.themoviedb.org/3/search/multi', {
         language: 'ko-KR',
@@ -72,5 +72,3 @@ function Search() {
         )
     )
 }
-
-export default Search

@@ -15,7 +15,7 @@ export const ButtonWrapper = styled.button`
     white-space: nowrap;
 `
 
-function Button({
+export default function Button({
     onClick,
     name = undefined,
     children = undefined,
@@ -33,5 +33,3 @@ function Button({
         </ButtonWrapper>
     )
 }
-
-export default Button
