@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
-import axios from 'axios'
 import {
     largeSize,
     mediumWeight,
@@ -11,6 +10,7 @@ import {
 } from '../style/font'
 import Rank from './Rank'
 import { xlargeRadius, smallRadius, xsmallRadius } from '../style/border'
+import { getData } from '../api/server'
 
 export const TrendingWrapper = styled.div`
     display: flex;
@@ -91,7 +91,6 @@ export const Label = styled.label`
 `
 
 export default function Trending({ trendingData }) {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [duration, setDuration] = useState('day')
     const [category, setCategory] = useState('movie')
     const [data, setData] = useState(trendingData)
@@ -107,24 +106,12 @@ export default function Trending({ trendingData }) {
     ]
 
     const changeDuration = (e) => {
-        axios
-            .get(`${serverUrl}/trending/${category}/${e.currentTarget.value}`, {
-                withCredentials: true,
-            })
-            .then((response) => {
-                setData(response.data)
-            })
+        getData(`/trending/${category}/${e.currentTarget.value}`).then(setData)
         setDuration(e.currentTarget.value)
     }
 
     const changeCategory = (e) => {
-        axios
-            .get(`${serverUrl}/trending/${e.currentTarget.value}/${duration}`, {
-                withCredentials: true,
-            })
-            .then((response) => {
-                setData(response.data)
-            })
+        getData(`/trending/${e.currentTarget.value}/${duration}`).then(setData)
         setCategory(e.currentTarget.value)
     }
 

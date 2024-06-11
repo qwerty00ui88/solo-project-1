@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import Button from './commons/Button'
 import Poster from './commons/Poster'
 import { xsmallRadius } from '../style/border'
 import { semiboldWeight } from '../style/font'
+import { deleteData, getData } from '../api/server'
 
 export const MyFavoriteWrapper = styled.ul`
     display: flex;
@@ -37,49 +38,21 @@ const Title = styled.div`
 `
 
 export default function MyFavorite() {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
-    const [data, setData] = useState([])
+    const { data } = useQuery({
+        queryKey: ['myFavorite'],
+        queryFn: () => getData('/mypage/favorite-list'),
+    })
 
-    useEffect(() => {
-        axios
-            .get(`${serverUrl}/mypage/favorite-list`, {
-                withCredentials: true,
-            })
-            .then((response) => {
-                const template = [
-                    {
-                        tmdbId: null || 1,
-                        mediaType: null,
-                        poster_path: null,
-                        contentTitle: null,
-                    },
-                    {
-                        tmdbId: null || 2,
-                        mediaType: null,
-                        poster_path: null,
-                        contentTitle: null,
-                    },
-                    {
-                        tmdbId: null || 3,
-                        mediaType: null,
-                        poster_path: null,
-                        contentTitle: null,
-                    },
-                ]
-                const favoriteList = template.map((el, idx) => {
-                    const responseData = response.data[idx]
-                    return responseData
-                        ? {
-                              tmdbId: responseData.tmdbId,
-                              mediaType: responseData.mediaType,
-                              posterPath: responseData.posterPath,
-                              contentTitle: responseData.title,
-                          }
-                        : el
-                })
-                setData(favoriteList)
-            })
-    }, [])
+    const handleOnClick = (mediaType, tmdbId) => {
+        deleteData('/favorite/delete', {
+            data: {
+                mediaType,
+                tmdbId,
+            },
+        })
+        window.location.reload()
+    }
+
     return (
         data && (
             <MyFavoriteWrapper>
@@ -87,34 +60,28 @@ export default function MyFavorite() {
                     return (
                         <MyFavoriteLi key={el.tmdbId}>
                             {el.mediaType ? (
-                                <div>
+                                <>
+                                    <div>
+                                        <Poster data={el} />
+                                        <Title>{el.contentTitle}</Title>
+                                    </div>
+                                    <Button
+                                        name="삭제"
+                                        onClick={() =>
+                                            handleOnClick(
+                                                el.mediaType,
+                                                el.tmdbId
+                                            )
+                                        }
+                                    />
+                                </>
+                            ) : (
+                                <>
                                     <Poster data={el} />
-                                    <Title>{el.contentTitle}</Title>
-                                </div>
-                            ) : (
-                                <Poster data={el} />
-                            )}
-
-                            {el.mediaType ? (
-                                <Button
-                                    name="삭제"
-                                    onClick={() => {
-                                        axios.delete(
-                                            `${serverUrl}/favorite/delete`,
-                                            {
-                                                data: {
-                                                    mediaType: el.mediaType,
-                                                    tmdbId: el.id,
-                                                },
-                                                withCredentials: true,
-                                            }
-                                        )
-                                    }}
-                                />
-                            ) : (
-                                <AddFavorite to="/">
-                                    <span>추가</span>
-                                </AddFavorite>
+                                    <AddFavorite to="/">
+                                        <span>추가</span>
+                                    </AddFavorite>
+                                </>
                             )}
                         </MyFavoriteLi>
                     )

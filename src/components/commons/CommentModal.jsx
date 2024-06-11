@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 import Button from './Button'
 import { xlargeRadius } from '../../style/border'
+import { deleteData, postData, updateData } from '../../api/server'
 
 const ModalWrapper = styled.div`
     position: fixed;
@@ -30,8 +30,43 @@ const Buttons = styled.div`
 `
 
 export default function Modal({ handleClose, mediaType, tmdbId, myComment }) {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [comment, setComment] = useState(myComment ? myComment.text : '')
+
+    const handleCreate = () => {
+        postData('/comment/create', {
+            mediaType,
+            tmdbId: Number(tmdbId),
+            text: comment,
+        }).then((res) => {
+            if (res.code === 200) {
+                window.location.reload()
+            }
+        })
+    }
+
+    const handleEdit = () => {
+        updateData('/comment/update', {
+            commentId: myComment.id,
+            text: comment,
+        }).then((res) => {
+            if (res.code === 200) {
+                window.location.reload()
+            }
+        })
+    }
+
+    const handleDelete = () => {
+        deleteData('/comment/delete', {
+            data: {
+                commentId: myComment.id,
+            },
+        }).then((res) => {
+            if (res.code === 200) {
+                window.location.reload()
+            }
+        })
+    }
+
     return (
         <ModalWrapper>
             <Textarea
@@ -43,64 +78,11 @@ export default function Modal({ handleClose, mediaType, tmdbId, myComment }) {
             <Buttons>
                 {myComment ? (
                     <>
-                        <Button
-                            name="수정"
-                            onClick={() => {
-                                axios
-                                    .put(
-                                        `${serverUrl}/comment/update`,
-                                        {
-                                            commentId: myComment.id,
-                                            text: comment,
-                                        },
-                                        { withCredentials: true }
-                                    )
-                                    .then((response) => {
-                                        if (response.data.code === 200) {
-                                            window.location.reload()
-                                        }
-                                    })
-                            }}
-                        />
-                        <Button
-                            name="삭제"
-                            onClick={() => {
-                                axios
-                                    .delete(`${serverUrl}/comment/delete`, {
-                                        data: {
-                                            commentId: myComment.id,
-                                        },
-                                        withCredentials: true,
-                                    })
-                                    .then((response) => {
-                                        if (response.data.code === 200) {
-                                            window.location.reload()
-                                        }
-                                    })
-                            }}
-                        />
+                        <Button name="수정" onClick={handleEdit} />
+                        <Button name="삭제" onClick={handleDelete} />
                     </>
                 ) : (
-                    <Button
-                        name="저장"
-                        onClick={() => {
-                            axios
-                                .post(
-                                    `${serverUrl}/comment/create`,
-                                    {
-                                        mediaType,
-                                        tmdbId: Number(tmdbId),
-                                        text: comment,
-                                    },
-                                    { withCredentials: true }
-                                )
-                                .then((response) => {
-                                    if (response.data.code === 200) {
-                                        window.location.reload()
-                                    }
-                                })
-                        }}
-                    />
+                    <Button name="저장" onClick={handleCreate} />
                 )}
                 <Button name="취소" onClick={handleClose} />
             </Buttons>

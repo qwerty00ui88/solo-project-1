@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
-import axios from 'axios'
 import { titleWeb, xlargeSize } from '../style/font'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as Favorite } from '../assets/favorite.svg'
 import { ReactComponent as Edit } from '../assets/edit.svg'
 import { ReactComponent as Star } from '../assets/star.svg'
+import { getData } from '../api/server'
 
 const OutlineWrapper = styled.div`
     height: 100%;
@@ -81,10 +81,47 @@ export default function Outline({
     myComment,
     handleIsClick,
 }) {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
     const [recommend, setRecommend] = useState(recommendStatus)
     const [isFavorite, setIsFavorite] = useState(favorite)
     const { title, releaseDate, runtime, tagline } = data
+
+    const handleRecommend = (status) => {
+        getData('/recommend', {
+            params: {
+                mediaType: data.mediaType,
+                tmdbId: data.tmdbId,
+                status,
+            },
+        })
+            .then((res) => {
+                if (res.code === 200) {
+                    setRecommend(res.result)
+                } else {
+                    // eslint-disable-next-line no-alert
+                    alert(res.error_message)
+                }
+            })
+            .catch((error) => {
+                // eslint-disable-next-line no-alert
+                alert(error)
+            })
+    }
+
+    const handleFavorite = () => {
+        getData('/favorite/toggle', {
+            params: {
+                mediaType: data.mediaType,
+                tmdbId: data.tmdbId,
+            },
+        }).then((res) => {
+            if (res.code === 200) {
+                setIsFavorite(!isFavorite)
+            } else {
+                // eslint-disable-next-line no-alert
+                alert(res.error_message)
+            }
+        })
+    }
 
     return (
         data && (
@@ -124,29 +161,7 @@ export default function Outline({
                     <Buttons>
                         <button
                             type="button"
-                            onClick={() => {
-                                axios
-                                    .get(`${serverUrl}/recommend`, {
-                                        params: {
-                                            mediaType: data.mediaType,
-                                            tmdbId: data.tmdbId,
-                                            status: 'good',
-                                        },
-                                        withCredentials: true,
-                                    })
-                                    .then((response) => {
-                                        if (response.data.code === 200) {
-                                            setRecommend(response.data.result)
-                                        } else {
-                                            // eslint-disable-next-line no-alert
-                                            alert(response.data.error_message)
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        // eslint-disable-next-line no-alert
-                                        alert(error)
-                                    })
-                            }}
+                            onClick={() => handleRecommend('good')}
                             aria-label="good"
                         >
                             <Good
@@ -157,29 +172,7 @@ export default function Outline({
                         </button>
                         <button
                             type="button"
-                            onClick={() => {
-                                axios
-                                    .get(`${serverUrl}/recommend`, {
-                                        params: {
-                                            mediaType: data.mediaType,
-                                            tmdbId: data.tmdbId,
-                                            status: 'bad',
-                                        },
-                                        withCredentials: true,
-                                    })
-                                    .then((response) => {
-                                        if (response.data.code === 200) {
-                                            setRecommend(response.data.result)
-                                        } else {
-                                            // eslint-disable-next-line no-alert
-                                            alert(response.data.error_message)
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        // eslint-disable-next-line no-alert
-                                        alert(error)
-                                    })
-                            }}
+                            onClick={() => handleRecommend('bad')}
                             aria-label="bad"
                         >
                             <Bad
@@ -192,24 +185,7 @@ export default function Outline({
                         </button>
                         <button
                             type="button"
-                            onClick={() => {
-                                axios
-                                    .get(`${serverUrl}/favorite/toggle`, {
-                                        params: {
-                                            mediaType: data.mediaType,
-                                            tmdbId: data.tmdbId,
-                                        },
-                                        withCredentials: true,
-                                    })
-                                    .then((response) => {
-                                        if (response.data.code === 200) {
-                                            setIsFavorite(!isFavorite)
-                                        } else {
-                                            // eslint-disable-next-line no-alert
-                                            alert(response.data.error_message)
-                                        }
-                                    })
-                            }}
+                            onClick={handleFavorite}
                             aria-label="favorite"
                         >
                             <Favorite
@@ -218,9 +194,7 @@ export default function Outline({
                         </button>
                         <button
                             type="button"
-                            onClick={() => {
-                                handleIsClick()
-                            }}
+                            onClick={handleIsClick}
                             aria-label="edit"
                         >
                             <Edit fill={myComment ? '#FFD700' : '#e5e5e5'} />

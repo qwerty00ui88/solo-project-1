@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import axios from 'axios'
+import { useQuery } from '@tanstack/react-query'
 import Outline from '../components/Outline'
-import Cast from '../components/Cast'
 import { xlargeSize } from '../style/font'
 import Comment from '../components/Comment'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as NotRated } from '../assets/comment.svg'
 import CommentModal from '../components/commons/CommentModal'
+import { getData } from '../api/server'
+import Cast from '../components/Cast'
 
 const DetailWrapper = styled.main`
     display: flex;
@@ -32,11 +33,13 @@ const GoodBadComment = styled.div`
 `
 
 export default function Detail() {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
-    const [responseData, setResponseData] = useState(null)
-    const [isClick, setIsClick] = useState(false)
-
     const { mediaType, tmdbId } = useParams()
+    const { data: responseData } = useQuery({
+        queryKey: ['detailPage'],
+        queryFn: () => getData(`/detail/${mediaType}/${tmdbId}`),
+    })
+
+    const [isClick, setIsClick] = useState(false)
 
     // const NumberOfWorksData = {
     //     movie: (data as PersonDetail)?.combined_credits?.cast.filter((el) => {
@@ -55,16 +58,6 @@ export default function Detail() {
     const handleIsClick = () => {
         setIsClick(!isClick)
     }
-
-    useEffect(() => {
-        axios
-            .get(`${serverUrl}/detail/${mediaType}/${tmdbId}`, {
-                withCredentials: true,
-            })
-            .then((response) => {
-                setResponseData(response.data)
-            })
-    }, [])
 
     return (
         responseData && (

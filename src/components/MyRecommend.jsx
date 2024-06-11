@@ -1,7 +1,8 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import { useQuery } from '@tanstack/react-query'
 import RecommendItem from './RecommendItem'
+import { getData } from '../api/server'
 
 export const MyRecommendWrapper = styled.ul`
     width: 100%;
@@ -15,22 +16,15 @@ const RecommendItemLi = styled.li`
 `
 
 export default function MyRecommend() {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
-    const [recommend, setRecommend] = useState([])
+    const { data: recommendList } = useQuery({
+        queryKey: ['myRecommend'],
+        queryFn: () => getData('/mypage/recommend-list'),
+    })
 
-    useEffect(() => {
-        axios
-            .get(`${serverUrl}/mypage/recommend-list`, {
-                withCredentials: true,
-            })
-            .then((response) => {
-                setRecommend(response.data)
-            })
-    }, [])
     return (
-        recommend && (
+        recommendList && (
             <MyRecommendWrapper>
-                {recommend.map((el) => {
+                {recommendList.map((el) => {
                     return (
                         <RecommendItemLi key={el.contentEntity.tmdbId}>
                             <RecommendItem item={el} />

@@ -2,9 +2,13 @@ import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { login, logout } from './reducers/userReducer'
+
+const queryClient = new QueryClient()
 
 function App() {
     const serverUrl = process.env.REACT_APP_SERVER_URL
@@ -27,7 +31,10 @@ function App() {
     return (
         <>
             <Header />
-            <Outlet />
+            <QueryClientProvider client={queryClient}>
+                <Outlet />
+                <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
             <Footer />
         </>
     )
