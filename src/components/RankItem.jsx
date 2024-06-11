@@ -34,17 +34,17 @@ const Title = styled(Link)`
 `
 
 export default function RankItem({ category, data, rank }) {
-    const { itemImagePath, backgroundImagePath } = data
-    const title = data.item
+    const { title, posterPath, backdropPath, voteAverage } = data
 
     return (
-        <ChartWrapper $backdrop={backgroundImagePath}>
+        <ChartWrapper $backdrop={backdropPath}>
             <Rank>{rank}</Rank>
             <Poster
-                src={`https://image.tmdb.org/t/p/w92${itemImagePath}`}
+                src={`https://image.tmdb.org/t/p/w92${posterPath}`}
                 alt=""
             />
             <Title to={`/detail/${category}/${data.tmdbId}`}>{title}</Title>
+            <div>{voteAverage}</div>
         </ChartWrapper>
     )
 }

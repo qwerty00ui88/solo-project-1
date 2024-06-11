@@ -26,7 +26,7 @@ const router = createBrowserRouter([
             { index: true, element: <Main /> },
             { path: '/login', element: <Login /> },
             { path: '/signup/:page', element: <SignUp /> },
-            { path: '/search/:word', element: <Search /> },
+            { path: '/search/:keyword', element: <Search /> },
             { path: '/mypage/:category', element: <Mypage /> },
             { path: '/:menu/:category', element: <Content /> },
             { path: '/detail/:mediaType/:tmdbId', element: <Detail /> },

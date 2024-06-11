@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import { xxlargeSize } from '../style/font'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
-import useGet from '../utils/useGet'
 import { xlargeRadius } from '../style/border'
-import AutoComplete from './AutoComplete'
 
 const SearchBarWrapper = styled.div`
     flex: 1 1 70%;
@@ -53,63 +52,39 @@ const SearchInput = styled.input`
     }
 `
 
-const GenrePanel = styled.ul`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-
-    & > li {
-        width: fit-content;
-        border: 1px solid #e5e5e5;
-        border-radius: ${xlargeRadius};
-        padding: 5px 10px;
-    }
-
-    & > a {
-        width: 100%;
-        height: 100%;
-    }
-`
-
 export default function SearchBar({ isOpen, handleSetIsOpen }) {
-    const [word, setWord] = useState('')
-    const [autoCompleteVisible, setAutoCompleteVisible] = useState(false)
-    const { data } = useGet(
-        'https://api.themoviedb.org/3/search/multi',
-        {
-            query: `${word}`,
-            include_adult: false,
-            language: 'ko-KR',
-            page: 1,
-        },
-        [word]
-    )
-
-    const result = data?.results
-
-    const { data: genres } = useGet(
-        `https://api.themoviedb.org/3/genre/movie/list`,
-        {
-            language: 'ko',
-        }
-    )
-
-    const changeSearchWord = (e) => {
-        setWord(e.target.value)
-    }
+    const serverUrl = process.env.REACT_APP_SERVER_URL
+    const navigate = useNavigate()
+    const [text, setText] = useState('')
+    // const [autoCompleteVisible, setAutoCompleteVisible] = useState(false)
 
     const handleCancelButton = () => {
         handleSetIsOpen()
-        setWord('')
+        setText('')
     }
 
-    useEffect(() => {
-        if (result?.length > 0) {
-            setAutoCompleteVisible(true)
-        } else {
-            setAutoCompleteVisible(false)
-        }
-    }, [data])
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios
+            .get(`${serverUrl}/search`, {
+                withCredentials: true,
+                params: {
+                    query: text,
+                    page: 1,
+                },
+            })
+            .then((response) => {
+                navigate(`/search/${text}`, { state: response.data })
+            })
+    }
+
+    // useEffect(() => {
+    //     if (result?.length > 0) {
+    //         setAutoCompleteVisible(true)
+    //     } else {
+    //         setAutoCompleteVisible(false)
+    //     }
+    // }, [data])
 
     return (
         <SearchBarWrapper
@@ -123,30 +98,24 @@ export default function SearchBar({ isOpen, handleSetIsOpen }) {
                     <CancelButton type="button" onClick={handleCancelButton}>
                         <Cancel />
                     </CancelButton>
-                    <SearchInput
-                        id="search"
-                        placeholder="검색해보세요"
-                        value={word}
-                        onChange={changeSearchWord}
-                    />
-                    {autoCompleteVisible && (
+                    <form onSubmit={handleSubmit}>
+                        <SearchInput
+                            id="search"
+                            type="text"
+                            placeholder="검색해보세요"
+                            value={text}
+                            onChange={(e) => {
+                                setText(e.target.value)
+                            }}
+                        />
+                        <button type="submit">검색 버튼</button>
+                    </form>
+                    {/* {autoCompleteVisible && (
                         <AutoComplete
                             data={result}
                             autoCompleteVisible={autoCompleteVisible}
                         />
-                    )}
-                    <GenrePanel>
-                        {genres.genres.length > 0 &&
-                            genres.genres.map((g) => {
-                                return (
-                                    <li key={g.id}>
-                                        <Link to="/movie/popular">
-                                            {g.name}
-                                        </Link>
-                                    </li>
-                                )
-                            })}
-                    </GenrePanel>
+                    )} */}
                 </>
             ) : (
                 <div>원하는 영화, 드라마를 검색해보세요</div>

@@ -64,10 +64,9 @@ export default function ContentCard({ data, setRef = () => {} }) {
                     />
                     <Description>
                         <Title>{data.title}</Title>
-                        <div>{data.release_date || data.first_air_date}</div>
                         <Vote>
                             <Star />
-                            {data.vote_average?.toFixed(1)}
+                            {data.voteAverage?.toFixed(1)}
                         </Vote>
                     </Description>
                 </Link>

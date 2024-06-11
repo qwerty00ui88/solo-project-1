@@ -5,7 +5,6 @@ import Carousel from '../components/Carousel'
 import SearchBar from '../components/SearchBar'
 import FloatingBar from '../components/FloatingBar'
 import Trending from '../components/Trending'
-import RecommendedVideo from '../components/RecommendedVideo'
 import StatModal from '../components/StatModal'
 
 const MainWrapper = styled.main``
@@ -68,7 +67,7 @@ export default function Main() {
         data && (
             <MainWrapper>
                 <div>
-                    <Carousel data={data.allTrending} />
+                    <Carousel data={data} />
                     <UtilityBar
                         $isOpen={isOpen}
                         $isScrolledDown={isScrolledDown}
@@ -94,8 +93,8 @@ export default function Main() {
                         )}
                     </UtilityBar>
                 </div>
-                <Trending trendingData={data.movieTrending} />
-                <RecommendedVideo videoData={data.allTrendingVideo} />
+                <Trending trendingData={data} />
+                {/* <RecommendedVideo videoData={data.allTrendingVideo} /> */}
             </MainWrapper>
         )
     )

@@ -99,7 +99,6 @@ export default function Trending({ trendingData }) {
     const categoryArr = [
         { id: 'movie', name: '영화' },
         { id: 'tv', name: 'TV' },
-        { id: 'person', name: '인물' },
     ]
 
     const dataArr = [
@@ -109,12 +108,8 @@ export default function Trending({ trendingData }) {
 
     const changeDuration = (e) => {
         axios
-            .get(`${serverUrl}/content/trending`, {
+            .get(`${serverUrl}/trending/${category}/${e.currentTarget.value}`, {
                 withCredentials: true,
-                params: {
-                    category,
-                    duration: e.currentTarget.value,
-                },
             })
             .then((response) => {
                 setData(response.data)
@@ -124,12 +119,8 @@ export default function Trending({ trendingData }) {
 
     const changeCategory = (e) => {
         axios
-            .get(`${serverUrl}/mainpage/trending`, {
+            .get(`${serverUrl}/trending/${e.currentTarget.value}/${duration}`, {
                 withCredentials: true,
-                params: {
-                    category: e.currentTarget.value,
-                    duration,
-                },
             })
             .then((response) => {
                 setData(response.data)

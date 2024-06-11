@@ -8,7 +8,7 @@ const Viewer = styled.div`
     overflow: hidden;
 `
 
-const Slides = `
+const Slides = styled.div`
     display: flex;
     transition: ${(props) => props.$animation && `transform 0.8s ease`};
     transform: ${(props) =>

@@ -24,8 +24,6 @@ export default function MyRecommend() {
                 withCredentials: true,
             })
             .then((response) => {
-                // eslint-disable-next-line no-console
-                console.log(response.data)
                 setRecommend(response.data)
             })
     }, [])
@@ -34,7 +32,7 @@ export default function MyRecommend() {
             <MyRecommendWrapper>
                 {recommend.map((el) => {
                     return (
-                        <RecommendItemLi key={el.contentEntity.id}>
+                        <RecommendItemLi key={el.contentEntity.tmdbId}>
                             <RecommendItem item={el} />
                         </RecommendItemLi>
                     )

@@ -1,36 +1,19 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import useGet from '../utils/useGet'
-import PersonCard from '../components/PersonCard'
 import ContentCard from '../components/ContentCard'
-import { ContentList, PeopleList } from './Content'
+import { ContentList } from './Content'
 
 const SearchWrapper = styled.main``
 
 export default function Search() {
-    const { word } = useParams()
-    const { data } = useGet('https://api.themoviedb.org/3/search/multi', {
-        language: 'ko-KR',
-        query: word,
-    })
-
-    const person = data?.results.filter((el) => {
-        return el.media_type === 'person'
-    })
-
-    const movie = data?.results.filter((el) => {
-        return el.media_type === 'movie'
-    })
-
-    const tv = data?.results.filter((el) => {
-        return el.media_type === 'tv'
-    })
+    const location = useLocation()
+    const data = location.state
 
     return (
         data && (
             <SearchWrapper>
-                <div>person</div>
+                {/* <div>person</div>
                 <PeopleList>
                     {person.map((el) => {
                         return (
@@ -41,13 +24,13 @@ export default function Search() {
                             />
                         )
                     })}
-                </PeopleList>
+                </PeopleList> */}
                 <div>movie</div>
                 <ContentList>
-                    {movie.map((el) => {
+                    {data.movieList.map((el) => {
                         return (
                             <ContentCard
-                                key={el.id}
+                                key={el.tmdbId}
                                 id={String(el.id)}
                                 data={el}
                                 mediaType="movie"
@@ -57,10 +40,10 @@ export default function Search() {
                 </ContentList>
                 <div>tv</div>
                 <ContentList>
-                    {tv.map((el) => {
+                    {data.tvList.map((el) => {
                         return (
                             <ContentCard
-                                key={el.id}
+                                key={el.tmdbId}
                                 id={String(el.id)}
                                 data={el}
                                 mediaType="tv"

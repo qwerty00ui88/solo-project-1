@@ -16,14 +16,14 @@ const Empty = styled.div`
 `
 
 export default function Poster({ data }) {
-    const { mediaType, tmdbId, itemImagePath } = data
+    const { mediaType, tmdbId, posterPath } = data
     return tmdbId ? (
         <Link to={`/detail/${mediaType}/${tmdbId}`}>
             <Image
                 alt="포스터 이미지"
                 src={
-                    itemImagePath
-                        ? `https://image.tmdb.org/t/p/w500${itemImagePath}`
+                    posterPath
+                        ? `https://image.tmdb.org/t/p/w500${posterPath}`
                         : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png'
                 }
             />

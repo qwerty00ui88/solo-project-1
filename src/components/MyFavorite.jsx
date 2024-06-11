@@ -48,19 +48,19 @@ export default function MyFavorite() {
             .then((response) => {
                 const template = [
                     {
-                        id: null || 1,
+                        tmdbId: null || 1,
                         mediaType: null,
                         poster_path: null,
                         contentTitle: null,
                     },
                     {
-                        id: null || 2,
+                        tmdbId: null || 2,
                         mediaType: null,
                         poster_path: null,
                         contentTitle: null,
                     },
                     {
-                        id: null || 3,
+                        tmdbId: null || 3,
                         mediaType: null,
                         poster_path: null,
                         contentTitle: null,
@@ -70,7 +70,7 @@ export default function MyFavorite() {
                     const responseData = response.data[idx]
                     return responseData
                         ? {
-                              id: responseData.id,
+                              tmdbId: responseData.tmdbId,
                               mediaType: responseData.mediaType,
                               posterPath: responseData.posterPath,
                               contentTitle: responseData.title,
@@ -85,22 +85,14 @@ export default function MyFavorite() {
             <MyFavoriteWrapper>
                 {data.map((el) => {
                     return (
-                        <MyFavoriteLi key={el.id}>
+                        <MyFavoriteLi key={el.tmdbId}>
                             {el.mediaType ? (
                                 <div>
-                                    <Poster
-                                        mediaType={el.mediaType}
-                                        id={el.id}
-                                        posterPath={el.posterPath}
-                                    />
+                                    <Poster data={el} />
                                     <Title>{el.contentTitle}</Title>
                                 </div>
                             ) : (
-                                <Poster
-                                    mediaType={null}
-                                    id={null}
-                                    posterPath={undefined}
-                                />
+                                <Poster data={el} />
                             )}
 
                             {el.mediaType ? (

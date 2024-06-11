@@ -19,7 +19,7 @@ export default function MyComment() {
         comment && (
             <MyRecommendWrapper>
                 {comment.map((el) => {
-                    return <RecommendItem key={el.contentDetail.id} item={el} />
+                    return <RecommendItem key={el.contentEntity.id} item={el} />
                 })}
             </MyRecommendWrapper>
         )

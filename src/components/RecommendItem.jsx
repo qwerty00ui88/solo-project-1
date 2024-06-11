@@ -33,11 +33,7 @@ export default function RecommendItem({ item }) {
         <>
             <Top>
                 <PosterSection>
-                    <Poster
-                        mediaType={item.contentEntity.mediaType}
-                        tmdbId={item.contentEntity.tmdbId}
-                        posterPath={item.contentEntity.posterPath}
-                    />
+                    <Poster data={item.contentEntity} />
                 </PosterSection>
                 <TitleSection>{item.contentEntity.title}</TitleSection>
                 <RecommendSection>
