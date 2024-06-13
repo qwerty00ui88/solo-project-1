@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import Carousel from '../components/Carousel'
 import SearchBar from '../components/SearchBar'
-import FloatingBar from '../components/FloatingBar'
 import Trending from '../components/Trending'
 import StatModal from '../components/StatModal'
 import { getData } from '../api/server'
@@ -78,10 +77,10 @@ export default function Main() {
                                 onClick={handleSetFloatingBarOpen}
                                 aria-label="floatingBar"
                             >
-                                <FloatingBar
+                                {/* <FloatingBar
                                     isOpen={isOpen}
                                     isScrolledDown={isScrolledDown}
-                                />
+                                /> */}
                             </button>
                         )}
                     </UtilityBar>

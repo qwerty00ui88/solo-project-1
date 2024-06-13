@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { xlargeSize } from '../style/font'
 import { smallRadius } from '../style/border'
+import { ReactComponent as Star } from '../assets/star.svg'
 
 const ChartWrapper = styled.div`
     display: flex;
@@ -33,6 +34,11 @@ const Title = styled(Link)`
     flex: 1;
 `
 
+const VoteAverage = styled.div`
+    display: flex;
+    width: 60px;
+`
+
 export default function RankItem({ category, data, rank }) {
     const { title, posterPath, backdropPath, voteAverage } = data
 
@@ -44,7 +50,10 @@ export default function RankItem({ category, data, rank }) {
                 alt=""
             />
             <Title to={`/detail/${category}/${data.tmdbId}`}>{title}</Title>
-            <div>{voteAverage}</div>
+            <VoteAverage>
+                <Star />
+                <div>{voteAverage.toFixed(1)}</div>
+            </VoteAverage>
         </ChartWrapper>
     )
 }

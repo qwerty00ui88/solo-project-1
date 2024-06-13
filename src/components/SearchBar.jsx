@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { xxlargeSize } from '../style/font'
 import { ReactComponent as Cancel } from '../assets/cancel.svg'
+import { ReactComponent as SearchIcon } from '../assets/search.svg'
 import { xlargeRadius } from '../style/border'
 
 const SearchBarWrapper = styled.div`
@@ -42,7 +43,7 @@ export const CancelButton = styled.button`
 `
 
 const SearchInput = styled.input`
-    margin-bottom: 1rem;
+    margin: 0 1rem 1rem 0;
     width: 100%;
     border-bottom: 1px solid #e5e5e5;
     padding-bottom: 0.7rem;
@@ -50,6 +51,10 @@ const SearchInput = styled.input`
     &::placeholder {
         color: #e5e5e53f;
     }
+`
+
+const Form = styled.form`
+    display: flex;
 `
 
 export default function SearchBar({ isOpen, handleSetIsOpen }) {
@@ -98,9 +103,8 @@ export default function SearchBar({ isOpen, handleSetIsOpen }) {
                     <CancelButton type="button" onClick={handleCancelButton}>
                         <Cancel />
                     </CancelButton>
-                    <form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit}>
                         <SearchInput
-                            id="search"
                             type="text"
                             placeholder="검색해보세요"
                             value={text}
@@ -108,8 +112,10 @@ export default function SearchBar({ isOpen, handleSetIsOpen }) {
                                 setText(e.target.value)
                             }}
                         />
-                        <button type="submit">검색 버튼</button>
-                    </form>
+                        <button type="submit" aria-label="search">
+                            <SearchIcon />
+                        </button>
+                    </Form>
                     {/* {autoCompleteVisible && (
                         <AutoComplete
                             data={result}

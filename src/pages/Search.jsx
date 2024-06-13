@@ -3,8 +3,14 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import ContentCard from '../components/ContentCard'
 import { ContentList } from './Content'
+import { semiboldWeight, xxlargeSize } from '../style/font'
 
 const SearchWrapper = styled.main``
+
+const Category = styled.h3`
+    font-size: ${xxlargeSize};
+    font-weight: ${semiboldWeight};
+`
 
 export default function Search() {
     const location = useLocation()
@@ -13,19 +19,7 @@ export default function Search() {
     return (
         data && (
             <SearchWrapper>
-                {/* <div>person</div>
-                <PeopleList>
-                    {person.map((el) => {
-                        return (
-                            <PersonCard
-                                key={el.id}
-                                id={String(el.id)}
-                                data={el}
-                            />
-                        )
-                    })}
-                </PeopleList> */}
-                <div>movie</div>
+                <Category>Movie</Category>
                 <ContentList>
                     {data.movieList.map((el) => {
                         return (
@@ -38,7 +32,7 @@ export default function Search() {
                         )
                     })}
                 </ContentList>
-                <div>tv</div>
+                <Category>TV</Category>
                 <ContentList>
                     {data.tvList.map((el) => {
                         return (

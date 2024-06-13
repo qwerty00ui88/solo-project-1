@@ -35,7 +35,7 @@ const GoodBadComment = styled.div`
 export default function Detail() {
     const { mediaType, tmdbId } = useParams()
     const { data: responseData } = useQuery({
-        queryKey: ['detailPage'],
+        queryKey: ['detail', mediaType, tmdbId],
         queryFn: () => getData(`/detail/${mediaType}/${tmdbId}`),
     })
 

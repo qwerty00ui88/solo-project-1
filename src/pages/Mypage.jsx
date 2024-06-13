@@ -12,7 +12,6 @@ import {
 import MyFavorite from '../components/MyFavorite'
 import MyRecommend from '../components/MyRecommend'
 import MyComment from '../components/MyComment'
-import MyInfo from '../components/MyInfo'
 
 const ContentWrapper = styled.main``
 
@@ -24,7 +23,6 @@ export default function Mypage() {
         { id: 'favoirte', name: '인생 컨텐츠' },
         { id: 'recommend', name: '평가한 컨텐츠' },
         { id: 'comment', name: '나의 코멘트' },
-        { id: 'info', name: '회원정보' },
     ]
 
     const changeCategory = (e) => {
@@ -39,8 +37,6 @@ export default function Mypage() {
         children = <MyRecommend />
     } else if (category === 'comment') {
         children = <MyComment />
-    } else if (category === 'info') {
-        children = <MyInfo />
     }
 
     return (

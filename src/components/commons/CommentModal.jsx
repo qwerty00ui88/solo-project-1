@@ -5,6 +5,9 @@ import { xlargeRadius } from '../../style/border'
 import { deleteData, postData, updateData } from '../../api/server'
 
 const ModalWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: fixed;
     top: 50%;
     right: 50%;
@@ -22,11 +25,13 @@ const Textarea = styled.textarea`
     color: black;
     width: 100%;
     height: 80%;
+    padding: 1rem;
 `
 
 const Buttons = styled.div`
     display: flex;
     justify-content: end;
+    gap: 0.5rem;
 `
 
 export default function Modal({ handleClose, mediaType, tmdbId, myComment }) {

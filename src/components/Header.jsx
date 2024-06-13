@@ -3,29 +3,22 @@ import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { fontLogo, boldWeight, logoSize } from '../style/font'
 import { ReactComponent as User } from '../assets/user.svg'
+import { ReactComponent as Logo } from '../assets/logo.svg'
 import Button from './commons/Button'
 import LinkTo from './commons/LinkTo'
 import { logout } from '../reducers/userReducer'
 
 const HeaderWrapper = styled.div`
     display: flex;
+    justify-content: space-between;
     margin: 0 10vw;
+    height: 15vh;
+    max-height: 120px;
     & > * {
         display: flex;
         align-items: center;
     }
-    height: 15vh;
-    max-height: 120px;
-`
-
-const Logo = styled.h1`
-    font-family: ${fontLogo};
-    font-size: ${logoSize};
-    font-weight: ${boldWeight};
-    color: rgb(229, 9, 20);
-    margin-right: 1vw;
 `
 
 const Menu = styled.div`
@@ -45,7 +38,7 @@ export default function Header() {
     return (
         <HeaderWrapper>
             <Link to="/">
-                <Logo>GOODORBAD</Logo>
+                <Logo />
             </Link>
             {isLoggedIn ? (
                 <Menu>
