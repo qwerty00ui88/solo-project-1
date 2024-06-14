@@ -19,6 +19,12 @@ const HeaderWrapper = styled.div`
         display: flex;
         align-items: center;
     }
+    @media screen and (max-width: 768px) {
+        margin: 0 4vw;
+    }
+    @media screen and (max-width: 375px) {
+        margin: 0 3vw;
+    }
 `
 
 const Menu = styled.div`
