@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { titleWeb, xlargeSize } from '../style/font'
-import { ReactComponent as Good } from '../assets/good.svg'
-import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as Favorite } from '../assets/favorite.svg'
 import { ReactComponent as Edit } from '../assets/edit.svg'
 import { ReactComponent as Star } from '../assets/star.svg'
 import { getData } from '../api/server'
+import GoodorBadButtons from './GoodorBadButtons'
 
 const OutlineWrapper = styled.div`
     height: 100%;
@@ -81,31 +80,8 @@ export default function Outline({
     myComment,
     handleIsClick,
 }) {
-    const [recommend, setRecommend] = useState(recommendStatus)
     const [isFavorite, setIsFavorite] = useState(favorite)
     const { title, releaseDate, runtime, tagline } = data
-
-    const handleRecommend = (status) => {
-        getData('/recommend', {
-            params: {
-                mediaType: data.mediaType,
-                tmdbId: data.tmdbId,
-                status,
-            },
-        })
-            .then((res) => {
-                if (res.code === 200) {
-                    setRecommend(res.result)
-                } else {
-                    // eslint-disable-next-line no-alert
-                    alert(res.error_message)
-                }
-            })
-            .catch((error) => {
-                // eslint-disable-next-line no-alert
-                alert(error)
-            })
-    }
 
     const handleFavorite = () => {
         getData('/favorite/toggle', {
@@ -117,7 +93,6 @@ export default function Outline({
             if (res.code === 200) {
                 setIsFavorite(!isFavorite)
             } else {
-                // eslint-disable-next-line no-alert
                 alert(res.error_message)
             }
         })
@@ -159,30 +134,10 @@ export default function Outline({
                         )}
                     </DetailedInfo>
                     <Buttons>
-                        <button
-                            type="button"
-                            onClick={() => handleRecommend('good')}
-                            aria-label="good"
-                        >
-                            <Good
-                                fill={
-                                    recommend === 'good' ? '#019e74' : '#e5e5e5'
-                                }
-                            />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => handleRecommend('bad')}
-                            aria-label="bad"
-                        >
-                            <Bad
-                                fill={
-                                    recommend === 'bad'
-                                        ? 'rgb(229, 9, 20)'
-                                        : '#e5e5e5'
-                                }
-                            />
-                        </button>
+                        <GoodorBadButtons
+                            data={data}
+                            recommendStatus={recommendStatus}
+                        />
                         <button
                             type="button"
                             onClick={handleFavorite}

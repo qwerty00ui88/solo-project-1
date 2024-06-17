@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
+import { useSelector } from 'react-redux'
 import Outline from '../components/Outline'
 import { xlargeSize } from '../style/font'
 import Comment from '../components/Comment'
@@ -34,8 +35,9 @@ const GoodBadComment = styled.div`
 
 export default function Detail() {
     const { mediaType, tmdbId } = useParams()
+    const { userId } = useSelector((state) => state.user)
     const { data: responseData } = useQuery({
-        queryKey: ['detail', mediaType, tmdbId],
+        queryKey: ['detail', mediaType, tmdbId, userId],
         queryFn: () => getData(`/detail/${mediaType}/${tmdbId}`),
     })
 

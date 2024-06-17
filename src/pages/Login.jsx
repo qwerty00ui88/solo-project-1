@@ -75,7 +75,7 @@ export default function Login() {
                             )
                             .then((response) => {
                                 if (response.data.code === 200) {
-                                    dispatch(login())
+                                    dispatch(login(response.data.userId))
                                     navigate(`/`)
                                 }
                             })
