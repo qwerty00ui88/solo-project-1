@@ -42,7 +42,8 @@
       "props": true,
       "ignorePropertyModificationsFor": ["state"]
     }],
-    "no-alert": "off" 
+    "no-alert": "off",
+    "import/no-named-default": "off"
   },
   "settings": {
     "import/resolver": {

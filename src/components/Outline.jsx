@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { styled } from 'styled-components'
 import { titleWeb, xlargeSize } from '../style/font'
-import { ReactComponent as Favorite } from '../assets/favorite.svg'
+
 import { ReactComponent as Edit } from '../assets/edit.svg'
 import { ReactComponent as Star } from '../assets/star.svg'
-import { getData } from '../api/server'
-import GoodorBadButtons from './GoodorBadButtons'
+import RecommendButtons from './RecommendButtons'
+import FavoriteButton from './FavoriteButton'
+import { default as CommentButton } from './commons/IconButton'
 
 const OutlineWrapper = styled.div`
     height: 100%;
@@ -80,30 +81,14 @@ export default function Outline({
     myComment,
     handleIsClick,
 }) {
-    const [isFavorite, setIsFavorite] = useState(favorite)
     const { title, releaseDate, runtime, tagline } = data
-
-    const handleFavorite = () => {
-        getData('/favorite/toggle', {
-            params: {
-                mediaType: data.mediaType,
-                tmdbId: data.tmdbId,
-            },
-        }).then((res) => {
-            if (res.code === 200) {
-                setIsFavorite(!isFavorite)
-            } else {
-                alert(res.error_message)
-            }
-        })
-    }
 
     return (
         data && (
             <OutlineWrapper $backdropPath={data.backdropPath}>
                 <OutlineLeft
                     src={`https://image.tmdb.org/t/p/w500${data.posterPath}`}
-                    alt=""
+                    alt="posterImage"
                 />
                 <OutlineRight>
                     <MainInfo>
@@ -134,26 +119,18 @@ export default function Outline({
                         )}
                     </DetailedInfo>
                     <Buttons>
-                        <GoodorBadButtons
+                        <RecommendButtons
                             data={data}
                             recommendStatus={recommendStatus}
                         />
-                        <button
-                            type="button"
-                            onClick={handleFavorite}
-                            aria-label="favorite"
-                        >
-                            <Favorite
-                                fill={isFavorite ? '#FFD700' : '#e5e5e5'}
-                            />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleIsClick}
-                            aria-label="edit"
-                        >
+                        <FavoriteButton
+                            mediaType={data.mediaType}
+                            tmdbId={data.tmdbId}
+                            favorite={favorite}
+                        />
+                        <CommentButton onClick={handleIsClick}>
                             <Edit fill={myComment ? '#FFD700' : '#e5e5e5'} />
-                        </button>
+                        </CommentButton>
                     </Buttons>
                 </OutlineRight>
             </OutlineWrapper>

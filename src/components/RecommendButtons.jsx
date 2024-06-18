@@ -2,8 +2,9 @@ import React from 'react'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
 import useRecommend from '../hooks/useRecommend'
+import IconButton from './commons/IconButton'
 
-export default function GoodorBadButtons({ data, recommendStatus }) {
+export default function RecommendButtons({ data, recommendStatus }) {
     const { recommend, updateRecommend } = useRecommend(
         data.mediaType,
         data.tmdbId,
@@ -15,23 +16,15 @@ export default function GoodorBadButtons({ data, recommendStatus }) {
     }
 
     return (
-        <div>
-            <button
-                type="button"
-                onClick={() => handleRecommend('good')}
-                aria-label="good"
-            >
+        <>
+            <IconButton onClick={() => handleRecommend('good')}>
                 <Good fill={recommend === 'good' ? '#019e74' : '#e5e5e5'} />
-            </button>
-            <button
-                type="button"
-                onClick={() => handleRecommend('bad')}
-                aria-label="bad"
-            >
+            </IconButton>
+            <IconButton onClick={() => handleRecommend('bad')}>
                 <Bad
                     fill={recommend === 'bad' ? 'rgb(229, 9, 20)' : '#e5e5e5'}
                 />
-            </button>
-        </div>
+            </IconButton>
+        </>
     )
 }
