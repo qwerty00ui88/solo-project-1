@@ -1,8 +1,8 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { ReactComponent as Pre } from '../assets/pre.svg'
-import { ReactComponent as Next } from '../assets/next.svg'
-import { roundRadius } from '../style/border'
+import { ReactComponent as Pre } from '../../assets/pre.svg'
+import { ReactComponent as Next } from '../../assets/next.svg'
+import { roundRadius } from '../../style/border'
 
 const IndicatorWrapper = styled.div`
     display: flex;

@@ -1,8 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import ContentCard from '../components/ContentCard'
-import { ContentList } from './Content'
+import ContentCard from '../components/search/ContentCard'
 import { semiboldWeight, xxlargeSize } from '../style/font'
 
 const SearchWrapper = styled.main``
@@ -10,6 +9,13 @@ const SearchWrapper = styled.main``
 const Category = styled.h3`
     font-size: ${xxlargeSize};
     font-weight: ${semiboldWeight};
+`
+
+const ContentList = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 1.2rem;
 `
 
 export default function Search() {

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { boldWeight } from '../style/font'
+import { boldWeight } from '../../style/font'
 
 const PersonCardWrapper = styled.li`
     border: 2px solid #e5e5e53f;

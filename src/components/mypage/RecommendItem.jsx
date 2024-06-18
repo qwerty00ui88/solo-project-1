@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ReactComponent as Good } from '../assets/good.svg'
-import { ReactComponent as Bad } from '../assets/bad.svg'
-import Poster from './commons/Poster'
+import { ReactComponent as Good } from '../../assets/good.svg'
+import { ReactComponent as Bad } from '../../assets/bad.svg'
+import Poster from '../commons/Poster'
 
 export const PosterSection = styled.div`
     width: 10%;

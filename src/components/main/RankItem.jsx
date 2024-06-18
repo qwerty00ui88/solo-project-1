@@ -1,9 +1,9 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
-import { xlargeSize } from '../style/font'
-import { smallRadius } from '../style/border'
-import { ReactComponent as Star } from '../assets/star.svg'
+import { xlargeSize } from '../../style/font'
+import { smallRadius } from '../../style/border'
+import { ReactComponent as Star } from '../../assets/star.svg'
 
 const ChartWrapper = styled.div`
     display: flex;

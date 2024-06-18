@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { xlargeRadius } from '../style/border'
-import Poster from './commons/Poster'
+import { xlargeRadius } from '../../style/border'
+import Poster from '../commons/Poster'
 
 const SlideWrapper = styled.div`
     flex: 0 0 calc(100% + 30vw);

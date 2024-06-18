@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { xxlargeSize } from '../style/font'
-import { ReactComponent as Cancel } from '../assets/cancel.svg'
-import { ReactComponent as SearchIcon } from '../assets/search.svg'
-import { xlargeRadius } from '../style/border'
+import { xxlargeSize } from '../../style/font'
+import { ReactComponent as Cancel } from '../../assets/cancel.svg'
+import { ReactComponent as SearchIcon } from '../../assets/search.svg'
+import { xlargeRadius } from '../../style/border'
 
 const SearchBarWrapper = styled.div`
     flex: 1 1 70%;

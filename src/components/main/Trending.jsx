@@ -7,10 +7,10 @@ import {
     titleMobile,
     titleTablet,
     titleWeb,
-} from '../style/font'
+} from '../../style/font'
 import Rank from './Rank'
-import { xlargeRadius, smallRadius, xsmallRadius } from '../style/border'
-import { getData } from '../api/server'
+import { xlargeRadius, smallRadius, xsmallRadius } from '../../style/border'
+import { getData } from '../../api/server'
 
 export const TrendingWrapper = styled.div`
     display: flex;

@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import Button from './commons/Button'
-import Poster from './commons/Poster'
-import { xsmallRadius } from '../style/border'
-import { semiboldWeight } from '../style/font'
-import { deleteData, getData } from '../api/server'
+import Button from '../commons/Button'
+import Poster from '../commons/Poster'
+import { xsmallRadius } from '../../style/border'
+import { semiboldWeight } from '../../style/font'
+import { deleteData, getData } from '../../api/server'
 
 export const MyFavoriteWrapper = styled.ul`
     display: flex;

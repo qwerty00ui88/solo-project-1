@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { smallRadius } from '../style/border'
+import { smallRadius } from '../../style/border'
 
 const CommentWrapper = styled.div`
     background-color: #e5e5e5;

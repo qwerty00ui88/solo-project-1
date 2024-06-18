@@ -1,9 +1,9 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
-import { xlargeRadius } from '../style/border'
-import { boldWeight, largeSize } from '../style/font'
-import { ReactComponent as Star } from '../assets/star.svg'
+import { ReactComponent as Star } from '../../assets/star.svg'
+import { xlargeRadius } from '../../style/border'
+import { boldWeight, largeSize } from '../../style/font'
 
 const ContentCardWrapper = styled.li`
     display: flex;

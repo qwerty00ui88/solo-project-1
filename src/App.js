@@ -4,8 +4,8 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './components/commons/Header'
+import Footer from './components/commons/Footer'
 import { login, logout } from './reducers/userReducer'
 
 const queryClient = new QueryClient()

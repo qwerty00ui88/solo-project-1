@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import RecommendItem from './RecommendItem'
-import { getData } from '../api/server'
+import { getData } from '../../api/server'
 
 export const MyRecommendWrapper = styled.ul`
     width: 100%;

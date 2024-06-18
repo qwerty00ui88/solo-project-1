@@ -1,12 +1,12 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { titleWeb, xlargeSize } from '../style/font'
+import { titleWeb, xlargeSize } from '../../style/font'
 
-import { ReactComponent as Edit } from '../assets/edit.svg'
-import { ReactComponent as Star } from '../assets/star.svg'
+import { ReactComponent as Edit } from '../../assets/edit.svg'
+import { ReactComponent as Star } from '../../assets/star.svg'
 import RecommendButtons from './RecommendButtons'
 import FavoriteButton from './FavoriteButton'
-import { default as CommentButton } from './commons/IconButton'
+import { default as CommentButton } from '../commons/IconButton'
 
 const OutlineWrapper = styled.div`
     height: 100%;

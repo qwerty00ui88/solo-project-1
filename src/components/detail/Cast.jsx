@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import CastCard from './CastCard'
-import { xlargeSize } from '../style/font'
+import { xlargeSize } from '../../style/font'
 
 const CastList = styled.ul`
     display: flex;

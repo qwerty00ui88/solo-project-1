@@ -1,8 +1,8 @@
 import React from 'react'
-import { ReactComponent as Good } from '../assets/good.svg'
-import { ReactComponent as Bad } from '../assets/bad.svg'
-import useRecommend from '../hooks/useRecommend'
-import IconButton from './commons/IconButton'
+import { ReactComponent as Good } from '../../assets/good.svg'
+import { ReactComponent as Bad } from '../../assets/bad.svg'
+import useRecommend from '../../hooks/useRecommend'
+import IconButton from '../commons/IconButton'
 
 export default function RecommendButtons({ data, recommendStatus }) {
     const { recommend, updateRecommend } = useRecommend(

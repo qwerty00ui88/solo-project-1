@@ -3,15 +3,15 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
-import Outline from '../components/Outline'
+import Outline from '../components/detail/Outline'
 import { xlargeSize } from '../style/font'
-import Comment from '../components/Comment'
+import Comment from '../components/detail/Comment'
 import { ReactComponent as Good } from '../assets/good.svg'
 import { ReactComponent as Bad } from '../assets/bad.svg'
 import { ReactComponent as NotRated } from '../assets/comment.svg'
 import CommentModal from '../components/commons/CommentModal'
 import { getData } from '../api/server'
-import Cast from '../components/Cast'
+import Cast from '../components/detail/Cast'
 
 const DetailWrapper = styled.main`
     display: flex;

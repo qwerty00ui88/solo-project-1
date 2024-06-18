@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Button from './commons/Button'
+import Button from '../commons/Button'
 
 export default function SignUp4({ user }) {
     const serverUrl = process.env.REACT_APP_SERVER_URL

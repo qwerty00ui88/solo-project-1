@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Input from './commons/Input'
-import LinkTo from './commons/LinkTo'
-import { ReactComponent as Next } from '../assets/next.svg'
+import Input from '../commons/Input'
+import LinkTo from '../commons/LinkTo'
+import { ReactComponent as Next } from '../../assets/next.svg'
 
 const Buttons = styled.div`
     display: flex;

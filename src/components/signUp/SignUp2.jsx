@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import Button from './commons/Button'
-import Input from './commons/Input'
-import LinkTo from './commons/LinkTo'
-import { ReactComponent as Pre } from '../assets/pre.svg'
-import { ReactComponent as Next } from '../assets/next.svg'
-import { ReactComponent as Success } from '../assets/success.svg'
-import { ReactComponent as Failure } from '../assets/failure.svg'
-import NotificationMessage from './commons/NotificationMessage'
+import Button from '../commons/Button'
+import Input from '../commons/Input'
+import LinkTo from '../commons/LinkTo'
+import { ReactComponent as Pre } from '../../assets/pre.svg'
+import { ReactComponent as Next } from '../../assets/next.svg'
+import { ReactComponent as Success } from '../../assets/success.svg'
+import { ReactComponent as Failure } from '../../assets/failure.svg'
+import NotificationMessage from '../commons/NotificationMessage'
 
 const NicknameSet = styled.div`
     display: flex;

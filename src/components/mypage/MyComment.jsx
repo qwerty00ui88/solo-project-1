@@ -2,7 +2,7 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { MyRecommendWrapper } from './MyRecommend'
 import RecommendItem from './RecommendItem'
-import { getData } from '../api/server'
+import { getData } from '../../api/server'
 
 export default function MyComment() {
     const { data: commentList } = useQuery({

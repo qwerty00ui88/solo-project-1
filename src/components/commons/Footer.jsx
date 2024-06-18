@@ -1,9 +1,9 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { xsmallSize } from '../style/font'
-import { ReactComponent as Velog } from '../assets/velog.svg'
-import { ReactComponent as GitHub } from '../assets/github.svg'
-import { ReactComponent as Gmail } from '../assets/gmail.svg'
+import { xsmallSize } from '../../style/font'
+import { ReactComponent as Velog } from '../../assets/velog.svg'
+import { ReactComponent as GitHub } from '../../assets/github.svg'
+import { ReactComponent as Gmail } from '../../assets/gmail.svg'
 
 const FooterWrapper = styled.div`
     display: flex;

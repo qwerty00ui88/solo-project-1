@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import LinkTo from './commons/LinkTo'
-import { ReactComponent as Pre } from '../assets/pre.svg'
-import Button from './commons/Button'
-import { xsmallRadius } from '../style/border'
-import { semiboldWeight } from '../style/font'
-import { Select } from './Trending'
+import LinkTo from '../commons/LinkTo'
+import { ReactComponent as Pre } from '../../assets/pre.svg'
+import Button from '../commons/Button'
+import { xsmallRadius } from '../../style/border'
+import { semiboldWeight } from '../../style/font'
+import { Select } from '../main/Trending'
 
 const Buttons = styled.div`
     display: flex;

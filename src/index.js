@@ -13,7 +13,6 @@ import Main from './pages/Main'
 import Detail from './pages/Detail'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
-import Content from './pages/Content'
 import Search from './pages/Search'
 import Mypage from './pages/Mypage'
 
@@ -28,7 +27,6 @@ const router = createBrowserRouter([
             { path: '/signup/:page', element: <SignUp /> },
             { path: '/search/:keyword', element: <Search /> },
             { path: '/mypage/:category', element: <Mypage /> },
-            { path: '/:menu/:category', element: <Content /> },
             { path: '/detail/:mediaType/:tmdbId', element: <Detail /> },
         ],
     },

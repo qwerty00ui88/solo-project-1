@@ -3,11 +3,11 @@ import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { ReactComponent as User } from '../assets/user.svg'
-import { ReactComponent as Logo } from '../assets/logo.svg'
-import Button from './commons/Button'
-import LinkTo from './commons/LinkTo'
-import { logout } from '../reducers/userReducer'
+import { ReactComponent as User } from '../../assets/user.svg'
+import { ReactComponent as Logo } from '../../assets/logo.svg'
+import Button from './Button'
+import LinkTo from './LinkTo'
+import { logout } from '../../reducers/userReducer'
 
 const HeaderWrapper = styled.div`
     display: flex;
