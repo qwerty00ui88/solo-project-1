@@ -81,13 +81,25 @@ export default function Outline({
     myComment,
     handleIsClick,
 }) {
-    const { title, releaseDate, runtime, tagline } = data
+    const {
+        title,
+        releaseDate,
+        runtime,
+        tagline,
+        voteAverage,
+        genres,
+        posterPath,
+        backdropPath,
+        mediaType,
+        tmdbId,
+        overview,
+    } = data
 
     return (
         data && (
-            <OutlineWrapper $backdropPath={data.backdropPath}>
+            <OutlineWrapper $backdropPath={backdropPath}>
                 <OutlineLeft
-                    src={`https://image.tmdb.org/t/p/w500${data.posterPath}`}
+                    src={`https://image.tmdb.org/t/p/w500${posterPath}`}
                     alt="posterImage"
                 />
                 <OutlineRight>
@@ -96,25 +108,25 @@ export default function Outline({
                         <Facts>
                             <span>{releaseDate}</span>
                             <GenreList>
-                                {data.genres?.map((el) => {
-                                    return <li key={el.name}>{el.name}</li>
+                                {genres?.map((g) => {
+                                    return <li key={g.name}>{g.name}</li>
                                 })}
                             </GenreList>
-                            {data.mediaType === 'movie' && (
+                            {mediaType === 'movie' && (
                                 <span>{`${runtime}분`}</span>
                             )}
                         </Facts>
                     </MainInfo>
                     <VoteAvg>
                         <Star />
-                        {data.voteAverage?.toFixed(1)}
+                        {voteAverage?.toFixed(1)}
                     </VoteAvg>
-                    {data.mediaType === 'movie' && <Tagline>{tagline}</Tagline>}
+                    {mediaType === 'movie' && <Tagline>{tagline}</Tagline>}
                     <DetailedInfo>
-                        {data.overview && (
+                        {overview && (
                             <>
                                 <SubTitle>개요</SubTitle>
-                                <div>{data.overview}</div>
+                                <div>{overview}</div>
                             </>
                         )}
                     </DetailedInfo>
@@ -124,8 +136,8 @@ export default function Outline({
                             recommendStatus={recommendStatus}
                         />
                         <FavoriteButton
-                            mediaType={data.mediaType}
-                            tmdbId={data.tmdbId}
+                            mediaType={mediaType}
+                            tmdbId={tmdbId}
                             favorite={favorite}
                         />
                         <CommentButton onClick={handleIsClick}>
