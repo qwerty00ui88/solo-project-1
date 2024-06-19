@@ -1,7 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { titleWeb, xlargeSize } from '../../style/font'
-
 import { ReactComponent as Edit } from '../../assets/edit.svg'
 import { ReactComponent as Star } from '../../assets/star.svg'
 import RecommendButtons from './RecommendButtons'
