@@ -47,7 +47,11 @@ export default function Slide({ data, slideRef }) {
                 {data.map((el) => {
                     return (
                         <PosterLi key={el.mediaType + el.tmdbId}>
-                            <Poster data={el} />
+                            <Poster
+                                data={el}
+                                width="100%"
+                                borderRadius={xlargeRadius}
+                            />
                         </PosterLi>
                     )
                 })}

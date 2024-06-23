@@ -33,7 +33,7 @@ export default function RecommendItem({ item }) {
         <>
             <Top>
                 <PosterSection>
-                    <Poster data={item.contentEntity} />
+                    <Poster data={item.contentEntity} width="60px" />
                 </PosterSection>
                 <TitleSection>{item.contentEntity.title}</TitleSection>
                 <RecommendSection>

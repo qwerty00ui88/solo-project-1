@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import Button from '../commons/Button'
 import Poster from '../commons/Poster'
-import { xsmallRadius } from '../../style/border'
+import { xlargeRadius, xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 import { deleteData, getData } from '../../api/server'
 
@@ -62,7 +62,11 @@ export default function MyFavorite() {
                             {el.mediaType ? (
                                 <>
                                     <div>
-                                        <Poster data={el} />
+                                        <Poster
+                                            data={el}
+                                            width="100%"
+                                            borderRadius={xlargeRadius}
+                                        />
                                         <Title>{el.contentTitle}</Title>
                                     </div>
                                     <Button
@@ -77,7 +81,11 @@ export default function MyFavorite() {
                                 </>
                             ) : (
                                 <>
-                                    <Poster data={el} />
+                                    <Poster
+                                        data={el}
+                                        width="100%"
+                                        borderRadius={xlargeRadius}
+                                    />
                                     <AddFavorite to="/">
                                         <span>추가</span>
                                     </AddFavorite>
