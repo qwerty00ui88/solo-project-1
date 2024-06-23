@@ -18,7 +18,6 @@ export default function useRecommend(mediaType, tmdbId, recommendStatus) {
                     },
                 })
             }
-
             return alert('로그인해 주세요.')
         },
         onSuccess: (res) => {

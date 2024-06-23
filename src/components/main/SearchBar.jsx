@@ -83,14 +83,6 @@ export default function SearchBar({ isOpen, handleSetIsOpen }) {
             })
     }
 
-    // useEffect(() => {
-    //     if (result?.length > 0) {
-    //         setAutoCompleteVisible(true)
-    //     } else {
-    //         setAutoCompleteVisible(false)
-    //     }
-    // }, [data])
-
     return (
         <SearchBarWrapper
             onClick={() => {

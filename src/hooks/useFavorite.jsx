@@ -17,7 +17,6 @@ export default function useFavorite(mediaType, tmdbId, favorite) {
                     },
                 })
             }
-
             return alert('로그인해 주세요.')
         },
         onSuccess: (res) => {

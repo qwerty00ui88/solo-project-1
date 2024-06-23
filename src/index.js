@@ -8,7 +8,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import GlobalStyle from './style/globalStyle'
 import { store } from './store'
-import NotFound from './pages/NotFound'
+import Error from './pages/Error'
 import Main from './pages/Main'
 import Detail from './pages/Detail'
 import Login from './pages/Login'
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
-        errorElement: <NotFound />,
+        errorElement: <Error />,
         children: [
             { index: true, element: <Main /> },
             { path: '/login', element: <Login /> },
