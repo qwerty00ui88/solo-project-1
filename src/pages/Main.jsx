@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
-import Carousel from '../components/Carousel'
-import SearchBar from '../components/SearchBar'
-import Trending from '../components/Trending'
-import StatModal from '../components/StatModal'
+import Carousel from '../components/main/Carousel'
+import SearchBar from '../components/main/SearchBar'
+import Trending from '../components/main/Trending'
 import { getData } from '../api/server'
 
 const MainWrapper = styled.main``
@@ -27,7 +26,6 @@ export default function Main() {
     })
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolledDown, setIsScrollDown] = useState(false)
-    const [floatingBarOpen, setFloatingBarOpen] = useState(false)
 
     const handleSetIsOpen = () => {
         setIsOpen(!isOpen)
@@ -38,10 +36,6 @@ export default function Main() {
             top: window.innerHeight * 0.62,
             behavior: 'smooth',
         })
-    }
-
-    const handleSetFloatingBarOpen = () => {
-        setFloatingBarOpen(!floatingBarOpen)
     }
 
     window.addEventListener('scroll', () => {
@@ -63,30 +57,14 @@ export default function Main() {
                     <UtilityBar
                         $isOpen={isOpen}
                         $isScrolledDown={isScrolledDown}
-                        $floatingBarOpen={floatingBarOpen}
                     >
                         <SearchBar
                             isOpen={isOpen}
                             handleSetIsOpen={handleSetIsOpen}
                         />
-                        {floatingBarOpen ? (
-                            <StatModal handleClose={handleSetFloatingBarOpen} />
-                        ) : (
-                            <button
-                                type="button"
-                                onClick={handleSetFloatingBarOpen}
-                                aria-label="floatingBar"
-                            >
-                                {/* <FloatingBar
-                                    isOpen={isOpen}
-                                    isScrolledDown={isScrolledDown}
-                                /> */}
-                            </button>
-                        )}
                     </UtilityBar>
                 </div>
                 <Trending trendingData={data} />
-                {/* <RecommendedVideo videoData={data.allTrendingVideo} /> */}
             </MainWrapper>
         )
     )

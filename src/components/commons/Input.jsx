@@ -12,8 +12,8 @@ const Label = styled.label`
 `
 
 const InputWrapper = styled.input`
-    width: ${(props) => `${props.$width}`};
-    height: ${(props) => `${props.$height}`};
+    width: ${(props) => props.$width};
+    height: ${(props) => props.$height};
     padding: 5px 10px;
     border: 1px solid #e5e5e5;
     border-radius: ${xsmallRadius};

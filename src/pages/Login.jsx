@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import axios from 'axios'
-import { useDispatch } from 'react-redux'
 import Input from '../components/commons/Input'
 import Button from '../components/commons/Button'
 import { logoSize } from '../style/font'
-import { login } from '../reducers/userReducer'
+import { useAuthContext } from '../context/AuthContext'
 
 export const LoginWrapper = styled.main`
     display: flex;
@@ -34,12 +32,9 @@ export const Title = styled.h2`
 `
 
 export default function Login() {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
-    const dispatch = useDispatch()
-    // const { isLoggedIn } = useSelector((state: RootState) => state.user)
+    const { login } = useAuthContext()
     const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate()
 
     return (
         <LoginWrapper>
@@ -64,25 +59,7 @@ export default function Login() {
                 <Button
                     name="로그인"
                     onClick={() => {
-                        axios
-                            .post(
-                                `${serverUrl}/user/login`,
-                                {
-                                    nickname,
-                                    password,
-                                },
-                                { withCredentials: true }
-                            )
-                            .then((response) => {
-                                if (response.data.code === 200) {
-                                    dispatch(login())
-                                    navigate(`/`)
-                                }
-                            })
-                            .catch((error) => {
-                                // eslint-disable-next-line no-alert
-                                alert(error)
-                            })
+                        login(nickname, password)
                     }}
                     width="100%"
                 />

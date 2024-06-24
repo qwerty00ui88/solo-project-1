@@ -5,8 +5,8 @@ import { xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 
 const LinkWrapper = styled(Link)`
-    width: ${(props) => `${props.$width}`};
-    height: ${(props) => `${props.$height}`};
+    width: ${(props) => props.$width};
+    height: ${(props) => props.$height};
     border-radius: ${xsmallRadius};
     background-color: rgb(229, 9, 20);
     font-weight: ${semiboldWeight};

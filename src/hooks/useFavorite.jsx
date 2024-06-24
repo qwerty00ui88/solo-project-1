@@ -3,28 +3,27 @@ import { useState } from 'react'
 import { getData } from '../api/server'
 import { useAuthContext } from '../context/AuthContext'
 
-export default function useRecommend(mediaType, tmdbId, recommendStatus) {
+export default function useFavorite(mediaType, tmdbId, favorite) {
     const { user } = useAuthContext()
-    const [recommend, setRecommend] = useState(recommendStatus)
+    const [isFavorite, setIsFavorite] = useState(favorite)
 
-    const updateRecommend = useMutation({
-        mutationFn: (clickedStatus) => {
+    const updateFavorite = useMutation({
+        mutationFn: () => {
             if (user) {
-                return getData('/recommend', {
+                return getData('/favorite/toggle', {
                     params: {
                         mediaType,
                         tmdbId,
-                        status: clickedStatus,
                     },
                 })
             }
             return alert('로그인해 주세요.')
         },
         onSuccess: (res) => {
-            if (res.code === 200) setRecommend(res.result)
+            if (res.code === 200) setIsFavorite(!isFavorite)
             else alert(res.error_message)
         },
     })
 
-    return { recommend, updateRecommend }
+    return { isFavorite, updateFavorite }
 }

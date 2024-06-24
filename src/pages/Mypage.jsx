@@ -8,10 +8,10 @@ import {
     TrendingLeft,
     TrendingRight,
     TrendingWrapper,
-} from '../components/Trending'
-import MyFavorite from '../components/MyFavorite'
-import MyRecommend from '../components/MyRecommend'
-import MyComment from '../components/MyComment'
+} from '../components/main/Trending'
+import MyFavorite from '../components/mypage/MyFavorite'
+import MyRecommend from '../components/mypage/MyRecommend'
+import MyComment from '../components/mypage/MyComment'
 
 const ContentWrapper = styled.main``
 

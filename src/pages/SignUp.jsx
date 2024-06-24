@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { LoginWrapper as SignUpWrpper, Title } from './Login'
-import SignUp1 from '../components/SignUp1'
-import SignUp2 from '../components/SignUp2'
-import SignUp3 from '../components/SignUp3'
-import SignUp4 from '../components/SignUp4'
+import SignUp1 from '../components/signUp/SignUp1'
+import SignUp2 from '../components/signUp/SignUp2'
+import SignUp3 from '../components/signUp/SignUp3'
+import SignUp4 from '../components/signUp/SignUp4'
 
 const ChildrenWrapper = styled.div`
     width: 35vw;
