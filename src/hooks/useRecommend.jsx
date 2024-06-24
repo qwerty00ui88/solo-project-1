@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { getData } from '../api/server'
+import { useAuthContext } from '../context/AuthContext'
 
 export default function useRecommend(mediaType, tmdbId, recommendStatus) {
-    const { isLoggedIn } = useSelector((state) => state.user)
+    const { user } = useAuthContext()
     const [recommend, setRecommend] = useState(recommendStatus)
 
     const updateRecommend = useMutation({
         mutationFn: (clickedStatus) => {
-            if (isLoggedIn) {
+            if (user) {
                 return getData('/recommend', {
                     params: {
                         mediaType,

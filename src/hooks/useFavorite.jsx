@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { getData } from '../api/server'
+import { useAuthContext } from '../context/AuthContext'
 
 export default function useFavorite(mediaType, tmdbId, favorite) {
-    const { isLoggedIn } = useSelector((state) => state.user)
+    const { user } = useAuthContext()
     const [isFavorite, setIsFavorite] = useState(favorite)
 
     const updateFavorite = useMutation({
         mutationFn: () => {
-            if (isLoggedIn) {
+            if (user) {
                 return getData('/favorite/toggle', {
                     params: {
                         mediaType,

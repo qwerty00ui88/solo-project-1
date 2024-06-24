@@ -1,13 +1,11 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as User } from '../../assets/user.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import Button from './Button'
 import LinkTo from './LinkTo'
-import { logout } from '../../reducers/userReducer'
+import { useAuthContext } from '../../context/AuthContext'
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -36,34 +34,19 @@ const Menu = styled.div`
 `
 
 export default function Header() {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
-    const clientUrl = process.env.REACT_APP_CLIENT_URL
-    const dispatch = useDispatch()
-    const { isLoggedIn } = useSelector((state) => state.user)
+    const { user, logout } = useAuthContext()
 
     return (
         <HeaderWrapper>
             <Link to="/">
                 <Logo />
             </Link>
-            {isLoggedIn ? (
+            {user ? (
                 <Menu>
                     <Link to="/mypage/favorite">
                         <User />
                     </Link>
-                    <Button
-                        name="로그아웃"
-                        onClick={() => {
-                            axios
-                                .get(`${serverUrl}/user/logout`, {
-                                    withCredentials: true,
-                                })
-                                .then(() => {
-                                    dispatch(logout())
-                                    window.location.href = `${clientUrl}`
-                                })
-                        }}
-                    />
+                    <Button name="로그아웃" onClick={logout} />
                 </Menu>
             ) : (
                 <Menu>

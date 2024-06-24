@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 import Outline from '../components/detail/Outline'
 import { xlargeSize } from '../style/font'
 import Comment from '../components/detail/Comment'
@@ -12,6 +11,7 @@ import { ReactComponent as NotRated } from '../assets/comment.svg'
 import CommentModal from '../components/commons/CommentModal'
 import { getData } from '../api/server'
 import Cast from '../components/detail/Cast'
+import { useAuthContext } from '../context/AuthContext'
 
 const DetailWrapper = styled.main`
     display: flex;
@@ -35,7 +35,7 @@ const GoodBadComment = styled.div`
 
 export default function Detail() {
     const { mediaType, tmdbId } = useParams()
-    const { userId } = useSelector((state) => state.user)
+    const { userId } = useAuthContext()
     const { data: responseData } = useQuery({
         queryKey: ['detail', mediaType, tmdbId, userId],
         queryFn: () => getData(`/detail/${mediaType}/${tmdbId}`),
