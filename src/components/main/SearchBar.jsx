@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { xxlargeSize } from '../../style/font'
 import { ReactComponent as Cancel } from '../../assets/cancel.svg'
 import { ReactComponent as SearchIcon } from '../../assets/search.svg'
 import { xlargeRadius } from '../../style/border'
+import { getData } from '../../api/server'
 
 const SearchBarWrapper = styled.div`
     flex: 1 1 70%;
@@ -58,10 +58,8 @@ const Form = styled.form`
 `
 
 export default function SearchBar({ isOpen, handleSetIsOpen }) {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
     const navigate = useNavigate()
     const [text, setText] = useState('')
-    // const [autoCompleteVisible, setAutoCompleteVisible] = useState(false)
 
     const handleCancelButton = () => {
         handleSetIsOpen()
@@ -70,17 +68,14 @@ export default function SearchBar({ isOpen, handleSetIsOpen }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios
-            .get(`${serverUrl}/search`, {
-                withCredentials: true,
-                params: {
-                    query: text,
-                    page: 1,
-                },
-            })
-            .then((response) => {
-                navigate(`/search/${text}`, { state: response.data })
-            })
+        getData('/search', {
+            params: {
+                query: text,
+                page: 1,
+            },
+        }).then((res) => {
+            navigate(`/search/${text}`, { state: res })
+        })
     }
 
     return (
@@ -108,12 +103,6 @@ export default function SearchBar({ isOpen, handleSetIsOpen }) {
                             <SearchIcon />
                         </button>
                     </Form>
-                    {/* {autoCompleteVisible && (
-                        <AutoComplete
-                            data={result}
-                            autoCompleteVisible={autoCompleteVisible}
-                        />
-                    )} */}
                 </>
             ) : (
                 <div>원하는 영화, 드라마를 검색해보세요</div>

@@ -140,7 +140,7 @@ export default function Outline({
                             favorite={favorite}
                         />
                         <CommentButton onClick={handleIsClick}>
-                            <Edit fill={myComment ? '#FFD700' : '#e5e5e5'} />
+                            <Edit fill={myComment ? '#2282e2' : '#e5e5e5'} />
                         </CommentButton>
                     </Buttons>
                 </OutlineRight>

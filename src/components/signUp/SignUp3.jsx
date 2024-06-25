@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import LinkTo from '../commons/LinkTo'
 import { ReactComponent as Pre } from '../../assets/pre.svg'
@@ -8,6 +7,7 @@ import Button from '../commons/Button'
 import { xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 import { Select } from '../main/Trending'
+import { postData } from '../../api/server'
 
 const Buttons = styled.div`
     display: flex;
@@ -42,8 +42,27 @@ const BirthSelect = styled(Select)`
 `
 
 export default function SignUp3({ user, handleChange }) {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
     const navigate = useNavigate()
+
+    const createUser = () => {
+        postData('/user/create', {
+            name: user.name,
+            nickname: user.nickname,
+            email: user.email,
+            password: user.password,
+            birth: Number(user.birth),
+            gender: user.gender,
+        }).then((res) => {
+            if (res.code === 200) {
+                navigate('/signup/4', {
+                    state: res.userId,
+                })
+            } else {
+                // eslint-disable-next-line no-alert
+                alert(res.error_message)
+            }
+        })
+    }
 
     return (
         <>
@@ -111,34 +130,7 @@ export default function SignUp3({ user, handleChange }) {
                 <LinkTo to="/signup/2">
                     <Pre />
                 </LinkTo>
-                <Button
-                    name="회원가입 하기"
-                    onClick={() => {
-                        axios
-                            .post(
-                                `${serverUrl}/user/create`,
-                                {
-                                    name: user.name,
-                                    nickname: user.nickname,
-                                    email: user.email,
-                                    password: user.password,
-                                    birth: Number(user.birth),
-                                    gender: user.gender,
-                                },
-                                { withCredentials: true }
-                            )
-                            .then((response) => {
-                                if (response.data.code === 200) {
-                                    navigate('/signup/4', {
-                                        state: response.data.userId,
-                                    })
-                                } else {
-                                    // eslint-disable-next-line no-alert
-                                    alert(response.data.error_message)
-                                }
-                            })
-                    }}
-                />
+                <Button name="회원가입 하기" onClick={createUser} />
             </Buttons>
         </>
     )

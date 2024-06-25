@@ -5,9 +5,6 @@ import { useQuery } from '@tanstack/react-query'
 import Outline from '../components/detail/Outline'
 import { xlargeSize } from '../style/font'
 import Comment from '../components/detail/Comment'
-import { ReactComponent as Good } from '../assets/good.svg'
-import { ReactComponent as Bad } from '../assets/bad.svg'
-import { ReactComponent as NotRated } from '../assets/comment.svg'
 import CommentModal from '../components/commons/CommentModal'
 import { getData } from '../api/server'
 import Cast from '../components/detail/Cast'
@@ -22,15 +19,10 @@ const DetailWrapper = styled.main`
 const SubTitle = styled.h3`
     font-size: ${xlargeSize};
 `
-
-const CommentSection = styled.section``
-
-const GoodBadComment = styled.div`
+const CommentUl = styled.ul`
     display: flex;
-    justify-content: space-between;
-    > div {
-        width: 48.5%;
-    }
+    flex-direction: column;
+    gap: 0.5rem;
 `
 
 export default function Detail() {
@@ -63,61 +55,22 @@ export default function Detail() {
                         handleIsClick={handleIsClick}
                     />
                     <Cast credits={responseData.contentDetail.credits} />
-                    <CommentSection>
+                    <section>
                         <SubTitle>코멘트</SubTitle>
-
-                        {/* 추천/비추천 리뷰 */}
-                        <GoodBadComment>
-                            <div>
-                                <Good fill="#019e74" />
-                                {responseData?.goodCommentViewList?.map(
-                                    (el) => {
-                                        return (
-                                            <li key={el.comment.id}>
-                                                <Comment
-                                                    id={el.userId}
-                                                    nickname={el.nickname}
-                                                    commentText={
-                                                        el.comment.text
-                                                    }
-                                                />
-                                            </li>
-                                        )
-                                    }
-                                )}
-                            </div>
-                            <div>
-                                <Bad fill="rgb(229, 9, 20)" />
-                                {responseData?.badCommentViewList?.map((el) => {
-                                    return (
-                                        <li key={el.comment.id}>
-                                            <Comment
-                                                id={el.userId}
-                                                nickname={el.nickname}
-                                                commentText={el.comment.text}
-                                            />
-                                        </li>
-                                    )
-                                })}
-                            </div>
-                        </GoodBadComment>
-
-                        {/* 미평가 리뷰 */}
-                        <div>
-                            <NotRated />
-                            {responseData?.unratedCommentViewList?.map((el) => {
+                        <CommentUl>
+                            {responseData?.commentViewList?.map((el) => {
                                 return (
-                                    <li key={el.comment.id}>
-                                        <Comment
-                                            id={el.userId}
-                                            nickname={el.nickname}
-                                            commentText={el.comment.text}
-                                        />
-                                    </li>
+                                    <Comment
+                                        key={el.comment.id}
+                                        id={el.userId}
+                                        nickname={el.nickname}
+                                        commentText={el.comment.text}
+                                        recommendStatus={el.recommendStatus}
+                                    />
                                 )
                             })}
-                        </div>
-                    </CommentSection>
+                        </CommentUl>
+                    </section>
                 </DetailWrapper>
                 {isClick && (
                     <CommentModal

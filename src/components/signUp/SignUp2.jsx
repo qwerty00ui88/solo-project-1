@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 import Button from '../commons/Button'
 import Input from '../commons/Input'
 import LinkTo from '../commons/LinkTo'
@@ -9,6 +8,7 @@ import { ReactComponent as Next } from '../../assets/next.svg'
 import { ReactComponent as Success } from '../../assets/success.svg'
 import { ReactComponent as Failure } from '../../assets/failure.svg'
 import NotificationMessage from '../commons/NotificationMessage'
+import { getData } from '../../api/server'
 
 const NicknameSet = styled.div`
     display: flex;
@@ -30,7 +30,16 @@ export const Buttons = styled.div`
 export default function SignUp1({ user, handleChange }) {
     const [isDuplicated, setIsDuplicated] = useState(null)
     const [isSame, setIsSame] = useState(null)
-    const serverUrl = process.env.REACT_APP_SERVER_URL
+
+    const handleIsDuplicated = () => {
+        getData('/user/isDuplicated', {
+            params: {
+                nickname: user.nickname,
+            },
+        }).then((res) => {
+            setIsDuplicated(res.result)
+        })
+    }
 
     useEffect(() => {
         if (user.passwordCheck === '') {
@@ -58,21 +67,7 @@ export default function SignUp1({ user, handleChange }) {
                     name="nickname"
                     label="닉네임"
                 />
-                <Button
-                    name="중복 확인"
-                    onClick={() => {
-                        axios
-                            .get(`${serverUrl}/user/isDuplicated`, {
-                                params: {
-                                    nickname: user.nickname,
-                                },
-                                withCredentials: true,
-                            })
-                            .then((response) => {
-                                setIsDuplicated(response.data.result)
-                            })
-                    }}
-                />
+                <Button name="중복 확인" onClick={handleIsDuplicated} />
             </NicknameSet>
             {isDuplicated === true && (
                 <NotificationMessage message="이미 사용중인 닉네임입니다.">
