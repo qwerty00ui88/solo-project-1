@@ -16,13 +16,13 @@ const Title = styled.h3`
 
 export default function Cast({ credits }) {
     return (
-        <div>
+        <section>
             <Title>출연</Title>
             <CastList>
                 {credits?.cast.slice(0, 12)?.map((el) => {
                     return <CastCard key={el.id} personData={el} />
                 })}
             </CastList>
-        </div>
+        </section>
     )
 }

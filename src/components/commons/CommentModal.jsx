@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Button from './Button'
 import { xlargeRadius } from '../../style/border'
-import { deleteData, postData, updateData } from '../../api/server'
 
 const ModalWrapper = styled.div`
     display: flex;
@@ -34,60 +33,49 @@ const Buttons = styled.div`
     gap: 0.5rem;
 `
 
-export default function Modal({ handleClose, mediaType, tmdbId, myComment }) {
-    const [comment, setComment] = useState(myComment ? myComment.text : '')
-
-    const handleCreate = () => {
-        postData('/comment/create', {
-            mediaType,
-            tmdbId: Number(tmdbId),
-            text: comment,
-        }).then((res) => {
-            if (res.code === 200) {
-                window.location.reload()
-            }
-        })
-    }
-
-    const handleEdit = () => {
-        updateData('/comment/update', {
-            commentId: myComment.id,
-            text: comment,
-        }).then((res) => {
-            if (res.code === 200) {
-                window.location.reload()
-            }
-        })
-    }
-
-    const handleDelete = () => {
-        deleteData('/comment/delete', {
-            data: {
-                commentId: myComment.id,
-            },
-        }).then((res) => {
-            if (res.code === 200) {
-                window.location.reload()
-            }
-        })
-    }
+export default function CommentModal({
+    handleClose,
+    myComment,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
+}) {
+    const [text, setText] = useState(myComment ? myComment.text : '')
 
     return (
         <ModalWrapper>
             <Textarea
-                value={comment}
+                value={text}
                 onChange={(e) => {
-                    setComment(e.target.value)
+                    setText(e.target.value)
                 }}
             />
             <Buttons>
                 {myComment ? (
                     <>
-                        <Button name="수정" onClick={handleEdit} />
-                        <Button name="삭제" onClick={handleDelete} />
+                        <Button
+                            name="수정"
+                            onClick={() => {
+                                handleUpdate(myComment.id, text)
+                                handleClose()
+                            }}
+                        />
+                        <Button
+                            name="삭제"
+                            onClick={() => {
+                                handleDelete(myComment.id)
+                                handleClose()
+                            }}
+                        />
                     </>
                 ) : (
-                    <Button name="저장" onClick={handleCreate} />
+                    <Button
+                        name="저장"
+                        onClick={() => {
+                            handleCreate(text)
+                            handleClose()
+                        }}
+                    />
                 )}
                 <Button name="취소" onClick={handleClose} />
             </Buttons>

@@ -7,7 +7,7 @@ import RecommendButtons from './RecommendButtons'
 import FavoriteButton from './FavoriteButton'
 import { default as CommentButton } from '../commons/IconButton'
 
-const OutlineWrapper = styled.div`
+const OutlineWrapper = styled.section`
     height: 100%;
     display: flex;
     padding: 2.4vw 3vw;

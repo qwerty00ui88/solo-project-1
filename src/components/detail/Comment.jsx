@@ -1,52 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
-import { smallRadius } from '../../style/border'
-import { ReactComponent as Good } from '../../assets/good.svg'
-import { ReactComponent as Bad } from '../../assets/bad.svg'
-import { boldWeight } from '../../style/font'
+import CommentItem from './CommentItem'
+import { xlargeSize } from '../../style/font'
 
-const CommentWrapper = styled.li`
-    background-color: #e5e5e5;
-    border-radius: ${smallRadius};
-    padding: 0.5rem;
-    height: fit-content;
+const SubTitle = styled.h3`
+    font-size: ${xlargeSize};
 `
-
-const NicknameAndRecommend = styled.div`
+const CommentUl = styled.ul`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.5rem;
 `
 
-const Nickname = styled.div`
-    font-weight: ${boldWeight};
-    color: black;
-`
-
-const Text = styled.div`
-    color: black;
-    white-space: pre-wrap;
-    word-break: break-all;
-`
-
-export default function Comment({
-    id,
-    nickname,
-    commentText,
-    recommendStatus,
-}) {
+export default function Comment({ commentList }) {
     return (
-        <CommentWrapper id={id}>
-            <NicknameAndRecommend>
-                <Nickname>{nickname}</Nickname>
-                {recommendStatus === 'good' && (
-                    <Good fill="#019e74" width="1.5rem" />
-                )}
-                {recommendStatus === 'bad' && (
-                    <Bad fill="rgb(229, 9, 20)" width="1.5rem" />
-                )}
-            </NicknameAndRecommend>
-            <Text>{commentText}</Text>
-        </CommentWrapper>
+        <section>
+            <SubTitle>코멘트</SubTitle>
+            <CommentUl>
+                {commentList?.map((c) => {
+                    return (
+                        <CommentItem
+                            key={c.comment.id}
+                            id={c.userId}
+                            nickname={c.nickname}
+                            commentText={c.comment.text}
+                            recommendStatus={c.recommendStatus}
+                        />
+                    )
+                })}
+            </CommentUl>
+        </section>
     )
 }
