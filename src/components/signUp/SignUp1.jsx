@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Input from '../commons/Input'
-import LinkTo from '../commons/LinkTo'
+import LinkButton from '../commons/LinkButton'
 import { ReactComponent as Next } from '../../assets/next.svg'
 
 const Buttons = styled.div`
@@ -31,9 +31,9 @@ export default function SignUp1({ user, handleChange }) {
                 label="이메일"
             />
             <Buttons>
-                <LinkTo to="/signup/2">
+                <LinkButton to="/signup/2">
                     <Next />
-                </LinkTo>
+                </LinkButton>
             </Buttons>
         </>
     )

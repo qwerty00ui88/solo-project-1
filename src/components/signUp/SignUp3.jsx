@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import LinkTo from '../commons/LinkTo'
+import LinkButton from '../commons/LinkButton'
 import { ReactComponent as Pre } from '../../assets/pre.svg'
 import Button from '../commons/Button'
 import { xsmallRadius } from '../../style/border'
@@ -127,9 +127,9 @@ export default function SignUp3({ user, handleChange }) {
                 </GenderInput>
             </div>
             <Buttons>
-                <LinkTo to="/signup/2">
+                <LinkButton to="/signup/2">
                     <Pre />
-                </LinkTo>
+                </LinkButton>
                 <Button name="회원가입 하기" onClick={createUser} />
             </Buttons>
         </>

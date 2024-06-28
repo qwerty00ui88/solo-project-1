@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import Outline from '../components/detail/Outline'
-import CommentModal from '../components/commons/CommentModal'
+import CommentModal from '../components/detail/CommentModal'
 import { getData } from '../api/server'
 import Cast from '../components/detail/Cast'
 import { useAuthContext } from '../context/AuthContext'
 import useCommentList from '../hooks/useCommentList'
 import Comment from '../components/detail/Comment'
+import useModal from '../hooks/useModal'
 
 const DetailWrapper = styled.main`
     display: flex;
@@ -30,11 +31,7 @@ export default function Detail() {
         handleUpdate,
         handleDelete,
     } = useCommentList(mediaType, tmdbId, userId)
-    const [isClick, setIsClick] = useState(false)
-
-    const handleIsClick = () => {
-        setIsClick(!isClick)
-    }
+    const { isOpen, open, close } = useModal()
 
     window.scrollTo({
         top: 0,
@@ -54,14 +51,14 @@ export default function Detail() {
                         recommendStatus={responseData.recommendStatus}
                         favorite={responseData.favorite}
                         myComment={responseData.myComment}
-                        handleIsClick={handleIsClick}
+                        handleIsClick={open}
                     />
                     <Cast credits={responseData.contentDetail.credits} />
                     <Comment commentList={commentList} />
                 </DetailWrapper>
-                {isClick && (
+                {isOpen && (
                     <CommentModal
-                        handleClose={handleIsClick}
+                        handleClose={close}
                         myComment={responseData.myComment}
                         handleCreate={handleCreate}
                         handleUpdate={handleUpdate}

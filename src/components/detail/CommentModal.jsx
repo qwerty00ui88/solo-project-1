@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Button from './Button'
+import Button from '../commons/Button'
 import { xlargeRadius } from '../../style/border'
 
 const ModalWrapper = styled.div`

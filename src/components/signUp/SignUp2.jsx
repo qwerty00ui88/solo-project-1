@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../commons/Button'
 import Input from '../commons/Input'
-import LinkTo from '../commons/LinkTo'
+import LinkButton from '../commons/LinkButton'
 import { ReactComponent as Pre } from '../../assets/pre.svg'
 import { ReactComponent as Next } from '../../assets/next.svg'
 import { ReactComponent as Success } from '../../assets/success.svg'
 import { ReactComponent as Failure } from '../../assets/failure.svg'
-import NotificationMessage from '../commons/NotificationMessage'
+import NotificationMessage from './NotificationMessage'
 import { getData } from '../../api/server'
 
 const NicknameSet = styled.div`
@@ -110,12 +110,12 @@ export default function SignUp1({ user, handleChange }) {
                 </NotificationMessage>
             )}
             <Buttons>
-                <LinkTo to="/signup/1">
+                <LinkButton to="/signup/1">
                     <Pre />
-                </LinkTo>
-                <LinkTo to="/signup/3">
+                </LinkButton>
+                <LinkButton to="/signup/3">
                     <Next />
-                </LinkTo>
+                </LinkButton>
             </Buttons>
         </>
     )
