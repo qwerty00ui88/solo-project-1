@@ -20,7 +20,6 @@ export default function DropDown({
     return (
         <>
             {labelText && <label htmlFor={selectId}>{labelText}</label>}
-
             <SelectWrapper id={selectId} onChange={onChange}>
                 {options.map((option) => {
                     return (

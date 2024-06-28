@@ -20,8 +20,8 @@ const InputWrapper = styled.input`
 `
 
 export default function Input({
-    onChange,
     type = 'text',
+    onChange,
     value = '',
     width = undefined,
     height = undefined,

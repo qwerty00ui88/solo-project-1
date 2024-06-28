@@ -27,7 +27,7 @@ export const Buttons = styled.div`
     justify-content: space-between;
 `
 
-export default function SignUp1({ user, handleChange }) {
+export default function SignUp1({ user, onChange }) {
     const [isDuplicated, setIsDuplicated] = useState(null)
     const [isSame, setIsSame] = useState(null)
 
@@ -61,9 +61,7 @@ export default function SignUp1({ user, handleChange }) {
                 <Input
                     id="nickname"
                     value={user.nickname}
-                    onChange={(e) => {
-                        handleChange(e)
-                    }}
+                    onChange={onChange}
                     name="nickname"
                     label="닉네임"
                 />
@@ -83,9 +81,7 @@ export default function SignUp1({ user, handleChange }) {
                 type="password"
                 id="password"
                 value={user.password}
-                onChange={(e) => {
-                    handleChange(e)
-                }}
+                onChange={onChange}
                 name="password"
                 label="비밀번호"
             />
@@ -93,9 +89,7 @@ export default function SignUp1({ user, handleChange }) {
                 type="password"
                 id="passwordCheck"
                 value={user.passwordCheck}
-                onChange={(e) => {
-                    handleChange(e)
-                }}
+                onChange={onChange}
                 name="passwordCheck"
                 label="비밀번호 확인"
             />

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Button from '../commons/Button'
 import { xlargeRadius } from '../../style/border'
+import useTextInput from '../../hooks/useTextInput'
 
 const ModalWrapper = styled.div`
     display: flex;
@@ -40,23 +41,18 @@ export default function CommentModal({
     handleUpdate,
     handleDelete,
 }) {
-    const [text, setText] = useState(myComment ? myComment.text : '')
+    const { value, onChange } = useTextInput(myComment ? myComment.text : '')
 
     return (
         <ModalWrapper>
-            <Textarea
-                value={text}
-                onChange={(e) => {
-                    setText(e.target.value)
-                }}
-            />
+            <Textarea value={value} onChange={onChange} />
             <Buttons>
                 {myComment ? (
                     <>
                         <Button
                             name="수정"
                             onClick={() => {
-                                handleUpdate(myComment.id, text)
+                                handleUpdate(myComment.id, value)
                                 handleClose()
                             }}
                         />
@@ -72,7 +68,7 @@ export default function CommentModal({
                     <Button
                         name="저장"
                         onClick={() => {
-                            handleCreate(text)
+                            handleCreate(value)
                             handleClose()
                         }}
                     />

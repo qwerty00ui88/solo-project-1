@@ -41,7 +41,7 @@ const BirthSelect = styled(Select)`
     text-align: center;
 `
 
-export default function SignUp3({ user, handleChange }) {
+export default function SignUp3({ user, onChange }) {
     const navigate = useNavigate()
 
     const createUser = () => {
@@ -68,12 +68,7 @@ export default function SignUp3({ user, handleChange }) {
         <>
             <div>
                 <div>출생연도</div>
-                <BirthSelect
-                    name="birth"
-                    onChange={(e) => {
-                        handleChange(e)
-                    }}
-                >
+                <BirthSelect name="birth" onChange={onChange}>
                     <option key={111} value={undefined}>
                         --- 선택하기 ---
                     </option>
@@ -101,9 +96,7 @@ export default function SignUp3({ user, handleChange }) {
                             type="radio"
                             id="male"
                             value="male"
-                            onChange={(e) => {
-                                handleChange(e)
-                            }}
+                            onChange={onChange}
                             name="gender"
                         />
                     </div>
@@ -118,9 +111,7 @@ export default function SignUp3({ user, handleChange }) {
                             type="radio"
                             id="female"
                             value="female"
-                            onChange={(e) => {
-                                handleChange(e)
-                            }}
+                            onChange={onChange}
                             name="gender"
                         />
                     </div>
