@@ -9,7 +9,7 @@ import Cast from '../components/detail/Cast'
 import { useAuthContext } from '../context/AuthContext'
 import useCommentList from '../hooks/useCommentList'
 import Comment from '../components/detail/Comment'
-import useModal from '../hooks/useModal'
+import useBoolean from '../hooks/useBoolean'
 
 const DetailWrapper = styled.main`
     display: flex;
@@ -31,7 +31,7 @@ export default function Detail() {
         handleUpdate,
         handleDelete,
     } = useCommentList(mediaType, tmdbId, userId)
-    const { isOpen, open, close } = useModal()
+    const { boolean: isOpen, setTrue: open, setFalse: close } = useBoolean()
 
     window.scrollTo({
         top: 0,

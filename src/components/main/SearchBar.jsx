@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { xxlargeSize } from '../../style/font'
@@ -6,6 +6,7 @@ import { ReactComponent as Cancel } from '../../assets/cancel.svg'
 import { ReactComponent as SearchIcon } from '../../assets/search.svg'
 import { xlargeRadius } from '../../style/border'
 import { getData } from '../../api/server'
+import useTextInput from '../../hooks/useTextInput'
 
 const SearchBarWrapper = styled.div`
     flex: 1 1 70%;
@@ -57,34 +58,30 @@ const Form = styled.form`
     display: flex;
 `
 
-export default function SearchBar({ isOpen, handleSetIsOpen }) {
+export default function SearchBar({ isOpen, open, close }) {
     const navigate = useNavigate()
-    const [text, setText] = useState('')
+    const { value, onChange, reset } = useTextInput()
 
-    const handleCancelButton = () => {
-        handleSetIsOpen()
-        setText('')
+    const handleCancelButton = (e) => {
+        e.stopPropagation()
+        close()
+        reset()
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         getData('/search', {
             params: {
-                query: text,
+                query: value,
                 page: 1,
             },
         }).then((res) => {
-            navigate(`/search/${text}`, { state: res })
+            navigate(`/search/${value}`, { state: res })
         })
     }
 
     return (
-        <SearchBarWrapper
-            onClick={() => {
-                if (!isOpen) handleSetIsOpen()
-            }}
-            $isOpen={isOpen}
-        >
+        <SearchBarWrapper onClick={open} $isOpen={isOpen}>
             {isOpen ? (
                 <>
                     <CancelButton type="button" onClick={handleCancelButton}>
@@ -94,10 +91,8 @@ export default function SearchBar({ isOpen, handleSetIsOpen }) {
                         <SearchInput
                             type="text"
                             placeholder="검색해보세요"
-                            value={text}
-                            onChange={(e) => {
-                                setText(e.target.value)
-                            }}
+                            value={value}
+                            onChange={onChange}
                         />
                         <button type="submit" aria-label="search">
                             <SearchIcon />
