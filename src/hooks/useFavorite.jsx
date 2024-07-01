@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { getData } from '../api/server'
 import { useAuthContext } from '../context/AuthContext'
 
-export default function useFavorite(mediaType, tmdbId, favorite) {
+export default function useFavorite(mediaType, tmdbId, init) {
     const { user } = useAuthContext()
-    const [isFavorite, setIsFavorite] = useState(favorite)
+    const [isFavorite, setIsFavorite] = useState(init)
 
     const updateFavorite = useMutation({
         mutationFn: () => {

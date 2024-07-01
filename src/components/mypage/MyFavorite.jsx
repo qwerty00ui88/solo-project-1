@@ -7,6 +7,7 @@ import Poster from '../commons/Poster'
 import { xlargeRadius, xsmallRadius } from '../../style/border'
 import { semiboldWeight } from '../../style/font'
 import { deleteData, getData } from '../../api/server'
+import { useAuthContext } from '../../context/AuthContext'
 
 export const MyFavoriteWrapper = styled.ul`
     display: flex;
@@ -38,8 +39,9 @@ const Title = styled.div`
 `
 
 export default function MyFavorite() {
+    const { userId } = useAuthContext()
     const { data } = useQuery({
-        queryKey: ['myFavorite'],
+        queryKey: ['myFavorite', userId],
         queryFn: () => getData('/mypage/favorite-list'),
     })
 
@@ -61,14 +63,12 @@ export default function MyFavorite() {
                         <MyFavoriteLi key={el.tmdbId}>
                             {el.mediaType ? (
                                 <>
-                                    <div>
-                                        <Poster
-                                            data={el}
-                                            width="100%"
-                                            borderRadius={xlargeRadius}
-                                        />
-                                        <Title>{el.contentTitle}</Title>
-                                    </div>
+                                    <Poster
+                                        data={el}
+                                        width="100%"
+                                        borderRadius={xlargeRadius}
+                                    />
+                                    <Title>{el.contentTitle}</Title>
                                     <Button
                                         name="삭제"
                                         onClick={() =>

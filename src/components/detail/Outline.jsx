@@ -6,6 +6,7 @@ import { ReactComponent as Star } from '../../assets/star.svg'
 import RecommendButtons from './RecommendButtons'
 import FavoriteButton from './FavoriteButton'
 import { default as CommentButton } from '../commons/IconButton'
+import { useAuthContext } from '../../context/AuthContext'
 
 const OutlineWrapper = styled.section`
     height: 100%;
@@ -77,8 +78,10 @@ export default function Outline({
     data,
     recommendStatus,
     favorite,
-    myComment,
-    handleIsClick,
+    userComment,
+    open,
+    updateRecommend,
+    commentRecommendUpdate,
 }) {
     const {
         title,
@@ -93,6 +96,14 @@ export default function Outline({
         tmdbId,
         overview,
     } = data
+    const { userId } = useAuthContext()
+    const handleIsClick = () => {
+        if (userId) {
+            open()
+        } else {
+            alert('로그인해 주세요.')
+        }
+    }
 
     return (
         data && (
@@ -131,16 +142,20 @@ export default function Outline({
                     </DetailedInfo>
                     <Buttons>
                         <RecommendButtons
-                            data={data}
-                            recommendStatus={recommendStatus}
+                            recommend={recommendStatus}
+                            updateRecommend={updateRecommend}
+                            commentRecommendUpdate={commentRecommendUpdate}
                         />
                         <FavoriteButton
                             mediaType={mediaType}
                             tmdbId={tmdbId}
                             favorite={favorite}
                         />
-                        <CommentButton onClick={handleIsClick}>
-                            <Edit fill={myComment ? '#2282e2' : '#e5e5e5'} />
+                        <CommentButton
+                            onClick={handleIsClick}
+                            fill={userComment && '#2282e2'}
+                        >
+                            <Edit />
                         </CommentButton>
                     </Buttons>
                 </OutlineRight>

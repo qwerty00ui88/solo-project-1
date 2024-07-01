@@ -36,31 +36,37 @@ const Buttons = styled.div`
 
 export default function CommentModal({
     handleClose,
-    myComment,
+    userComment,
     handleCreate,
     handleUpdate,
     handleDelete,
+    recommend,
+    setUserComment,
 }) {
-    const { value, onChange } = useTextInput(myComment ? myComment.text : '')
+    const { value, onChange } = useTextInput(
+        userComment ? userComment.text : ''
+    )
 
     return (
         <ModalWrapper>
             <Textarea value={value} onChange={onChange} />
             <Buttons>
-                {myComment ? (
+                {userComment ? (
                     <>
                         <Button
                             name="수정"
                             onClick={() => {
-                                handleUpdate(myComment.id, value)
+                                handleUpdate(userComment.id, value)
                                 handleClose()
+                                setUserComment({ ...userComment, text: value })
                             }}
                         />
                         <Button
                             name="삭제"
                             onClick={() => {
-                                handleDelete(myComment.id)
+                                handleDelete(userComment.id)
                                 handleClose()
+                                setUserComment()
                             }}
                         />
                     </>
@@ -68,8 +74,9 @@ export default function CommentModal({
                     <Button
                         name="저장"
                         onClick={() => {
-                            handleCreate(value)
+                            handleCreate(value, recommend)
                             handleClose()
+                            setUserComment({ ...userComment, text: value })
                         }}
                     />
                 )}

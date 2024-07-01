@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
@@ -10,6 +10,7 @@ import { useAuthContext } from '../context/AuthContext'
 import useCommentList from '../hooks/useCommentList'
 import Comment from '../components/detail/Comment'
 import useBoolean from '../hooks/useBoolean'
+import useRecommend from '../hooks/useRecommend'
 
 const DetailWrapper = styled.main`
     display: flex;
@@ -24,14 +25,21 @@ export default function Detail() {
         queryKey: ['detail', mediaType, tmdbId, userId],
         queryFn: () => getData(`/detail/${mediaType}/${tmdbId}`),
     })
+    const { boolean: isOpen, setTrue: open, setFalse: close } = useBoolean()
     const {
         state: commentList,
-        handleInitialize,
+        initializeCommentList,
         handleCreate,
         handleUpdate,
         handleDelete,
-    } = useCommentList(mediaType, tmdbId, userId)
-    const { boolean: isOpen, setTrue: open, setFalse: close } = useBoolean()
+        commentRecommendUpdate,
+    } = useCommentList({ mediaType, tmdbId })
+    const { recommend, initializeUserRecommend, updateRecommend } =
+        useRecommend({
+            mediaType,
+            tmdbId,
+        })
+    const [userComment, setUserComment] = useState()
 
     window.scrollTo({
         top: 0,
@@ -39,7 +47,11 @@ export default function Detail() {
     })
 
     useEffect(() => {
-        if (responseData) handleInitialize(responseData.commentViewList)
+        if (responseData) {
+            initializeCommentList(responseData.commentViewList)
+            initializeUserRecommend(responseData.recommendStatus)
+            setUserComment(responseData.myComment)
+        }
     }, [responseData])
 
     return (
@@ -48,10 +60,12 @@ export default function Detail() {
                 <DetailWrapper>
                     <Outline
                         data={responseData.contentDetail}
-                        recommendStatus={responseData.recommendStatus}
+                        recommendStatus={recommend}
                         favorite={responseData.favorite}
-                        myComment={responseData.myComment}
-                        handleIsClick={open}
+                        userComment={userComment}
+                        open={open}
+                        updateRecommend={updateRecommend}
+                        commentRecommendUpdate={commentRecommendUpdate}
                     />
                     <Cast credits={responseData.contentDetail.credits} />
                     <Comment commentList={commentList} />
@@ -59,10 +73,12 @@ export default function Detail() {
                 {isOpen && (
                     <CommentModal
                         handleClose={close}
-                        myComment={responseData.myComment}
+                        userComment={userComment}
+                        setUserComment={setUserComment}
                         handleCreate={handleCreate}
                         handleUpdate={handleUpdate}
                         handleDelete={handleDelete}
+                        recommend={recommend}
                     />
                 )}
             </>

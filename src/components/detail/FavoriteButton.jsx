@@ -15,8 +15,9 @@ export default function FavoriteButton({ mediaType, tmdbId, favorite }) {
             onClick={() => {
                 updateFavorite.mutate()
             }}
+            fill={isFavorite && '#FFD700'}
         >
-            <Favorite fill={isFavorite ? '#FFD700' : '#e5e5e5'} />
+            <Favorite />
         </IconButton>
     )
 }

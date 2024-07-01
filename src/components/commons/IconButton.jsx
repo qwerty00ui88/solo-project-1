@@ -1,9 +1,16 @@
 import React from 'react'
+import styled from 'styled-components'
 
-export default function IconButton({ onClick, children }) {
+const IconButtonWrapper = styled.button`
+    & svg {
+        fill: ${(props) => (props.$fill ? props.$fill : '#e5e5e5')};
+    }
+`
+
+export default function IconButton({ onClick, children, fill = undefined }) {
     return (
-        <button type="button" onClick={onClick}>
+        <IconButtonWrapper type="button" onClick={onClick} $fill={fill}>
             {children}
-        </button>
+        </IconButtonWrapper>
     )
 }

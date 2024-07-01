@@ -4,13 +4,13 @@ export default function commentReducer(commentList, action) {
             return action.init
         }
         case 'create': {
-            const { userId, nickname, comment } = action
+            const { userId, nickname, comment, recommend } = action
             return [
                 {
                     userId,
                     nickname,
                     comment,
-                    recommendStatus: 'good',
+                    recommendStatus: recommend,
                 },
                 ...commentList,
             ]
@@ -27,6 +27,15 @@ export default function commentReducer(commentList, action) {
         case 'delete': {
             const { commentId } = action
             return commentList.filter((c) => c.comment.id !== commentId)
+        }
+        case 'recommendUpdate': {
+            const { userId, recommend } = action
+            return commentList.map((c) => {
+                if (c.userId === userId) {
+                    return { ...c, recommendStatus: recommend }
+                }
+                return c
+            })
         }
         default: {
             throw Error(`알수없는 액션 타입입니다: ${action.type}`)

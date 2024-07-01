@@ -1,15 +1,17 @@
 import { useReducer } from 'react'
 import { deleteData, postData, updateData } from '../api/server'
 import commentReducer from '../reducer/comment-reducer'
+import { useAuthContext } from '../context/AuthContext'
 
-export default function useCommentList(mediaType, tmdbId, userId, nickname) {
+export default function useCommentList({ mediaType, tmdbId }) {
+    const { userId, nickname } = useAuthContext()
     const [state, dispatch] = useReducer(commentReducer, [])
 
-    const handleInitialize = (init) => {
+    const initializeCommentList = (init) => {
         dispatch({ type: 'initialize', init })
     }
 
-    const handleCreate = (text) => {
+    const handleCreate = (text, recommend) => {
         postData('/comment/create', {
             mediaType,
             tmdbId: Number(tmdbId),
@@ -17,7 +19,13 @@ export default function useCommentList(mediaType, tmdbId, userId, nickname) {
         }).then((res) => {
             if (res.code === 200) {
                 const { result: comment } = res
-                dispatch({ type: 'create', userId, nickname, comment })
+                dispatch({
+                    type: 'create',
+                    userId,
+                    nickname,
+                    comment,
+                    recommend,
+                })
             }
         })
     }
@@ -41,10 +49,24 @@ export default function useCommentList(mediaType, tmdbId, userId, nickname) {
         }).then((res) => {
             if (res.code === 200) {
                 dispatch({ type: 'delete', commentId })
-                // 코멘트 아이콘 색 회색으로 변경
             }
         })
     }
 
-    return { state, handleInitialize, handleCreate, handleUpdate, handleDelete }
+    const commentRecommendUpdate = (recommend) => {
+        dispatch({
+            type: 'recommendUpdate',
+            userId,
+            recommend,
+        })
+    }
+
+    return {
+        state,
+        initializeCommentList,
+        handleCreate,
+        handleUpdate,
+        handleDelete,
+        commentRecommendUpdate,
+    }
 }
