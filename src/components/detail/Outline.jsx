@@ -76,12 +76,9 @@ const Buttons = styled.div`
 
 export default function Outline({
     data,
-    recommendStatus,
-    favorite,
-    userComment,
-    open,
     updateRecommend,
-    commentRecommendUpdate,
+    updateFavorite,
+    handleOpen,
 }) {
     const {
         title,
@@ -93,13 +90,12 @@ export default function Outline({
         posterPath,
         backdropPath,
         mediaType,
-        tmdbId,
         overview,
-    } = data
+    } = data.contentDetail
     const { userId } = useAuthContext()
     const handleIsClick = () => {
         if (userId) {
-            open()
+            handleOpen()
         } else {
             alert('로그인해 주세요.')
         }
@@ -142,18 +138,16 @@ export default function Outline({
                     </DetailedInfo>
                     <Buttons>
                         <RecommendButtons
-                            recommend={recommendStatus}
-                            updateRecommend={updateRecommend}
-                            commentRecommendUpdate={commentRecommendUpdate}
+                            onClick={updateRecommend}
+                            recommend={data.recommendStatus}
                         />
                         <FavoriteButton
-                            mediaType={mediaType}
-                            tmdbId={tmdbId}
-                            favorite={favorite}
+                            onClick={updateFavorite}
+                            isFavorite={data.favorite}
                         />
                         <CommentButton
                             onClick={handleIsClick}
-                            fill={userComment && '#2282e2'}
+                            fill={data.myComment && '#2282e2'}
                         >
                             <Edit />
                         </CommentButton>

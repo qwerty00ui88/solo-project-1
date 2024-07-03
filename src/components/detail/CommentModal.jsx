@@ -36,12 +36,10 @@ const Buttons = styled.div`
 
 export default function CommentModal({
     handleClose,
+    addComment,
+    updateComment,
+    deleteComment,
     userComment,
-    handleCreate,
-    handleUpdate,
-    handleDelete,
-    recommend,
-    setUserComment,
 }) {
     const { value, onChange } = useTextInput(
         userComment ? userComment.text : ''
@@ -56,17 +54,18 @@ export default function CommentModal({
                         <Button
                             name="수정"
                             onClick={() => {
-                                handleUpdate(userComment.id, value)
+                                updateComment.mutate({
+                                    commentId: userComment.id,
+                                    text: value,
+                                })
                                 handleClose()
-                                setUserComment({ ...userComment, text: value })
                             }}
                         />
                         <Button
                             name="삭제"
                             onClick={() => {
-                                handleDelete(userComment.id)
+                                deleteComment.mutate(userComment.id)
                                 handleClose()
-                                setUserComment()
                             }}
                         />
                     </>
@@ -74,9 +73,8 @@ export default function CommentModal({
                     <Button
                         name="저장"
                         onClick={() => {
-                            handleCreate(value, recommend)
+                            addComment.mutate(value)
                             handleClose()
-                            setUserComment({ ...userComment, text: value })
                         }}
                     />
                 )}
