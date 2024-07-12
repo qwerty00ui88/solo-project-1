@@ -22,7 +22,7 @@ const UtilityBar = styled.div`
 
 export default function Main() {
     const { data } = useQuery({
-        queryKey: ['trending-movie-day'],
+        queryKey: ['trending', 'movie', 'day'],
         queryFn: () => getData(`/trending/movie/day`),
     })
     const { boolean: isOpen, setTrue: open, setFalse: close } = useBoolean()
