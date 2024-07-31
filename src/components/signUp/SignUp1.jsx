@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Input from '../commons/Input'
-import LinkTo from '../commons/LinkTo'
+import LinkButton from '../commons/LinkButton'
 import { ReactComponent as Next } from '../../assets/next.svg'
 
 const Buttons = styled.div`
@@ -9,31 +9,27 @@ const Buttons = styled.div`
     justify-content: end;
 `
 
-export default function SignUp1({ user, handleChange }) {
+export default function SignUp1({ user, onChange }) {
     return (
         <>
             <Input
                 id="name"
                 value={user.name}
-                onChange={(e) => {
-                    handleChange(e)
-                }}
+                onChange={onChange}
                 name="name"
                 label="이름"
             />
             <Input
                 id="email"
                 value={user.email}
-                onChange={(e) => {
-                    handleChange(e)
-                }}
+                onChange={onChange}
                 name="email"
                 label="이메일"
             />
             <Buttons>
-                <LinkTo to="/signup/2">
+                <LinkButton to="/signup/2">
                     <Next />
-                </LinkTo>
+                </LinkButton>
             </Buttons>
         </>
     )

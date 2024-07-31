@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 import Button from '../commons/Button'
 import Input from '../commons/Input'
-import LinkTo from '../commons/LinkTo'
+import LinkButton from '../commons/LinkButton'
 import { ReactComponent as Pre } from '../../assets/pre.svg'
 import { ReactComponent as Next } from '../../assets/next.svg'
 import { ReactComponent as Success } from '../../assets/success.svg'
 import { ReactComponent as Failure } from '../../assets/failure.svg'
-import NotificationMessage from '../commons/NotificationMessage'
+import NotificationMessage from './NotificationMessage'
+import { getData } from '../../api/server'
 
 const NicknameSet = styled.div`
     display: flex;
@@ -27,10 +27,19 @@ export const Buttons = styled.div`
     justify-content: space-between;
 `
 
-export default function SignUp1({ user, handleChange }) {
+export default function SignUp1({ user, onChange }) {
     const [isDuplicated, setIsDuplicated] = useState(null)
     const [isSame, setIsSame] = useState(null)
-    const serverUrl = process.env.REACT_APP_SERVER_URL
+
+    const handleIsDuplicated = () => {
+        getData('/user/isDuplicated', {
+            params: {
+                nickname: user.nickname,
+            },
+        }).then((res) => {
+            setIsDuplicated(res.result)
+        })
+    }
 
     useEffect(() => {
         if (user.passwordCheck === '') {
@@ -52,27 +61,11 @@ export default function SignUp1({ user, handleChange }) {
                 <Input
                     id="nickname"
                     value={user.nickname}
-                    onChange={(e) => {
-                        handleChange(e)
-                    }}
+                    onChange={onChange}
                     name="nickname"
                     label="닉네임"
                 />
-                <Button
-                    name="중복 확인"
-                    onClick={() => {
-                        axios
-                            .get(`${serverUrl}/user/isDuplicated`, {
-                                params: {
-                                    nickname: user.nickname,
-                                },
-                                withCredentials: true,
-                            })
-                            .then((response) => {
-                                setIsDuplicated(response.data.result)
-                            })
-                    }}
-                />
+                <Button name="중복 확인" onClick={handleIsDuplicated} />
             </NicknameSet>
             {isDuplicated === true && (
                 <NotificationMessage message="이미 사용중인 닉네임입니다.">
@@ -88,9 +81,7 @@ export default function SignUp1({ user, handleChange }) {
                 type="password"
                 id="password"
                 value={user.password}
-                onChange={(e) => {
-                    handleChange(e)
-                }}
+                onChange={onChange}
                 name="password"
                 label="비밀번호"
             />
@@ -98,9 +89,7 @@ export default function SignUp1({ user, handleChange }) {
                 type="password"
                 id="passwordCheck"
                 value={user.passwordCheck}
-                onChange={(e) => {
-                    handleChange(e)
-                }}
+                onChange={onChange}
                 name="passwordCheck"
                 label="비밀번호 확인"
             />
@@ -115,12 +104,12 @@ export default function SignUp1({ user, handleChange }) {
                 </NotificationMessage>
             )}
             <Buttons>
-                <LinkTo to="/signup/1">
+                <LinkButton to="/signup/1">
                     <Pre />
-                </LinkTo>
-                <LinkTo to="/signup/3">
+                </LinkButton>
+                <LinkButton to="/signup/3">
                     <Next />
-                </LinkTo>
+                </LinkButton>
             </Buttons>
         </>
     )

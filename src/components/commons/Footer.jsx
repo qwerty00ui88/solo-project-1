@@ -5,7 +5,7 @@ import { ReactComponent as Velog } from '../../assets/velog.svg'
 import { ReactComponent as GitHub } from '../../assets/github.svg'
 import { ReactComponent as Gmail } from '../../assets/gmail.svg'
 
-const FooterWrapper = styled.div`
+const FooterWrapper = styled.footer`
     display: flex;
     color: #a5a5a7;
     padding: 50px 10vw;

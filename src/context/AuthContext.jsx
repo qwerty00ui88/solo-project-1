@@ -48,6 +48,7 @@ export default function AuthContextProvider({ children }) {
         () => ({
             user,
             userId: user && user.userId,
+            nickname: user && user.userNickname,
             login,
             logout,
         }),

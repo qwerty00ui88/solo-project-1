@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Input from '../components/commons/Input'
 import Button from '../components/commons/Button'
 import { logoSize } from '../style/font'
 import { useAuthContext } from '../context/AuthContext'
+import useTextInput from '../hooks/useTextInput'
 
 export const LoginWrapper = styled.main`
     display: flex;
@@ -33,27 +34,23 @@ export const Title = styled.h2`
 
 export default function Login() {
     const { login } = useAuthContext()
-    const [nickname, setNickname] = useState('')
-    const [password, setPassword] = useState('')
+    const { value: nickname, onChange: handleNickname } = useTextInput()
+    const { value: password, onChange: handlePassword } = useTextInput()
 
     return (
         <LoginWrapper>
             <Title>Login</Title>
             <div>
                 <Input
-                    value={nickname}
-                    onChange={(e) => {
-                        setNickname(e.target.value)
-                    }}
                     label="닉네임"
+                    value={nickname}
+                    onChange={handleNickname}
                 />
                 <Input
                     type="password"
-                    value={password}
-                    onChange={(e) => {
-                        setPassword(e.target.value)
-                    }}
                     label="비밀번호"
+                    value={password}
+                    onChange={handlePassword}
                 />
                 <Link to="/signup/1">회원이 아니십니까?</Link>
                 <Button

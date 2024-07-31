@@ -6,8 +6,9 @@ import { ReactComponent as Star } from '../../assets/star.svg'
 import RecommendButtons from './RecommendButtons'
 import FavoriteButton from './FavoriteButton'
 import { default as CommentButton } from '../commons/IconButton'
+import { useAuthContext } from '../../context/AuthContext'
 
-const OutlineWrapper = styled.div`
+const OutlineWrapper = styled.section`
     height: 100%;
     display: flex;
     padding: 2.4vw 3vw;
@@ -75,10 +76,9 @@ const Buttons = styled.div`
 
 export default function Outline({
     data,
-    recommendStatus,
-    favorite,
-    myComment,
-    handleIsClick,
+    updateRecommend,
+    updateFavorite,
+    handleOpen,
 }) {
     const {
         title,
@@ -90,9 +90,16 @@ export default function Outline({
         posterPath,
         backdropPath,
         mediaType,
-        tmdbId,
         overview,
-    } = data
+    } = data.contentDetail
+    const { userId } = useAuthContext()
+    const handleIsClick = () => {
+        if (userId) {
+            handleOpen()
+        } else {
+            alert('로그인해 주세요.')
+        }
+    }
 
     return (
         data && (
@@ -131,16 +138,18 @@ export default function Outline({
                     </DetailedInfo>
                     <Buttons>
                         <RecommendButtons
-                            data={data}
-                            recommendStatus={recommendStatus}
+                            onClick={updateRecommend}
+                            recommend={data.recommendStatus}
                         />
                         <FavoriteButton
-                            mediaType={mediaType}
-                            tmdbId={tmdbId}
-                            favorite={favorite}
+                            onClick={updateFavorite}
+                            isFavorite={data.favorite}
                         />
-                        <CommentButton onClick={handleIsClick}>
-                            <Edit fill={myComment ? '#FFD700' : '#e5e5e5'} />
+                        <CommentButton
+                            onClick={handleIsClick}
+                            fill={data.myComment && '#2282e2'}
+                        >
+                            <Edit />
                         </CommentButton>
                     </Buttons>
                 </OutlineRight>

@@ -16,7 +16,7 @@ const LinkWrapper = styled(Link)`
     }
 `
 
-export default function LinkTo({
+export default function LinkButton({
     to,
     name = undefined,
     children = undefined,

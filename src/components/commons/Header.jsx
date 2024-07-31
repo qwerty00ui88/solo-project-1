@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as User } from '../../assets/user.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import Button from './Button'
-import LinkTo from './LinkTo'
+import LinkButton from './LinkButton'
 import { useAuthContext } from '../../context/AuthContext'
 
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.header`
     display: flex;
     justify-content: space-between;
     margin: 0 10vw;
@@ -50,8 +50,8 @@ export default function Header() {
                 </Menu>
             ) : (
                 <Menu>
-                    <LinkTo name="로그인" to="/login" height="2.4rem" />
-                    <LinkTo name="회원가입" to="signup/1" height="2.4rem" />
+                    <LinkButton name="로그인" to="/login" height="2.4rem" />
+                    <LinkButton name="회원가입" to="signup/1" height="2.4rem" />
                 </Menu>
             )}
         </HeaderWrapper>

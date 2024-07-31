@@ -1,21 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
-import { smallRadius } from '../../style/border'
+import CommentItem from './CommentItem'
+import { xlargeSize } from '../../style/font'
 
-const CommentWrapper = styled.div`
-    background-color: #e5e5e5;
-    border-radius: ${smallRadius};
-    padding: 0.5rem;
-    > div {
-        color: black;
-    }
+const SubTitle = styled.h3`
+    font-size: ${xlargeSize};
+`
+const CommentUl = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 `
 
-export default function Comment({ id, nickname, commentText }) {
+export default function Comment({ commentList }) {
     return (
-        <CommentWrapper id={id}>
-            <div>{nickname}</div>
-            <div>{commentText}</div>
-        </CommentWrapper>
+        <section>
+            <SubTitle>코멘트</SubTitle>
+            <CommentUl>
+                {commentList?.map((c) => {
+                    return (
+                        <CommentItem
+                            key={c.comment.id}
+                            id={c.userId}
+                            nickname={c.nickname}
+                            commentText={c.comment.text}
+                            recommendStatus={c.recommendStatus}
+                        />
+                    )
+                })}
+            </CommentUl>
+        </section>
     )
 }

@@ -1,12 +1,25 @@
 import React from 'react'
-import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../commons/Button'
+import { postData } from '../../api/server'
 
 export default function SignUp4({ user }) {
-    const serverUrl = process.env.REACT_APP_SERVER_URL
     const { state } = useLocation()
     const navigate = useNavigate()
+
+    const resendEmail = () => {
+        postData('/user/resend-verification-email', {
+            userId: state,
+            purpose: '회원가입',
+        }).then((res) => {
+            if (res.code === 200) {
+                // eslint-disable-next-line no-alert
+                alert('회원가입 완료')
+                navigate('/login')
+            }
+        })
+    }
+
     return (
         <div>
             <h2>인증 메일이 발송되었습니다</h2>
@@ -16,24 +29,7 @@ export default function SignUp4({ user }) {
             </div>
             <Button
                 name="인증 메일 다시 보내기"
-                onClick={() => {
-                    axios
-                        .post(
-                            `${serverUrl}/user/resend-verification-email`,
-                            {
-                                userId: state,
-                                purpose: '회원가입',
-                            },
-                            { withCredentials: true }
-                        )
-                        .then((response) => {
-                            if (response.data.code === 200) {
-                                // eslint-disable-next-line no-alert
-                                alert('회원가입 완료')
-                                navigate('/login')
-                            }
-                        })
-                }}
+                onClick={resendEmail}
                 width="20rem"
                 height="3rem"
             />

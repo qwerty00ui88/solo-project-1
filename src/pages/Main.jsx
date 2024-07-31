@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import Carousel from '../components/main/Carousel'
 import SearchBar from '../components/main/SearchBar'
 import Trending from '../components/main/Trending'
 import { getData } from '../api/server'
+import useBoolean from '../hooks/useBoolean'
 
 const MainWrapper = styled.main``
 
@@ -21,15 +22,11 @@ const UtilityBar = styled.div`
 
 export default function Main() {
     const { data } = useQuery({
-        queryKey: ['trending-movie-day'],
+        queryKey: ['trending', 'movie', 'day'],
         queryFn: () => getData(`/trending/movie/day`),
     })
-    const [isOpen, setIsOpen] = useState(false)
-    const [isScrolledDown, setIsScrollDown] = useState(false)
-
-    const handleSetIsOpen = () => {
-        setIsOpen(!isOpen)
-    }
+    const { boolean: isOpen, setTrue: open, setFalse: close } = useBoolean()
+    const { boolean: isScrolledDown, set: setIsScrollDown } = useBoolean()
 
     const scrollToSearchBar = () => {
         window.scrollTo({
@@ -44,9 +41,7 @@ export default function Main() {
     })
 
     useEffect(() => {
-        if (isOpen) {
-            scrollToSearchBar()
-        }
+        if (isOpen) scrollToSearchBar()
     }, [isOpen])
 
     return (
@@ -58,10 +53,7 @@ export default function Main() {
                         $isOpen={isOpen}
                         $isScrolledDown={isScrolledDown}
                     >
-                        <SearchBar
-                            isOpen={isOpen}
-                            handleSetIsOpen={handleSetIsOpen}
-                        />
+                        <SearchBar isOpen={isOpen} open={open} close={close} />
                     </UtilityBar>
                 </div>
                 <Trending trendingData={data} />
