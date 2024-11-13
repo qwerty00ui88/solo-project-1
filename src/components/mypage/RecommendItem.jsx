@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { ReactComponent as Good } from '../../assets/good.svg'
 import { ReactComponent as Bad } from '../../assets/bad.svg'
 import Poster from '../commons/Poster'
+import { CommentWrapper, Text } from '../detail/CommentItem'
 
 export const PosterSection = styled.div`
     width: 10%;
@@ -28,6 +29,10 @@ const RecommendSection = styled.div`
     width: 15%;
 `
 
+const CommentSection = styled(CommentWrapper)`
+    margin: 0.5rem 0 1.5rem;
+`
+
 export default function RecommendItem({ item }) {
     return (
         <>
@@ -49,7 +54,11 @@ export default function RecommendItem({ item }) {
                     )}
                 </RecommendSection>
             </Top>
-            {item.comment && <div>{item.comment.text}</div>}
+            {item.comment && (
+                <CommentSection>
+                    <Text>{item.comment.text}</Text>
+                </CommentSection>
+            )}
         </>
     )
 }

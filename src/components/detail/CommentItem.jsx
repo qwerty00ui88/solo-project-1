@@ -5,7 +5,7 @@ import { ReactComponent as Good } from '../../assets/good.svg'
 import { ReactComponent as Bad } from '../../assets/bad.svg'
 import { boldWeight } from '../../style/font'
 
-const CommentWrapper = styled.li`
+export const CommentWrapper = styled.li`
     background-color: #e5e5e5;
     border-radius: ${smallRadius};
     padding: 0.5rem;
@@ -23,7 +23,7 @@ const Nickname = styled.div`
     color: black;
 `
 
-const Text = styled.div`
+export const Text = styled.div`
     color: black;
     white-space: pre-wrap;
     word-break: break-all;
