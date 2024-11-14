@@ -8,6 +8,7 @@ export default function MyComment() {
     const { data: commentList } = useQuery({
         queryKey: ['myComment'],
         queryFn: () => getData('/mypage/comment-list'),
+        staleTime: 60 * 1000,
     })
 
     return (

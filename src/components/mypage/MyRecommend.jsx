@@ -19,6 +19,7 @@ export default function MyRecommend() {
     const { data: recommendList } = useQuery({
         queryKey: ['myRecommend'],
         queryFn: () => getData('/mypage/recommend-list'),
+        staleTime: 60 * 1000,
     })
 
     return (
