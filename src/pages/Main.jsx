@@ -24,6 +24,7 @@ export default function Main() {
     const { data } = useQuery({
         queryKey: ['trending', 'movie', 'day'],
         queryFn: () => getData(`/trending/movie/day`),
+        staleTime: 60 * 60 * 1000,
     })
     const { boolean: isOpen, setTrue: open, setFalse: close } = useBoolean()
     const { boolean: isScrolledDown, set: setIsScrollDown } = useBoolean()

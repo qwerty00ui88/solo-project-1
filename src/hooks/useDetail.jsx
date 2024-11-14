@@ -10,6 +10,7 @@ export default function useDetail({ mediaType, tmdbId }) {
     const detailQuery = useQuery({
         queryKey: ['detail', mediaType, tmdbId, userId],
         queryFn: () => getData(`/detail/${mediaType}/${tmdbId}`),
+        staleTime: 60 * 1000,
     })
 
     const addComment = optimisticUpdate({

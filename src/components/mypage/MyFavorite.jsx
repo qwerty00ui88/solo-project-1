@@ -43,6 +43,7 @@ export default function MyFavorite() {
     const { data } = useQuery({
         queryKey: ['myFavorite', userId],
         queryFn: () => getData('/mypage/favorite-list'),
+        staleTime: 60 * 1000,
     })
 
     const handleOnClick = (mediaType, tmdbId) => {
